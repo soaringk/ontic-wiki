@@ -1,0 +1,35 @@
+{
+  "sources": {
+    "raw/CUDA_basic.md": {
+      "current_hash": "f5c86017439dd568805023afccc7ccddad7ca278ccbdd9a875c305ed1cfaa7e3",
+      "current_mtime": 1775738260.4764128,
+      "current_size": 30983,
+      "last_seen_at": "2026-04-10T07:31:27Z",
+      "raw_path": "raw/CUDA_basic.md",
+      "removed": false,
+      "source_id": "raw-cuda-basic",
+      "source_type": "markdown",
+      "text_error": null,
+      "text_path": null,
+      "text_status": "ready",
+      "title": "[CUDA C \u7f16\u7a0b\u5f15\u8a00\u2014\u2014\u5e76\u884c\u8ba1\u7b97](https://zhuanlan.zhihu.com/p/21259313375)",
+      "unsupported_reason": null
+    },
+    "raw/llm_model_calculation_cheat_sheet.md": {
+      "current_hash": "db7d30a0e8de272a2c2a7a15061cce0d60e504ca6e2dbe2cfaac9fbd68074423",
+      "current_mtime": 1775738325.0420334,
+      "current_size": 8148,
+      "last_seen_at": "2026-04-10T07:31:27Z",
+      "raw_path": "raw/llm_model_calculation_cheat_sheet.md",
+      "removed": false,
+      "source_id": "raw-llm-model-calculation-cheat-sheet",
+      "source_type": "markdown",
+      "text_error": null,
+      "text_path": null,
+      "text_status": "ready",
+      "title": "\u90e8\u7f72\u539f\u5219",
+      "unsupported_reason": null
+    }
+  },
+  "version": 1
+}
