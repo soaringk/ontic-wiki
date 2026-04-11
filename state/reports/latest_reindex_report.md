@@ -1,6 +1,6 @@
 # Latest Reindex Report
 
-- scan_time: `2026-04-10T07:31:27Z`
+- scan_time: `2026-04-10T20:00:02Z`
 - source_roots: `raw`
 - pending_supported: `2`
 - blocked_supported: `0`
@@ -12,7 +12,7 @@
 - raw_path: `raw/CUDA_basic.md`
 - source_id: `raw-cuda-basic`
 - source_type: `markdown`
-- current_hash: `f5c86017439dd568805023afccc7ccddad7ca278ccbdd9a875c305ed1cfaa7e3`
+- current_hash: `a4da98ac5f727aa552051d6bbbff786736599d7991a99fa97e53a6cde79eecf6`
 
 ### 部署原则
 - raw_path: `raw/llm_model_calculation_cheat_sheet.md`

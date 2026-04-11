@@ -1,10 +1,12 @@
 {
   "sources": {
     "raw/CUDA_basic.md": {
-      "current_hash": "f5c86017439dd568805023afccc7ccddad7ca278ccbdd9a875c305ed1cfaa7e3",
-      "current_mtime": 1775738260.4764128,
-      "current_size": 30983,
-      "last_seen_at": "2026-04-10T07:31:27Z",
+      "current_hash": "a4da98ac5f727aa552051d6bbbff786736599d7991a99fa97e53a6cde79eecf6",
+      "current_mtime": 1775822042.2100787,
+      "current_size": 39332,
+      "last_ingested_at": "2026-04-10T20:02:12Z",
+      "last_ingested_hash": "a4da98ac5f727aa552051d6bbbff786736599d7991a99fa97e53a6cde79eecf6",
+      "last_seen_at": "2026-04-10T20:00:02Z",
       "raw_path": "raw/CUDA_basic.md",
       "removed": false,
       "source_id": "raw-cuda-basic",
@@ -19,7 +21,9 @@
       "current_hash": "db7d30a0e8de272a2c2a7a15061cce0d60e504ca6e2dbe2cfaac9fbd68074423",
       "current_mtime": 1775738325.0420334,
       "current_size": 8148,
-      "last_seen_at": "2026-04-10T07:31:27Z",
+      "last_ingested_at": "2026-04-10T20:02:12Z",
+      "last_ingested_hash": "db7d30a0e8de272a2c2a7a15061cce0d60e504ca6e2dbe2cfaac9fbd68074423",
+      "last_seen_at": "2026-04-10T20:00:02Z",
       "raw_path": "raw/llm_model_calculation_cheat_sheet.md",
       "removed": false,
       "source_id": "raw-llm-model-calculation-cheat-sheet",
