@@ -21,6 +21,11 @@ CUDA organizes execution as `Grid -> Block -> Thread`.
 - Global thread IDs are usually derived from `blockIdx`, `blockDim`, and `threadIdx`.
 - Thread layout can influence warp divergence and memory coalescing.
 
+## Related Pages
+
+- [CUDA Programming](../topics/cuda-programming.md)
+- [GPU Memory Hierarchy](gpu-memory-hierarchy.md)
+
 ## Sources
 
 - [CUDA C Programming Introduction - Parallel Computing](../sources/cuda-c-programming-introduction-parallel-computing.md)

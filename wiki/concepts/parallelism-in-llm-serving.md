@@ -17,6 +17,11 @@ Serving large models requires separating which parts of the model are split by t
 
 - Memory formulas should be checked component by component rather than with a single global parameter-count estimate.
 
+## Related Pages
+
+- [LLM Deployment and Capacity Planning](../topics/llm-deployment-and-capacity-planning.md)
+- [KV Cache in LLM Serving](kv-cache-in-llm-serving.md)
+
 ## Sources
 
 - [LLM Deployment Principles and Memory Estimation Cheat Sheet](../sources/llm-deployment-principles-and-memory-estimation.md)

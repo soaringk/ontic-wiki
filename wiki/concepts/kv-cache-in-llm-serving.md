@@ -21,6 +21,11 @@ The factor of 2 comes from caching both K and V tensors.
 - Read engine/runtime logs for the actual cache allocation when available.
 - Treat the formula as a planning tool, then confirm with the serving framework's real allocation behavior.
 
+## Related Pages
+
+- [LLM Deployment and Capacity Planning](../topics/llm-deployment-and-capacity-planning.md)
+- [Parallelism in LLM Serving](parallelism-in-llm-serving.md)
+
 ## Sources
 
 - [LLM Deployment Principles and Memory Estimation Cheat Sheet](../sources/llm-deployment-principles-and-memory-estimation.md)
