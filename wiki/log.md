@@ -2,6 +2,13 @@
 
 Append-only timeline of ingest, synthesis, and lint activity.
 
+## [2026-04-13] reindex | processed 1 pending pdf source
+
+- Added source page for `raw/The Era of Experience Paper.pdf` from its extracted markdown sidecar.
+- Added topic page for experiential AI.
+- Added concept pages for streams of experience and grounded rewards.
+- Rebuilt `wiki/index.md`.
+
 ## [2026-04-11] reindex | processed 2 pending markdown sources
 
 - Added source pages for `raw/CUDA_basic.md` and `raw/llm_model_calculation_cheat_sheet.md`.

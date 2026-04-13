@@ -22,7 +22,7 @@ The user workflow is intentionally small:
 
 - Path: `state/`
 - `manifest.json` tracks file hashes and ingest state
-- `extracted/` stores cached PDF-to-Markdown sidecars only
+- `extracted/` stores cached PDF-to-Markdown bundles, including `full.md` and extracted assets
 - `reports/` stores the latest ingest and lint reports
 
 ### Wiki
@@ -73,7 +73,7 @@ The nightly reindex job does this:
 
 1. scan `raw/`
 2. detect new or changed supported files
-3. refresh cached PDF markdown under `state/extracted/` only for PDFs
+3. refresh cached PDF Markdown bundles under `state/extracted/` only for PDFs
 4. write a machine-readable and human-readable report under `state/reports/`
 5. trigger an agentic ingest pass
 6. update source/topic/concept pages
@@ -103,7 +103,7 @@ The lint pass should repair the wiki directly when safe and log what changed.
 ## PDF parsing
 
 - PDFs are parsed through MinerU Precision Extract, not by local text extraction.
-- The integration uses the local-file upload flow: request upload URLs, upload the file, poll the batch result, then download `full.md` from the returned zip.
+- The integration uses the local-file upload flow: request upload URLs, upload the file, poll the batch result, then download the returned zip and cache `full.md` with its referenced assets.
 - Cached PDF markdown is reused when the file hash has not changed.
 - Markdown and text sources are read directly from `raw/` and do not get sidecars.
 - Precision Extract currently supports up to 200 MB and 600 pages per file, and requires `MINERU_API_TOKEN`.

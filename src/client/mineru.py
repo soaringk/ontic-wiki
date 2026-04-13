@@ -4,9 +4,11 @@ import io
 import json
 import math
 import os
+import shutil
+import tempfile
 import time
 import zipfile
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 import requests
 from pypdf import PdfReader
@@ -69,11 +71,48 @@ class MineruPrecisionClient:
             return self._parse_pdf_once(file_path, data_id=data_id, is_ocr=True)
         return markdown
 
+    def parse_pdf_to_dir(self, file_path: Path, *, data_id: str, output_dir: Path) -> Path:
+        file_path = Path(file_path)
+        output_dir = Path(output_dir)
+        use_ocr = self._resolve_ocr_mode(file_path)
+        try:
+            full_md_path = self._parse_pdf_once_to_dir(
+                file_path,
+                data_id=data_id,
+                is_ocr=use_ocr,
+                output_dir=output_dir,
+            )
+        except MineruParseError:
+            if self.ocr_enable == "auto" and not use_ocr:
+                return self._parse_pdf_once_to_dir(
+                    file_path,
+                    data_id=data_id,
+                    is_ocr=True,
+                    output_dir=output_dir,
+                )
+            raise
+
+        markdown = full_md_path.read_text(encoding="utf-8", errors="ignore")
+        if self.ocr_enable == "auto" and not use_ocr and self._looks_weak(markdown):
+            return self._parse_pdf_once_to_dir(
+                file_path,
+                data_id=data_id,
+                is_ocr=True,
+                output_dir=output_dir,
+            )
+        return full_md_path
+
     def _parse_pdf_once(self, file_path: Path, *, data_id: str, is_ocr: bool) -> str:
         batch_id, upload_url = self._request_upload_url(file_path, data_id=data_id, is_ocr=is_ocr)
         self._upload_file(upload_url, file_path)
         full_zip_url = self._wait_for_result(batch_id, file_name=file_path.name, data_id=data_id)
         return self._download_full_markdown(full_zip_url)
+
+    def _parse_pdf_once_to_dir(self, file_path: Path, *, data_id: str, is_ocr: bool, output_dir: Path) -> Path:
+        batch_id, upload_url = self._request_upload_url(file_path, data_id=data_id, is_ocr=is_ocr)
+        self._upload_file(upload_url, file_path)
+        full_zip_url = self._wait_for_result(batch_id, file_name=file_path.name, data_id=data_id)
+        return self._download_full_result(full_zip_url, output_dir)
 
     def _resolve_ocr_mode(self, file_path: Path) -> bool:
         if self.ocr_enable in {"true", "1", "yes", "on"}:
@@ -212,14 +251,71 @@ class MineruPrecisionClient:
         response = requests.get(full_zip_url, timeout=120)
         self._raise_for_status_with_body(response, "MinerU result download failed")
         with zipfile.ZipFile(io.BytesIO(response.content)) as archive:
-            full_md_name = next((name for name in archive.namelist() if name.endswith("/full.md")), None)
-            if full_md_name is None:
-                full_md_name = next((name for name in archive.namelist() if name.endswith("full.md")), None)
-            if full_md_name is None:
-                raise MineruParseError(
-                    f"MinerU result zip does not contain full.md: entries={archive.namelist()}"
-                )
+            full_md_name = self._find_full_md_name(archive)
             return archive.read(full_md_name).decode("utf-8", errors="ignore")
+
+    def _download_full_result(self, full_zip_url: str, output_dir: Path) -> Path:
+        response = requests.get(full_zip_url, timeout=120)
+        self._raise_for_status_with_body(response, "MinerU result download failed")
+        return self._extract_result_zip(response.content, output_dir)
+
+    def _extract_result_zip(self, zip_bytes: bytes, output_dir: Path) -> Path:
+        output_dir = Path(output_dir)
+        output_dir.parent.mkdir(parents=True, exist_ok=True)
+        temp_dir = Path(tempfile.mkdtemp(prefix=f".{output_dir.name}.", dir=output_dir.parent))
+        try:
+            with zipfile.ZipFile(io.BytesIO(zip_bytes)) as archive:
+                full_md_name = self._find_full_md_name(archive)
+                prefix = full_md_name.removesuffix("full.md")
+                for member in archive.infolist():
+                    if member.is_dir():
+                        continue
+                    relative_name = self._relative_result_member(member.filename, prefix=prefix)
+                    if relative_name is None:
+                        continue
+                    target = temp_dir / relative_name
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_bytes(archive.read(member))
+
+            full_md_path = temp_dir / "full.md"
+            if not full_md_path.exists():
+                raise MineruParseError("MinerU result zip extraction did not produce full.md")
+
+            if output_dir.exists():
+                if output_dir.is_dir():
+                    shutil.rmtree(output_dir)
+                else:
+                    output_dir.unlink()
+            temp_dir.replace(output_dir)
+            return output_dir / "full.md"
+        except Exception:
+            if temp_dir.exists():
+                shutil.rmtree(temp_dir)
+            raise
+
+    @staticmethod
+    def _find_full_md_name(archive: zipfile.ZipFile) -> str:
+        full_md_name = next(
+            (name for name in archive.namelist() if PurePosixPath(name).name == "full.md"),
+            None,
+        )
+        if full_md_name is None:
+            raise MineruParseError(
+                f"MinerU result zip does not contain full.md: entries={archive.namelist()}"
+            )
+        return full_md_name
+
+    @staticmethod
+    def _relative_result_member(name: str, *, prefix: str) -> Path | None:
+        if prefix and not name.startswith(prefix):
+            return None
+        relative_name = name[len(prefix) :] if prefix else name
+        parts = PurePosixPath(relative_name).parts
+        if not parts or any(part in {"", ".", ".."} for part in parts):
+            return None
+        if PurePosixPath(relative_name).is_absolute():
+            return None
+        return Path(*parts)
 
     @staticmethod
     def _match_result(extract_result: list[dict], *, file_name: str, data_id: str) -> dict | None:

@@ -86,7 +86,16 @@ class RepositoryScanTests(unittest.TestCase):
                 patch.object(repository, "LOG_PATH", root / "wiki" / "log.md"), \
                 patch.object(repository, "source_roots", return_value=[raw]), \
                 patch.object(repository, "MineruPrecisionClient") as mineru_client_cls:
-                mineru_client_cls.return_value.parse_pdf.return_value = "# Parsed\n\ncontent"
+                def parse_pdf_to_dir(_path, *, data_id, output_dir):
+                    full_md_path = Path(output_dir) / "full.md"
+                    full_md_path.parent.mkdir(parents=True, exist_ok=True)
+                    full_md_path.write_text("# Parsed\n\n![](images/figure.jpg)", encoding="utf-8")
+                    image_path = full_md_path.parent / "images" / "figure.jpg"
+                    image_path.parent.mkdir(parents=True, exist_ok=True)
+                    image_path.write_bytes(b"jpg-bytes")
+                    return full_md_path
+
+                mineru_client_cls.return_value.parse_pdf_to_dir.side_effect = parse_pdf_to_dir
                 summary = repository.scan_sources()
                 manifest = repository.load_manifest()
 
@@ -94,9 +103,10 @@ class RepositoryScanTests(unittest.TestCase):
             record = manifest["sources"]["raw/paper.pdf"]
             self.assertEqual(record["source_type"], "pdf")
             self.assertEqual(record["text_status"], "ready")
-            self.assertTrue(record["text_path"].endswith(".md"))
+            self.assertTrue(record["text_path"].endswith("/full.md"))
             self.assertTrue((root / record["text_path"]).exists())
-            mineru_client_cls.return_value.parse_pdf.assert_called_once()
+            self.assertTrue((root / record["text_path"]).parent.joinpath("images", "figure.jpg").exists())
+            mineru_client_cls.return_value.parse_pdf_to_dir.assert_called_once()
 
     def test_unsupported_file_is_recorded(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

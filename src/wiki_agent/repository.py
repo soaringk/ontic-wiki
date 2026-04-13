@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import shutil
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -99,29 +100,26 @@ def relative_to_root(path: Path) -> str:
     return path.relative_to(ROOT_DIR).as_posix()
 
 
-def extracted_text_filename(relative_path: str, sha256: str, suffix: str = ".txt") -> str:
+def extracted_bundle_dirname(relative_path: str, sha256: str) -> str:
     stem = slugify(relative_path.replace("/", "-"))
-    return f"{stem}-{sha256[:12]}{suffix}"
+    return f"{stem}-{sha256[:12]}"
 
 
-def extract_text(path: Path, source_type: str) -> tuple[str | None, str | None, str | None]:
-    if source_type in {"markdown", "text"}:
-        return None, None, None
-
-    if source_type != "pdf":
-        return None, f"unsupported source type: {source_type}", None
+def extract_pdf(path: Path, output_dir: Path) -> tuple[Path | None, str | None]:
+    output_dir = Path(output_dir)
 
     try:
         data_id = slugify(path.name.rsplit(".", 1)[0])[:80]
-        markdown = MineruPrecisionClient().parse_pdf(path, data_id=data_id)
+        full_md_path = MineruPrecisionClient().parse_pdf_to_dir(path, data_id=data_id, output_dir=output_dir)
     except MineruParseError as exc:
-        return None, str(exc), None
+        return None, str(exc)
     except requests.RequestException as exc:  # pragma: no cover - network dependent
-        return None, f"MinerU request failed: {exc}", None
+        return None, f"MinerU request failed: {exc}"
 
+    markdown = full_md_path.read_text(encoding="utf-8", errors="ignore")
     if not markdown.strip():
-        return None, "MinerU returned empty markdown", None
-    return markdown, None, ".md"
+        return None, "MinerU returned empty markdown"
+    return full_md_path, None
 
 
 def iter_source_files() -> list[Path]:
@@ -146,13 +144,25 @@ def cached_text_path(record: dict, current_hash: str) -> Path | None:
 
 
 def cleanup_extracted_files(manifest: dict) -> None:
-    referenced_paths = {
-        ROOT_DIR / record["text_path"]
-        for record in manifest.get("sources", {}).values()
-        if not record.get("removed") and record.get("text_path")
-    }
+    referenced_paths: set[Path] = set()
+    for record in manifest.get("sources", {}).values():
+        if record.get("removed") or not record.get("text_path"):
+            continue
+        text_path = ROOT_DIR / record["text_path"]
+        try:
+            relative_text_path = text_path.relative_to(EXTRACTED_DIR)
+        except ValueError:
+            referenced_paths.add(text_path)
+            continue
+        if relative_text_path.parts:
+            referenced_paths.add(EXTRACTED_DIR / relative_text_path.parts[0])
+
     for extracted_path in EXTRACTED_DIR.glob("*"):
-        if extracted_path not in referenced_paths:
+        if extracted_path in referenced_paths:
+            continue
+        if extracted_path.is_dir():
+            shutil.rmtree(extracted_path)
+        else:
             extracted_path.unlink()
 
 
@@ -203,19 +213,14 @@ def scan_sources() -> ScanSummary:
                 entry["text_path"] = relative_to_root(cached_path)
                 entry["text_status"] = "ready"
             else:
-                text, text_error, extracted_suffix = extract_text(path, source_type)
+                extracted_name = extracted_bundle_dirname(relative_path, entry["current_hash"])
+                extracted_dir = EXTRACTED_DIR / extracted_name
+                extracted_path, text_error = extract_pdf(path, extracted_dir)
                 if text_error:
                     entry["text_error"] = text_error
                     entry["text_status"] = "blocked"
                     blocked_paths.append(relative_path)
                 else:
-                    extracted_name = extracted_text_filename(
-                        relative_path,
-                        entry["current_hash"],
-                        suffix=extracted_suffix or ".txt",
-                    )
-                    extracted_path = EXTRACTED_DIR / extracted_name
-                    extracted_path.write_text(text or "", encoding="utf-8")
                     entry["text_error"] = None
                     entry["text_path"] = relative_to_root(extracted_path)
                     entry["text_status"] = "ready"

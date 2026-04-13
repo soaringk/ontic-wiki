@@ -89,6 +89,77 @@ class MineruPrecisionClientTests(unittest.TestCase):
             put_mock.assert_called_once()
             self.assertEqual(get_mock.call_count, 2)
 
+    def test_parse_pdf_to_dir_extracts_markdown_and_images_from_zip(self) -> None:
+        with TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            pdf_path = temp_path / "paper.pdf"
+            pdf_path.write_bytes(b"%PDF-1.4 fake")
+
+            zip_buffer = io.BytesIO()
+            with zipfile.ZipFile(zip_buffer, "w") as archive:
+                archive.writestr("result/full.md", "# Parsed\n\n![](images/figure.jpg)")
+                archive.writestr("result/images/figure.jpg", b"jpg-bytes")
+                archive.writestr("unrelated/file.txt", "ignored")
+            zip_bytes = zip_buffer.getvalue()
+
+            post_response = Mock()
+            post_response.json.return_value = {
+                "code": 0,
+                "data": {
+                    "batch_id": "batch-1",
+                    "file_urls": ["https://upload.example/file"],
+                },
+            }
+            post_response.raise_for_status.return_value = None
+
+            put_response = Mock(status_code=200)
+
+            get_poll_response = Mock()
+            get_poll_response.json.return_value = {
+                "code": 0,
+                "data": {
+                    "extract_result": [
+                        {
+                            "data_id": "paper",
+                            "file_name": "paper.pdf",
+                            "state": "done",
+                            "full_zip_url": "https://cdn.example/result.zip",
+                        }
+                    ]
+                },
+            }
+            get_poll_response.raise_for_status.return_value = None
+
+            get_zip_response = Mock()
+            get_zip_response.content = zip_bytes
+            get_zip_response.raise_for_status.return_value = None
+
+            with patch.dict(
+                os.environ,
+                {
+                    "MINERU_API_TOKEN": "token",
+                    "MINERU_BASE_URL": "https://mineru.example/api/v4",
+                },
+                clear=False,
+            ), patch("client.mineru.requests.post", return_value=post_response), patch(
+                "client.mineru.requests.put",
+                return_value=put_response,
+            ), patch(
+                "client.mineru.requests.get",
+                side_effect=[get_poll_response, get_zip_response],
+            ), patch.object(MineruPrecisionClient, "_should_enable_ocr", return_value=False), patch.object(
+                MineruPrecisionClient,
+                "_looks_weak",
+                return_value=False,
+            ):
+                client = MineruPrecisionClient()
+                full_md_path = client.parse_pdf_to_dir(pdf_path, data_id="paper", output_dir=temp_path / "parsed")
+
+            self.assertEqual(full_md_path, temp_path / "parsed" / "full.md")
+            self.assertEqual(full_md_path.read_text(encoding="utf-8"), "# Parsed\n\n![](images/figure.jpg)")
+            self.assertEqual((temp_path / "parsed" / "images" / "figure.jpg").read_bytes(), b"jpg-bytes")
+            self.assertFalse((temp_path / "parsed" / "unrelated" / "file.txt").exists())
+
     def test_auto_policy_enables_ocr_for_scanned_like_pdf(self) -> None:
         with patch.dict(os.environ, {"MINERU_OCR_ENABLE": "auto", "MINERU_API_TOKEN": "token"}, clear=False):
             client = MineruPrecisionClient()
