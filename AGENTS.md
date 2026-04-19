@@ -20,7 +20,8 @@ Before changing the wiki:
 
 - Answer from the local wiki first.
 - Use citations to local wiki pages when possible.
-- Valuable query answers may be filed into `wiki/synthesis/`.
+- Valuable query answers/conversation may be filed into `wiki/synthesis/`.
+- Every answer is based on facts and logic, not sycophancy.
 
 ## Page placement
 

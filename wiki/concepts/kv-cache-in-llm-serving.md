@@ -7,6 +7,8 @@ KV cache stores attention keys and values for prior tokens so later decoding ste
 - KV cache is often the largest variable part of inference-time GPU memory.
 - Maximum supported context length depends on how much cache memory is available and how much memory each token consumes.
 - Cache size depends on layer count, KV head count, head dimension, cache precision, and tensor parallelism.
+- Large batches and long generations can make cache growth the limiting factor for otherwise efficient shared serving.
+- GQA and MQA reduce KV-cache footprint by sharing keys and values across more attention heads.
 
 ## Durable Formula Shape
 
@@ -20,12 +22,15 @@ The factor of 2 comes from caching both K and V tensors.
 
 - Read engine/runtime logs for the actual cache allocation when available.
 - Treat the formula as a planning tool, then confirm with the serving framework's real allocation behavior.
+- Evaluate cache quantization carefully because memory savings can be real but quality impact is model-dependent.
 
 ## Related Pages
 
 - [LLM Deployment and Capacity Planning](../topics/llm-deployment-and-capacity-planning.md)
+- [Model Bandwidth Utilization](model-bandwidth-utilization.md)
 - [Parallelism in LLM Serving](parallelism-in-llm-serving.md)
 
 ## Sources
 
 - [LLM Deployment Principles and Memory Estimation Cheat Sheet](../sources/llm-deployment-principles-and-memory-estimation.md)
+- [LLM Inference Performance Engineering Best Practices](../sources/llm-inference-performance-engineering-best-practices.md)

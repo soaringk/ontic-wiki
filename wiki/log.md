@@ -2,6 +2,14 @@
 
 Append-only timeline of ingest, synthesis, and lint activity.
 
+## [2026-04-20] reindex | processed 1 pending markdown source
+
+- Added source page for `raw/the-second-half.md`.
+- Updated `Experiential AI` with the shift from benchmark hillclimbing toward evaluation-for-utility.
+- Expanded `Streams of Experience` with sequential evaluation implications.
+- Added concept page `Utility Problem`.
+- Rebuilt `wiki/index.md`.
+
 ## [2026-04-13] reindex | processed 1 pending pdf source
 
 - Added source page for `raw/The Era of Experience Paper.pdf` from its extracted markdown sidecar.
@@ -22,3 +30,23 @@ Append-only timeline of ingest, synthesis, and lint activity.
 - Found no broken links or obvious duplicate pages in the current inventory.
 - Added topic-to-concept and concept-to-concept links on concept pages to reduce orphan risk and strengthen navigation.
 - Rebuilt `wiki/index.md` with compact one-line summaries for each tracked page.
+
+## [2026-04-17] reindex | processed 2 markdown sources
+
+- Added source page for `raw/LLM Inference Performance Engineering Best Practices.md`.
+- Updated `LLM Deployment and Capacity Planning` with latency metrics, batching, memory-bandwidth, and scaling trade-offs.
+- Expanded `KV Cache in LLM Serving` and `Parallelism in LLM Serving` with performance-engineering details.
+- Added concept page for `Model Bandwidth Utilization`.
+- Parsed `raw/private_credit_podcast.md` as a markdown source.
+- Added source page `Private Credit Podcast`.
+- Added topic page `Private Credit`.
+- Added concept pages `Unitranche Loans` and `Rated Note Feeders`.
+- Rebuilt `wiki/index.md`.
+
+## [2026-04-20] lint | tightened topic summaries and source coverage
+
+- Audited the local wiki for broken links, orphans, stale claims, duplicate pages, and weak source connections.
+- Found no broken links, no literal orphan content pages, and no obvious duplicate pages in the current inventory.
+- Strengthened `Experiential AI` with the source-backed claim that language priors and reasoning can act as a reusable internal action space.
+- Strengthened `Private Credit` with the source-backed expansion into asset-based finance and AI-related infrastructure collateral.
+- Rebuilt `wiki/index.md` to reflect the refreshed topic summaries.
