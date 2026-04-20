@@ -1,6 +1,6 @@
 # Experiential AI
 
-Experiential AI treats improvement from real or simulated interaction as the central engine of progress rather than relying mainly on human-generated corpora. The durable theme in the current material is that more capable agents should persist across long horizons, act through grounded interfaces, optimize rewards tied to environmental consequences, and use reinforcement-learning-style mechanisms to surpass human priors. Recent material adds a second claim: once a general recipe starts solving many benchmarks, the main bottleneck shifts toward evaluation setups that better reflect real utility.
+Experiential AI treats improvement from real or simulated interaction as the central engine of progress rather than relying mainly on human-generated corpora. The durable theme in the current material is that more capable agents should persist across long horizons, act through grounded interfaces, optimize rewards tied to environmental consequences, and use reinforcement-learning-style mechanisms to surpass human-data limits. Recent material adds a second claim: once a general recipe starts solving many benchmarks, the main bottleneck shifts toward evaluation setups that better reflect real utility.
 
 ## Core Ideas
 
@@ -19,7 +19,7 @@ Experiential AI treats improvement from real or simulated interaction as the cen
 - [Welcome to the Era of Experience](../sources/welcome-to-the-era-of-experience.md) treats human data, human prejudgement, and human-like reasoning as useful but ultimately limiting, so it reads language priors more as a bootstrap than as the final substrate for superhuman agents.
 - [Two Lessons from ICLR 2025](../sources/two-lessons-from-iclr-2025.md) raises the epistemic bar: roadmap claims should be discounted unless they are grounded in capabilities current systems achieve with near-100% reliability.
 
-The central unresolved question is whether today's human-derived language priors are a scalable general method, a temporary bridge to grounded experience, or a ceiling that will eventually block further progress.
+The central unresolved question is whether today's human-derived language priors are a scalable general method, a temporary bridge to grounded experience, or a ceiling that will eventually block further progress. See [AI Halftime vs Bitter Lesson and Era of Experience](../synthesis/ai-halftime-vs-bitter-lesson-and-era-of-experience.md) for the full comparison.
 
 ## Related Concepts
 

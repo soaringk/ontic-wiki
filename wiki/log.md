@@ -2,6 +2,12 @@
 
 Append-only timeline of ingest, synthesis, and lint activity.
 
+## [2026-04-20] synthesis | polished AI conflict narrative and links
+
+- Linked the AI conflict synthesis and debate notes to the relevant local source pages.
+- Tightened wording around priors, algorithms, and reliability to avoid false binaries while preserving the substantive conflict.
+- Refreshed the `Experiential AI` topic and `wiki/index.md` summary to match the revised synthesis.
+
 ## [2026-04-20] synthesis | tightened AI priors conflict analysis
 
 - Revalidated `The Second Half` against `The Bitter Lesson`, `Welcome to the Era of Experience`, and `Two Lessons from ICLR 2025`.

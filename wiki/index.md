@@ -35,4 +35,4 @@ This file is maintained by the agent.
 
 ## Synthesis
 
-- [AI Halftime vs Bitter Lesson and Era of Experience](synthesis/ai-halftime-vs-bitter-lesson-and-era-of-experience.md) - Comparative analysis separating hand-built knowledge, learned language priors, and human-data ceilings in the current AI-progress debate.
+- [AI Halftime vs Bitter Lesson and Era of Experience](synthesis/ai-halftime-vs-bitter-lesson-and-era-of-experience.md) - Comparative analysis of the substantive but staged conflict over language priors, grounded experience, algorithms, and reliability.
