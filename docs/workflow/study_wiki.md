@@ -33,6 +33,7 @@ The user workflow is intentionally small:
   - `source`
   - `topic`
   - `concept`
+  - `debate`
   - `synthesis`
 
 ## Source page shape
@@ -72,6 +73,17 @@ Recommended sections:
 - Add links back to relevant source pages
 - Keep pages compact and cumulative
 
+## Debate pages
+
+- Path: `wiki/debates/`
+- Debate pages are curated argument-validation records for contested interpretation across sources.
+- They are a workbench for claims, objections, axioms, hypotheses, and agent recommendations; they are not source pages and should not become parallel topic or synthesis pages.
+- Use debate pages when multiple sources appear to conflict, when a synthesis rests on contested interpretation, or when a topic/concept update needs adversarial validation.
+- Debate pages should cite local source pages, identify competing interpretations, classify claims as facts, axioms, hypotheses, interpretations, or recommendations, and end with agent recommendations plus a user decision area.
+- In the current workflow, only the user adjudicates contested debates. Agents may recommend promotion, but must not mark debates decided or promote conclusions unless the user explicitly accepts the outcome.
+- User-accepted conclusions should be distilled into `wiki/synthesis/`; topic pages should link to debates only as live or recently user-adjudicated tensions.
+- Follow [`debate_protocol.md`](./debate_protocol.md) for multi-agent debate roles, rounds, evidence rules, and promotion criteria.
+
 ## Ingest workflow
 
 The nightly reindex job does this:
@@ -82,9 +94,10 @@ The nightly reindex job does this:
 4. write a machine-readable and human-readable report under `state/reports/`
 5. trigger an agentic ingest pass
 6. update source/topic/concept pages
-7. rebuild `wiki/index.md`
-8. append an entry to `wiki/log.md`
-9. mark successfully processed hashes in `state/manifest.json`
+7. open or update debate pages when the ingest raises contested cross-source interpretation; promote contested conclusions only after user acceptance
+8. rebuild `wiki/index.md`
+9. append an entry to `wiki/log.md`
+10. mark successfully processed hashes in `state/manifest.json`
 
 ## Query workflow
 
@@ -93,6 +106,7 @@ The nightly reindex job does this:
 - Answer in prose with local citations
 - Use source `published` metadata for chronology-sensitive analysis when available
 - If the answer is durable, save it as a `synthesis` page and update the index/log
+- If the answer depends on disputed interpretation across curated sources, create or update a `debate` page first. Promote only after the user accepts the conclusion or explicitly asks for promotion.
 
 ## Lint workflow
 
@@ -103,8 +117,9 @@ The weekly lint pass checks for:
 - stale or conflicting claims
 - repeated concepts lacking their own page
 - source pages with weak or missing connections
+- debate pages that duplicate synthesis pages without clear workbench/promoted status
 
-The lint pass should repair the wiki directly when safe and log what changed.
+The lint pass should repair the wiki directly when safe and log what changed. For now, lint may flag debates that appear ready for decision, but must not close, delete, archive, or promote debate conclusions without explicit user instruction.
 
 ## PDF parsing
 

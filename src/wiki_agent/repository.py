@@ -14,6 +14,7 @@ from client.mineru import MineruParseError, MineruPrecisionClient
 
 from .config import (
     CONCEPTS_DIR,
+    DEBATES_DIR,
     EXTRACTED_DIR,
     INDEX_PATH,
     LOG_PATH,
@@ -48,7 +49,7 @@ def utc_now() -> str:
 
 
 def ensure_layout() -> None:
-    for path in (RAW_DIR, WIKI_DIR, SOURCES_DIR, TOPICS_DIR, CONCEPTS_DIR, SYNTHESIS_DIR, STATE_DIR, EXTRACTED_DIR, REPORTS_DIR):
+    for path in (RAW_DIR, WIKI_DIR, SOURCES_DIR, TOPICS_DIR, CONCEPTS_DIR, DEBATES_DIR, SYNTHESIS_DIR, STATE_DIR, EXTRACTED_DIR, REPORTS_DIR):
         path.mkdir(parents=True, exist_ok=True)
 
     if not MANIFEST_PATH.exists():
@@ -320,8 +321,9 @@ def write_lint_report(scan_time: str) -> Path:
     source_pages = sorted(relative_to_root(path) for path in SOURCES_DIR.glob("*.md"))
     topic_pages = sorted(relative_to_root(path) for path in TOPICS_DIR.glob("*.md"))
     concept_pages = sorted(relative_to_root(path) for path in CONCEPTS_DIR.glob("*.md"))
+    debate_pages = sorted(relative_to_root(path) for path in DEBATES_DIR.glob("*.md"))
     synthesis_pages = sorted(relative_to_root(path) for path in SYNTHESIS_DIR.glob("*.md"))
-    page_lines = [f"- `{path}`" for path in (source_pages + topic_pages + concept_pages + synthesis_pages)]
+    page_lines = [f"- `{path}`" for path in (source_pages + topic_pages + concept_pages + debate_pages + synthesis_pages)]
 
     content = "\n".join(
         [
@@ -331,6 +333,7 @@ def write_lint_report(scan_time: str) -> Path:
             f"- source_pages: `{len(source_pages)}`",
             f"- topic_pages: `{len(topic_pages)}`",
             f"- concept_pages: `{len(concept_pages)}`",
+            f"- debate_pages: `{len(debate_pages)}`",
             f"- synthesis_pages: `{len(synthesis_pages)}`",
             "",
             "## Existing Pages",

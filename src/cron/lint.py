@@ -24,7 +24,7 @@ Workflow guide: {workflow_path}
 Execution requirements:
 1. Read the repo guide and workflow guide first.
 2. Read the latest lint report before editing.
-3. Audit the wiki for orphan pages, broken links, stale claims, weak source connections, and obvious duplicate pages.
+3. Audit the wiki for orphan pages, broken links, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.
 4. Repair safe issues directly.
 5. Rebuild `wiki/index.md` if page inventory or summaries change.
 6. Append a new `wiki/log.md` entry using `## [YYYY-MM-DD] lint | ...`.
@@ -33,6 +33,8 @@ Constraints:
 - Do not modify files under `raw/`.
 - Keep the wiki English-first.
 - Prefer compact maintenance changes over broad rewrites.
+- Treat `wiki/debates/` as an argument-validation workbench and `wiki/synthesis/` as the durable resolved-conclusion layer.
+- Do not mark debates decided, archive debates, delete debates, or promote debate conclusions unless the user explicitly requested that action.
 """.strip()
 
 

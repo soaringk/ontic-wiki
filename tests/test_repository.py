@@ -23,6 +23,7 @@ class RepositoryScanTests(unittest.TestCase):
             (root / "wiki" / "sources").mkdir(parents=True)
             (root / "wiki" / "topics").mkdir(parents=True)
             (root / "wiki" / "concepts").mkdir(parents=True)
+            (root / "wiki" / "debates").mkdir(parents=True)
             (root / "wiki" / "synthesis").mkdir(parents=True)
             source = raw / "cuda_intro.md"
             source.write_text("# CUDA Intro\n\nThreads and blocks.\n", encoding="utf-8")
@@ -36,6 +37,7 @@ class RepositoryScanTests(unittest.TestCase):
                 patch.object(repository, "SOURCES_DIR", root / "wiki" / "sources"), \
                 patch.object(repository, "TOPICS_DIR", root / "wiki" / "topics"), \
                 patch.object(repository, "CONCEPTS_DIR", root / "wiki" / "concepts"), \
+                patch.object(repository, "DEBATES_DIR", root / "wiki" / "debates"), \
                 patch.object(repository, "SYNTHESIS_DIR", root / "wiki" / "synthesis"), \
                 patch.object(repository, "STATE_DIR", root / "state"), \
                 patch.object(repository, "EXTRACTED_DIR", root / "state" / "extracted"), \
@@ -64,6 +66,7 @@ class RepositoryScanTests(unittest.TestCase):
             (root / "wiki" / "sources").mkdir(parents=True)
             (root / "wiki" / "topics").mkdir(parents=True)
             (root / "wiki" / "concepts").mkdir(parents=True)
+            (root / "wiki" / "debates").mkdir(parents=True)
             (root / "wiki" / "synthesis").mkdir(parents=True)
             source = raw / "paper.pdf"
             source.write_bytes(b"%PDF-1.4 fake pdf content")
@@ -77,6 +80,7 @@ class RepositoryScanTests(unittest.TestCase):
                 patch.object(repository, "SOURCES_DIR", root / "wiki" / "sources"), \
                 patch.object(repository, "TOPICS_DIR", root / "wiki" / "topics"), \
                 patch.object(repository, "CONCEPTS_DIR", root / "wiki" / "concepts"), \
+                patch.object(repository, "DEBATES_DIR", root / "wiki" / "debates"), \
                 patch.object(repository, "SYNTHESIS_DIR", root / "wiki" / "synthesis"), \
                 patch.object(repository, "STATE_DIR", root / "state"), \
                 patch.object(repository, "EXTRACTED_DIR", root / "state" / "extracted"), \
@@ -125,6 +129,7 @@ class RepositoryScanTests(unittest.TestCase):
                 patch.object(repository, "SOURCES_DIR", root / "wiki" / "sources"), \
                 patch.object(repository, "TOPICS_DIR", root / "wiki" / "topics"), \
                 patch.object(repository, "CONCEPTS_DIR", root / "wiki" / "concepts"), \
+                patch.object(repository, "DEBATES_DIR", root / "wiki" / "debates"), \
                 patch.object(repository, "SYNTHESIS_DIR", root / "wiki" / "synthesis"), \
                 patch.object(repository, "STATE_DIR", root / "state"), \
                 patch.object(repository, "EXTRACTED_DIR", root / "state" / "extracted"), \
@@ -140,6 +145,42 @@ class RepositoryScanTests(unittest.TestCase):
             record = manifest["sources"]["raw/figure.png"]
             self.assertEqual(record["source_type"], "unsupported")
             self.assertIn("unsupported extension", record["unsupported_reason"])
+
+    def test_lint_report_counts_debate_pages(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            wiki = root / "wiki"
+            sources = wiki / "sources"
+            topics = wiki / "topics"
+            concepts = wiki / "concepts"
+            debates = wiki / "debates"
+            synthesis = wiki / "synthesis"
+            reports = root / "state" / "reports"
+            for path in (sources, topics, concepts, debates, synthesis, reports):
+                path.mkdir(parents=True)
+            (debates / "claim.md").write_text("# Debate\n", encoding="utf-8")
+            (synthesis / "answer.md").write_text("# Synthesis\n", encoding="utf-8")
+
+            with patch.object(repository, "ROOT_DIR", root), \
+                patch.object(repository, "RAW_DIR", root / "raw"), \
+                patch.object(repository, "WIKI_DIR", wiki), \
+                patch.object(repository, "SOURCES_DIR", sources), \
+                patch.object(repository, "TOPICS_DIR", topics), \
+                patch.object(repository, "CONCEPTS_DIR", concepts), \
+                patch.object(repository, "DEBATES_DIR", debates), \
+                patch.object(repository, "SYNTHESIS_DIR", synthesis), \
+                patch.object(repository, "STATE_DIR", root / "state"), \
+                patch.object(repository, "EXTRACTED_DIR", root / "state" / "extracted"), \
+                patch.object(repository, "REPORTS_DIR", reports), \
+                patch.object(repository, "MANIFEST_PATH", root / "state" / "manifest.json"), \
+                patch.object(repository, "INDEX_PATH", wiki / "index.md"), \
+                patch.object(repository, "LOG_PATH", wiki / "log.md"):
+                report_path = repository.write_lint_report("2026-04-20T00:00:00Z")
+
+            report = report_path.read_text(encoding="utf-8")
+            self.assertIn("- debate_pages: `1`", report)
+            self.assertIn("- synthesis_pages: `1`", report)
+            self.assertIn("- `wiki/debates/claim.md`", report)
 
 
 if __name__ == "__main__":

@@ -1,10 +1,11 @@
 # Latest Lint Report
 
-- scan_time: `2026-04-19T21:00:01Z`
-- source_pages: `6`
+- scan_time: `2026-04-20T06:02:51Z`
+- source_pages: `8`
 - topic_pages: `4`
 - concept_pages: `10`
-- synthesis_pages: `0`
+- debate_pages: `0`
+- synthesis_pages: `1`
 
 ## Existing Pages
 
@@ -12,6 +13,8 @@
 - `wiki/sources/llm-deployment-principles-and-memory-estimation.md`
 - `wiki/sources/llm-inference-performance-engineering-best-practices.md`
 - `wiki/sources/private-credit-podcast.md`
+- `wiki/sources/the-bitter-lesson.md`
+- `wiki/sources/two-lessons-from-iclr-2025.md`
 - `wiki/sources/welcome-to-the-era-of-experience.md`
 - `wiki/sources/were-at-ais-halftime.md`
 - `wiki/topics/cuda-programming.md`
@@ -28,3 +31,4 @@
 - `wiki/concepts/streams-of-experience.md`
 - `wiki/concepts/unitranche-loans.md`
 - `wiki/concepts/utility-problem.md`
+- `wiki/synthesis/ai-halftime-vs-bitter-lesson-and-era-of-experience.md`
