@@ -12,6 +12,15 @@ Experiential AI treats improvement from real or simulated interaction as the cen
 - Evaluation becomes a first-class design problem when standard benchmark loops no longer distinguish between narrow hillclimbing and genuinely useful agent behavior.
 - Interactive and sequential evaluation setups matter because real work is rarely autonomous, one-shot, or i.i.d.
 
+## Tensions
+
+- [The Bitter Lesson](../sources/the-bitter-lesson.md) warns that long-run progress usually comes from general methods that scale with computation, so appeals to "priors" must distinguish learned general structure from hand-built human knowledge.
+- [We're at AI's Halftime](../sources/were-at-ais-halftime.md) argues that current language priors and evaluation design now matter more, at the margin, than further algorithmic novelty.
+- [Welcome to the Era of Experience](../sources/welcome-to-the-era-of-experience.md) treats human data, human prejudgement, and human-like reasoning as useful but ultimately limiting, so it reads language priors more as a bootstrap than as the final substrate for superhuman agents.
+- [Two Lessons from ICLR 2025](../sources/two-lessons-from-iclr-2025.md) raises the epistemic bar: roadmap claims should be discounted unless they are grounded in capabilities current systems achieve with near-100% reliability.
+
+The central unresolved question is whether today's human-derived language priors are a scalable general method, a temporary bridge to grounded experience, or a ceiling that will eventually block further progress.
+
 ## Related Concepts
 
 - [Streams of Experience](../concepts/streams-of-experience.md)
@@ -21,4 +30,6 @@ Experiential AI treats improvement from real or simulated interaction as the cen
 ## Sources
 
 - [Welcome to the Era of Experience](../sources/welcome-to-the-era-of-experience.md)
+- [The Bitter Lesson](../sources/the-bitter-lesson.md)
+- [Two Lessons from ICLR 2025](../sources/two-lessons-from-iclr-2025.md)
 - [We're at AI's Halftime](../sources/were-at-ais-halftime.md)

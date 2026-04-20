@@ -7,13 +7,14 @@ source_ids:
 status: active
 raw_path: raw/the-second-half.md
 source_type: markdown
+published: 2025-04-10
 created: 2026-04-20
 updated: 2026-04-20
 ---
 
 # Summary
 
-This essay argues that AI has entered a "second half" where the main bottleneck is no longer inventing new model families for narrow benchmarks, but designing evaluation setups that measure real-world utility. It claims that a working reinforcement-learning recipe now exists: large language priors, reasoning-as-action, and scalable fine-tuning can generalize across many tasks, so progress depends increasingly on asking the right questions and measuring the right outcomes.
+This essay argues that AI has entered a "second half" where the main bottleneck is no longer inventing new model families for narrow benchmarks, but designing evaluation setups that measure real-world utility. It claims that a working reinforcement-learning recipe now exists: large language priors, reasoning-as-action, and scalable fine-tuning can generalize across many tasks, so progress depends increasingly on asking the right questions and measuring the right outcomes. Its strongest additional claim is that priors and evaluation now matter more, at the margin, than further algorithmic novelty.
 
 # Key Claims
 
@@ -33,9 +34,13 @@ The essay reframes current AI work from a contest over model architectures towar
 - Topic: [Experiential AI](../topics/experiential-ai.md)
 - Concept: [Streams of Experience](../concepts/streams-of-experience.md)
 - Concept: [Utility Problem](../concepts/utility-problem.md)
+- Synthesis: [AI Halftime vs Bitter Lesson and Era of Experience](../synthesis/ai-halftime-vs-bitter-lesson-and-era-of-experience.md)
 
 # Open Questions
 
 - Which evaluation designs best capture durable user value without becoming too expensive, noisy, or easy to game?
 - If reasoning is treated as an internal action space, what are the right constraints and reward signals to keep it useful rather than bloated or misaligned?
 - How should researchers compare progress across interactive, sequential, and environment-specific evaluations that do not reduce cleanly to a single benchmark number?
+- Does the essay overstate its case when it treats RL algorithms as nearly trivial relative to priors and evaluation, rather than as one part of the same scalable recipe?
+- Are the cited cross-domain successes reliable enough to justify the claim that "RL finally generalizes," or are they still better understood as heterogeneous demonstrations with uneven robustness?
+- Are language priors best understood as scalable learned structure, as human-data dependence that future agents must surpass, or as both at different stages of development?

@@ -32,8 +32,11 @@ The paper provides a durable frame for thinking about autonomous agents as more 
 - Topic: [Experiential AI](../topics/experiential-ai.md)
 - Concept: [Streams of Experience](../concepts/streams-of-experience.md)
 - Concept: [Grounded Rewards](../concepts/grounded-rewards.md)
+- Synthesis: [AI Halftime vs Bitter Lesson and Era of Experience](../synthesis/ai-halftime-vs-bitter-lesson-and-era-of-experience.md)
 
 # Open Questions
 
 - The paper is programmatic rather than empirical, so it leaves open which concrete training setups best combine user steerability with grounded reward optimization.
 - It argues that experiential learning can improve safety through adaptation, but does not resolve how to reliably detect and correct misaligned long-horizon behavior.
+- It treats experience as the next frontier, but leaves unresolved how much recent agent progress depends on broad language priors acquired before the agent begins learning from ongoing interaction.
+- It restores algorithms to the center of the agenda through value estimation, exploration, temporal abstraction, and world models, which pushes against claims that the RL algorithm has become merely trivial.

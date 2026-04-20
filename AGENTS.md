@@ -23,6 +23,13 @@ Before changing the wiki:
 - Valuable query answers/conversation may be filed into `wiki/synthesis/`.
 - Every answer is based on facts and logic, not sycophancy.
 
+## Timeliness
+
+- Timeliness-sensitive analysis must use each source's actual `published` field when it is present in the raw material.
+- Do not substitute local ingest dates such as wiki `created`, wiki `updated`, or raw `created` for the source's publication time.
+- When creating or updating `wiki/sources/` pages, carry the raw `published` value into source-page frontmatter when it is present and meaningful.
+- If the raw `published` field is blank, missing, or ambiguous, preserve that uncertainty explicitly instead of inventing a date.
+
 ## Page placement
 
 - Source pages: `wiki/sources/`

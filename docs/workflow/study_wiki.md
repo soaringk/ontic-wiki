@@ -48,9 +48,14 @@ source_ids:
 status: active
 raw_path: ...
 source_type: markdown|text|pdf
+published: ...
 created: ...
 updated: ...
 ```
+
+- `published` should come from the source's actual raw metadata when available.
+- `created` and `updated` are local wiki maintenance timestamps and must not be used as substitutes for publication time.
+- If the raw `published` field is blank, missing, or ambiguous, leave it unknown rather than inferring it from ingest time.
 
 Recommended sections:
 
@@ -86,6 +91,7 @@ The nightly reindex job does this:
 - Search the local wiki first
 - Read the most relevant pages
 - Answer in prose with local citations
+- Use source `published` metadata for chronology-sensitive analysis when available
 - If the answer is durable, save it as a `synthesis` page and update the index/log
 
 ## Lint workflow

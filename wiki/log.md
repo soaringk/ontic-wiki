@@ -2,6 +2,22 @@
 
 Append-only timeline of ingest, synthesis, and lint activity.
 
+## [2026-04-20] synthesis | tightened AI priors conflict analysis
+
+- Revalidated `The Second Half` against `The Bitter Lesson`, `Welcome to the Era of Experience`, and `Two Lessons from ICLR 2025`.
+- Updated the synthesis to separate hand-built human knowledge, learned language priors, and human-data ceilings.
+- Tightened `Experiential AI` and related source pages around the live dispute over priors, algorithms, evaluation, reliability, and factual accuracy.
+- Rebuilt `wiki/index.md`.
+
+## [2026-04-20] reindex | processed 2 manually added markdown sources and validated the comparison
+
+- Added source page for `raw/the-bitter-lesson.md`.
+- Added source page for `raw/two-lessons-from-iclr-2025.md`.
+- Updated `We're at AI's Halftime` and `Welcome to the Era of Experience` with stronger comparative open questions.
+- Updated `Experiential AI` and `Utility Problem` to capture the dispute over priors, algorithms, evaluation, and reliability.
+- Added synthesis page `AI Halftime vs Bitter Lesson and Era of Experience`.
+- Rebuilt `wiki/index.md`.
+
 ## [2026-04-20] reindex | processed 1 pending markdown source
 
 - Added source page for `raw/the-second-half.md`.
