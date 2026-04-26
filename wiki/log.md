@@ -2,6 +2,15 @@
 
 Append-only timeline of ingest, synthesis, and lint activity.
 
+## [2026-04-25] reindex | processed 10 pending serving and transformer sources
+
+- Added 10 source pages for the pending PDFs and markdown notes from the latest reindex report.
+- Added topic pages `Disaggregated LLM Inference` and `Transformer Architecture and Attention`.
+- Added concept pages for attention, context caching, integer-only quantization, iteration-level scheduling, PagedAttention, and prefill-decode disaggregation.
+- Expanded `LLM Deployment and Capacity Planning`, `KV Cache in LLM Serving`, and `Parallelism in LLM Serving` with disaggregation, cache-management, and quantization links.
+- Rebuilt `wiki/index.md`.
+- Blocked sources: none. Unsupported sources: none.
+
 ## [2026-04-20] synthesis | polished AI conflict narrative and links
 
 - Linked the AI conflict synthesis and debate notes to the relevant local source pages.
@@ -72,3 +81,10 @@ Append-only timeline of ingest, synthesis, and lint activity.
 - Strengthened `Experiential AI` with the source-backed claim that language priors and reasoning can act as a reusable internal action space.
 - Strengthened `Private Credit` with the source-backed expansion into asset-based finance and AI-related infrastructure collateral.
 - Rebuilt `wiki/index.md` to reflect the refreshed topic summaries.
+
+## [2026-04-27] lint | tightened source-page reciprocal links
+
+- Audited the local wiki for broken links, orphan pages, stale claims, duplicate pages, weak source connections, and debate/synthesis duplication.
+- Found no broken internal links, no orphan content pages, no obvious duplicate pages, and no debate/synthesis duplication in the current inventory.
+- Strengthened reciprocal navigation by adding missing source-to-topic and source-to-concept links on `Inference without Interference`, `Efficient Memory Management for Large Language Model Serving with PagedAttention`, and `MemServe`.
+- Left `wiki/index.md` unchanged because page inventory and index summaries did not change.

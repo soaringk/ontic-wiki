@@ -1,0 +1,4931 @@
+[
+    [
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                184,
+                128,
+                784,
+                174
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Benoit Jacob "
+                    }
+                ]
+            },
+            "bbox": [
+                207,
+                204,
+                313,
+                220
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Skirmantas Kligys "
+                    }
+                ]
+            },
+            "bbox": [
+                349,
+                204,
+                496,
+                220
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Bo Chen "
+                    }
+                ]
+            },
+            "bbox": [
+                532,
+                204,
+                604,
+                220
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Menglong Zhu "
+                    }
+                ]
+            },
+            "bbox": [
+                640,
+                204,
+                761,
+                220
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Matthew Tang "
+                    }
+                ]
+            },
+            "bbox": [
+                161,
+                222,
+                276,
+                239
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Andrew Howard "
+                    }
+                ]
+            },
+            "bbox": [
+                313,
+                222,
+                444,
+                238
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Hartwig Adam "
+                    }
+                ]
+            },
+            "bbox": [
+                480,
+                222,
+                599,
+                238
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Dmitry Kalenichenko "
+                    }
+                ]
+            },
+            "bbox": [
+                637,
+                222,
+                808,
+                238
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "{benoitjacob,skligys,bochen,menglong, "
+                    }
+                ]
+            },
+            "bbox": [
+                323,
+                242,
+                645,
+                256
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "mttang,howarda,hadam,dkalenichenko}@google.com "
+                    }
+                ]
+            },
+            "bbox": [
+                279,
+                260,
+                689,
+                273
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Google Inc. "
+                    }
+                ]
+            },
+            "bbox": [
+                436,
+                275,
+                531,
+                291
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "Abstract "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                233,
+                325,
+                310,
+                342
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "The rising popularity of intelligent mobile devices and the daunting computational cost of deep learning-based models call for efficient and accurate on-device inference schemes. We propose a quantization scheme that allows inference to be carried out using integer-only arithmetic, which can be implemented more efficiently than floating point inference on commonly available integer-only hardware. We also co-design a training procedure to preserve end-to-end model accuracy post quantization. As a result, the proposed quantization scheme improves the tradeoff between accuracy and on-device latency. The improvements are significant even on MobileNets, a model family known for run-time efficiency, and are demonstrated in ImageNet classification and COCO detection on popular CPUs. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                358,
+                472,
+                570
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "1. Introduction "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                76,
+                601,
+                207,
+                617
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Current state-of-the-art Convolutional Neural Networks (CNNs) are not well suited for use on mobile devices. Since the advent of AlexNet [20], modern CNNs have primarily been appraised according to classification / detection accuracy. Thus network architectures have evolved without regard to model complexity and computational efficiency. On the other hand, successful deployment of CNNs on mobile platforms such as smartphones, AR/VR devices (HoloLens, Daydream), and drones require small model sizes to accommodate limited on-device memory, and low latency to maintain user engagement. This has led to a burgeoning field of research that focuses on reducing the model size and inference time of CNNs with minimal accuracy losses. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                627,
+                468,
+                824
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Approaches in this field roughly fall into two categories. The first category, exemplified by MobileNet [10], SqueezeNet [16], ShuffleNet [32], and DenseNet [11], designs novel network architectures that exploit computation / memory efficient operations. The second category quan-"
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                824,
+                468,
+                901
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "tizes the weights and / or activations of a CNN from 32 bit floating point into lower bit-depth representations. This methodology, embraced by approaches such as Ternary weight networks (TWN [22]), Binary Neural Networks (BNN [14]), XNOR-net [27], and more [8, 21, 26, 33, 34, 35], is the focus of our investigation. Despite their abundance, current quantization approaches are lacking in two respects when it comes to trading off latency with accuracy. "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                327,
+                893,
+                449
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "First, prior approaches have not been evaluated on a reasonable baseline architecture. The most common baseline architectures, AlexNet [20], VGG [28] and GoogleNet [29], are all over-parameterized by design in order to extract marginal accuracy improvements. Therefore, it is easy to obtain sizable compression of these architectures, reducing quantization experiments on these architectures to proofof-concepts at best. Instead, a more meaningful challenge would be to quantize model architectures that are already efficient at trading off latency with accuracy, e.g. MobileNets. "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                455,
+                893,
+                607
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Second, many quantization approaches do not deliver verifiable efficiency improvements on real hardware. Approaches that quantize only the weights ([2, 4, 8, 33]) are primarily concerned with on-device storage and less with computational efficiency. Notable exceptions are binary, ternary and bit-shift networks [14, 22, 27]. These latter approaches employ weights that are either 0 or powers of 2, which allow multiplication to be implemented by bit shifts. However, while bit-shifts can be efficient in custom hardware, they provide little benefit on existing hardware with multiply-add instructions that, when properly used (i.e. pipelined), are not more expensive than additions alone. Moreover, multiplications are only expensive if the operands are wide, and the need to avoid multiplications diminishes with bit depth once both weights and activations are quantized. Notably, these approaches rarely provide on-device measurements to verify the promised timing improvements. More runtime-friendly approaches quantize both the weights and the activations into 1 bit representa-"
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                613,
+                893,
+                900
+            ]
+        },
+        {
+            "type": "page_aside_text",
+            "content": {
+                "page_aside_text_content": [
+                    {
+                        "type": "text",
+                        "content": "arXiv:1712.05877v1 [cs.LG] 15 Dec 2017 "
+                    }
+                ]
+            },
+            "bbox": [
+                22,
+                237,
+                57,
+                681
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "1 "
+                    }
+                ]
+            },
+            "bbox": [
+                480,
+                924,
+                488,
+                936
+            ]
+        }
+    ],
+    [
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/6b9b691e10d6904b19b66c6be55ba5c6965a77e687f3bfaeb6ed83fdb8d16297.jpg"
+                },
+                "image_caption": [
+                    {
+                        "type": "text",
+                        "content": "(a) Integer-arithmetic-only inference "
+                    }
+                ],
+                "image_footnote": []
+            },
+            "bbox": [
+                86,
+                99,
+                313,
+                271
+            ]
+        },
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/28c0ac4c653f727c1836f4b0f3cfc11958e4c5a129f6695c2d0e8b3bb9504a88.jpg"
+                },
+                "image_caption": [
+                    {
+                        "type": "text",
+                        "content": "(b) Training with simulated quantization "
+                    }
+                ],
+                "image_footnote": []
+            },
+            "bbox": [
+                316,
+                99,
+                630,
+                271
+            ]
+        },
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/3f6b0ec35b7a99c250ec6e13f5cea32dc215148077bea4a24338c7724ae2f4d3.jpg"
+                },
+                "image_caption": [
+                    {
+                        "type": "text",
+                        "content": "(c) ImageNet latency-vs-accuracy tradeoff "
+                    },
+                    {
+                        "type": "text",
+                        "content": "Figure 1.1: Integer-arithmetic-only quantization. a) Integer-arithmetic-only inference of a convolution layer. The input and output are represented as 8-bit integers according to equation 1. The convolution involves 8-bit integer operands and a 32-bit integer accumulator. The bias addition involves only 32-bit integers (section 2.4). The ReLU6 nonlinearity only involves 8-bit integer arithmetic. b) Training with simulated quantization of the convolution layer. All variables and computations are carried out using 32-bit floating-point arithmetic. Weight quantization (“wt quant”) and activation quantization (“act quant”) nodes are injected into the computation graph to simulate the effects of quantization of the variables (section 3). The resultant graph approximates the integer-arithmetic-only computation graph in panel a), while being trainable using conventional optimization algorithms for floating point models. c) Our quantization scheme benefits from the fast integer-arithmetic circuits in common CPUs to deliver an improved latency-vs-accuracy tradeoff (section 4). The figure compares integer quantized MobileNets [10] against floating point baselines on ImageNet [3] using Qualcomm Snapdragon 835 LITTLE cores. "
+                    }
+                ],
+                "image_footnote": []
+            },
+            "bbox": [
+                622,
+                99,
+                883,
+                268
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "tions [14, 27, 34]. With these approaches, both multiplications and additions can be implemented by efficient bit-shift and bit-count operations, which are showcased in custom GPU kernels (BNN [14]). However, 1 bit quantization often leads to substantial performance degradation, and may be overly stringent on model representation. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                450,
+                468,
+                542
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "In this paper we address the above issues by improving the latency-vs-accuracy tradeoffs of MobileNets on common mobile hardware. Our specific contributions are: "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                544,
+                468,
+                589
+            ]
+        },
+        {
+            "type": "list",
+            "content": {
+                "list_type": "text_list",
+                "list_items": [
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "• We provide a quantization scheme (section 2.1) that quantizesh both weights and activations as 8-bit integers, and just a few parameters (bias vectors) as 32-bit integers. "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "• We provide a quantized inference framework that is efficiently implementable on integer-arithmetic-only hardware such as the Qualcomm Hexagon (sections 2.2, 2.3), and we describe an efficient, accurate implementation on ARM NEON (Appendix B). "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "• We provide a quantized training framework (section 3) co-designed with our quantized inference to minimize the loss of accuracy from quantization on real models. "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "• We apply our frameworks to efficient classification and detection systems based on MobileNets and provide benchmark results on popular ARM CPUs (section 4) that show significant improvements in the latency-vsaccuracy tradeoffs for state-of-the-art MobileNet architectures, demonstrated in ImageNet classification [3], COCO object detection [23], and other tasks. "
+                            }
+                        ]
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                604,
+                468,
+                900
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Our work draws inspiration from [7], which leverages low-precision fixed-point arithmetic to accelerate the training speed of CNNs, and from [31], which uses 8-bit fixedpoint arithmetic to speed up inference on "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "\\mathbf { \\boldsymbol { x } } 8 6"
+                    },
+                    {
+                        "type": "text",
+                        "content": "CPUs. Our quantization scheme focuses instead on improving the inference speed vs accuracy tradeoff on mobile CPUs. "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                450,
+                890,
+                542
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "2. Quantized Inference "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                500,
+                556,
+                694,
+                574
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "2.1. Quantization scheme "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                500,
+                583,
+                697,
+                599
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "In this section, we describe our general quantization scheme12, that is, the correspondence between the bitrepresentation of values (denoted "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "q"
+                    },
+                    {
+                        "type": "text",
+                        "content": "below, for “quantized value”) and their interpretation as mathematical real numbers (denoted "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "r"
+                    },
+                    {
+                        "type": "text",
+                        "content": "below, for “real value”). Our quantization scheme is implemented using integer-only arithmetic during inference and floating-point arithmetic during training, with both implementations maintaining a high degree of correspondence with each other. We achieve this by first providing a mathematically rigorous definition of our quantization scheme, and separately adopting this scheme for both integer-arithmetic inference and floating-point training. "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                607,
+                890,
+                801
+            ]
+        },
+        {
+            "type": "page_footnote",
+            "content": {
+                "page_footnote_content": [
+                    {
+                        "type": "text",
+                        "content": "1The quantization scheme described here is the one adopted in Tensor-Flow Lite [5] and we will refer to specific parts of its code to illustrate aspects discussed below. "
+                    }
+                ]
+            },
+            "bbox": [
+                500,
+                815,
+                890,
+                849
+            ]
+        },
+        {
+            "type": "page_footnote",
+            "content": {
+                "page_footnote_content": [
+                    {
+                        "type": "text",
+                        "content": "2We had earlier described this quantization scheme in the documentation of gemmlowp [18]. That page may still be useful as an alternate treatment of some of the topics developed in this section, and for its selfcontained example code. "
+                    }
+                ]
+            },
+            "bbox": [
+                500,
+                849,
+                890,
+                898
+            ]
+        }
+    ],
+    [
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "A basic requirement of our quantization scheme is that it permits efficient implementation of all arithmetic using only integer arithmetic operations on the quantized values (we eschew implementations requiring lookup tables because these tend to perform poorly compared to pure arithmetic on SIMD hardware). This is equivalent to requiring that the quantization scheme be an affine mapping of integers "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "q"
+                    },
+                    {
+                        "type": "text",
+                        "content": "to real numbers "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "r"
+                    },
+                    {
+                        "type": "text",
+                        "content": ", i.e. of the form "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                90,
+                472,
+                210
+            ]
+        },
+        {
+            "type": "equation_interline",
+            "content": {
+                "math_content": "r = S (q - Z) \\tag {1}",
+                "math_type": "latex",
+                "image_source": {
+                    "path": "images/b791637f61075cf4758d3d38e8c7420fbe62d3722573e5abfaf1a77e22b0d622.jpg"
+                }
+            },
+            "bbox": [
+                222,
+                222,
+                468,
+                239
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "for some constants "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "S"
+                    },
+                    {
+                        "type": "text",
+                        "content": "and "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "Z"
+                    },
+                    {
+                        "type": "text",
+                        "content": ". Equation (1) is our quantization scheme and the constants "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "S"
+                    },
+                    {
+                        "type": "text",
+                        "content": "and "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "Z"
+                    },
+                    {
+                        "type": "text",
+                        "content": "are our quantization parameters. Our quantization scheme uses a single set of quantization parameters for all values within each activations array and within each weights array; separate arrays use separate quantization parameters. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                250,
+                468,
+                339
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "For 8-bit quantization, "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "q"
+                    },
+                    {
+                        "type": "text",
+                        "content": "is quantized as an 8-bit integer (for "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "B"
+                    },
+                    {
+                        "type": "text",
+                        "content": "-bit quantization, "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "q"
+                    },
+                    {
+                        "type": "text",
+                        "content": "is quantized as an "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "B"
+                    },
+                    {
+                        "type": "text",
+                        "content": "-bit integer). Some arrays, typically bias vectors, are quantized as 32-bit integers, see section 2.4. "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                340,
+                468,
+                400
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "The constant "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "S"
+                    },
+                    {
+                        "type": "text",
+                        "content": "(for “scale”) is an arbitrary positive real number. It is typically represented in software as a floatingpoint quantity, like the real values "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "r"
+                    },
+                    {
+                        "type": "text",
+                        "content": ". Section 2.2 describes methods for avoiding the representation of such floatingpoint quantities in the inference workload. "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                401,
+                468,
+                474
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "The constant "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "Z"
+                    },
+                    {
+                        "type": "text",
+                        "content": "(for “zero-point”) is of the same type as quantized values "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "q"
+                    },
+                    {
+                        "type": "text",
+                        "content": ", and is in fact the quantized value "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "q"
+                    },
+                    {
+                        "type": "text",
+                        "content": "corresponding to the real value 0. This allows us to automatically meet the requirement that the real value "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "r = 0"
+                    },
+                    {
+                        "type": "text",
+                        "content": "b e exactly representable by a quantized value. The motivation for this requirement is that efficient implementation of neural network operators often requires zero-padding of arrays around boundaries. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                476,
+                468,
+                595
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Our discussion so far is summarized in the following quantized buffer data structure3, with one instance of such a buffer existing for each activations array and weights array in a neural network. We use "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "\\mathrm { C } { + + }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "syntax because it allows the unambiguous conveyance of types. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                597,
+                468,
+                672
+            ]
+        },
+        {
+            "type": "code",
+            "content": {
+                "code_caption": [],
+                "code_content": [
+                    {
+                        "type": "text",
+                        "content": "template<typename QName> // e.g. QName=uint8\nstruct QuantizedBuffer {\n    vector<quette> q; // the quantized values\n    float S; // the scale\n    QName Z; // the zero-point\n}; "
+                    }
+                ],
+                "code_language": "txt"
+            },
+            "bbox": [
+                76,
+                680,
+                465,
+                752
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "2.2. Integer-arithmetic-only matrix multiplication "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                76,
+                762,
+                460,
+                777
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "We now turn to the question of how to perform inference using only integer arithmetic, i.e. how to use Equation (1) to translate real-numbers computation into quantized-values "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                785,
+                468,
+                830
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "computation, and how the latter can be designed to involve only integer arithmetic even though the scale values "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "S"
+                    },
+                    {
+                        "type": "text",
+                        "content": "are not integers. "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                90,
+                890,
+                135
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Consider the multiplication of two square "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "N \\times N"
+                    },
+                    {
+                        "type": "text",
+                        "content": "matrices of real numbers, "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "r _ { 1 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "and "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "r _ { 2 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": ", with their product represented by "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "r _ { 3 } = r _ { 1 } r _ { 2 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": ". We denote the entries of each of these matrices "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "r _ { \\alpha }"
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "\\mathbf { \\Phi } _ { \\cdot \\alpha } = 1 \\mathbf { \\Phi } _ { \\cdot }"
+                    },
+                    {
+                        "type": "text",
+                        "content": ", 2 or 3) as "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "r _ { \\alpha } ^ { ( i , j ) }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "for "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "1 \\leqslant i , j \\leqslant N"
+                    },
+                    {
+                        "type": "text",
+                        "content": "and the quantization parameters with which they are quantized as "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "( S _ { \\alpha } , Z _ { \\alpha } )"
+                    },
+                    {
+                        "type": "text",
+                        "content": ". We denote the quantized entries by "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "\\bar { q _ { \\alpha } ^ { ( i , j ) } }"
+                    },
+                    {
+                        "type": "text",
+                        "content": ". Equation (1) then becomes: "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                136,
+                890,
+                244
+            ]
+        },
+        {
+            "type": "equation_interline",
+            "content": {
+                "math_content": "r _ {\\alpha} ^ {(i, j)} = S _ {\\alpha} \\left(q _ {\\alpha} ^ {(i, j)} - Z _ {\\alpha}\\right). \\tag {2}",
+                "math_type": "latex",
+                "image_source": {
+                    "path": "images/84538ff3f9311b4f4fb79d78e8a4f3ba010560175a2d96bd721af5c382475a9d.jpg"
+                }
+            },
+            "bbox": [
+                609,
+                255,
+                890,
+                273
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "From the definition of matrix multiplication, we have "
+                    }
+                ]
+            },
+            "bbox": [
+                500,
+                286,
+                852,
+                301
+            ]
+        },
+        {
+            "type": "equation_interline",
+            "content": {
+                "math_content": "S _ {3} \\left(q _ {3} ^ {(i, k)} - Z _ {3}\\right) = \\sum_ {j = 1} ^ {N} S _ {1} \\left(q _ {1} ^ {(i, j)} - Z _ {1}\\right) S _ {2} \\left(q _ {2} ^ {(j, k)} - Z _ {2}\\right), \\tag {3}",
+                "math_type": "latex",
+                "image_source": {
+                    "path": "images/771bf0e863b30cb43b73fdf4a5bbe501684bdfa3ea79d21ef71241d00560d091.jpg"
+                }
+            },
+            "bbox": [
+                506,
+                311,
+                890,
+                354
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "which can be rewritten as "
+                    }
+                ]
+            },
+            "bbox": [
+                500,
+                364,
+                671,
+                378
+            ]
+        },
+        {
+            "type": "equation_interline",
+            "content": {
+                "math_content": "q _ {3} ^ {(i, k)} = Z _ {3} + M \\sum_ {j = 1} ^ {N} \\left(q _ {1} ^ {(i, j)} - Z _ {1}\\right) \\left(q _ {2} ^ {(j, k)} - Z _ {2}\\right), \\tag {4}",
+                "math_type": "latex",
+                "image_source": {
+                    "path": "images/b8b9f1a9b392f157a98ed27214bbac4f1ccc1221b6f2de5dd283d64d6c79655b.jpg"
+                }
+            },
+            "bbox": [
+                524,
+                388,
+                890,
+                430
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "where the multiplier "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "M"
+                    },
+                    {
+                        "type": "text",
+                        "content": "is defined as "
+                    }
+                ]
+            },
+            "bbox": [
+                500,
+                441,
+                743,
+                455
+            ]
+        },
+        {
+            "type": "equation_interline",
+            "content": {
+                "math_content": "M := \\frac {S _ {1} S _ {2}}{S _ {3}}. \\tag {5}",
+                "math_type": "latex",
+                "image_source": {
+                    "path": "images/622e7be44fd5a80214f1425a1b9760d7b61037430ebae3fc9f9c00def228b0ab.jpg"
+                }
+            },
+            "bbox": [
+                650,
+                465,
+                890,
+                498
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "In Equation (4), the only non-integer is the multiplier "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "M"
+                    },
+                    {
+                        "type": "text",
+                        "content": ". As a constant depending only on the quantization scales "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "S _ { 1 } , S _ { 2 } , S _ { 3 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": ", it can be computed offline. We empirically find it to always be in the interval "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "( 0 , 1 )"
+                    },
+                    {
+                        "type": "text",
+                        "content": ", and can therefore express it in the normalized form "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                507,
+                890,
+                580
+            ]
+        },
+        {
+            "type": "equation_interline",
+            "content": {
+                "math_content": "M = 2 ^ {- n} M _ {0} \\tag {6}",
+                "math_type": "latex",
+                "image_source": {
+                    "path": "images/4d3e8e75658be8a0b8f0265034bb83251b8ce54a5a05da96a6779bc42834b6ce.jpg"
+                }
+            },
+            "bbox": [
+                648,
+                594,
+                890,
+                609
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "where "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "M _ { 0 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "is in the interval [0.5, 1) and "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "n"
+                    },
+                    {
+                        "type": "text",
+                        "content": "is a non-negative integer. The normalized multiplier "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "M _ { 0 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "now lends itself well to being expressed as a fixed-point multiplier (e.g. int16 or int32 depending on hardware capability). For example, if int32 is used, the integer representing "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "M _ { 0 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "is the int32 value nearest to "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "2 ^ { 3 1 } M _ { 0 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": ". Since "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "M _ { 0 } \\geqslant 0 . 5"
+                    },
+                    {
+                        "type": "text",
+                        "content": ", this value is always at least "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "2 ^ { 3 0 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "and will therefore always have at least 30 bits of relative accuracy. Multiplication by "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "M _ { 0 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "can thus be implemented as a fixed-point multiplication4. Meanwhile, multiplication by "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "2 ^ { - n }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "can be implemented with an efficient bitshift, albeit one that needs to have correct round-to-nearest behavior, an issue that we return to in Appendix B. "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                622,
+                890,
+                803
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "2.3. Efficient handling of zero-points "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                500,
+                811,
+                782,
+                828
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "In order to efficiently implement the evaluation of Equation (4) without having to perform "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "2 N ^ { 3 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "subtractions and "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                835,
+                890,
+                866
+            ]
+        },
+        {
+            "type": "page_footnote",
+            "content": {
+                "page_footnote_content": [
+                    {
+                        "type": "text",
+                        "content": "3The actual data structures in the TensorFlow Lite [5] Converter are QuantizationParams and Array in this header file. As we discuss in the next subsection, this data structure, which still contains a floatingpoint quantity, does not appear in the actual quantized on-device inference code. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                838,
+                468,
+                898
+            ]
+        },
+        {
+            "type": "page_footnote",
+            "content": {
+                "page_footnote_content": [
+                    {
+                        "type": "text",
+                        "content": "4The computation discussed in this section is implemented in Tensor-Flow Lite [5] reference code for a fully-connected layer. "
+                    }
+                ]
+            },
+            "bbox": [
+                500,
+                875,
+                890,
+                900
+            ]
+        }
+    ],
+    [
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "without having to expand the operands of the multiplication into 16-bit integers, we first notice that by distributing the multiplication in Equation (4), we can rewrite it as "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                90,
+                468,
+                137
+            ]
+        },
+        {
+            "type": "equation_interline",
+            "content": {
+                "math_content": "\\begin{array}{l} q _ {3} ^ {(i, k)} = Z _ {3} + M \\left(N Z _ {1} Z _ {2} - Z _ {1} a _ {2} ^ {(k)} \\right. \\tag {7} \\\\ \\left. - Z _ {2} \\bar {a} _ {1} ^ {(i)} + \\sum_ {j = 1} ^ {N} q _ {1} ^ {(i, j)} q _ {2} ^ {(j, k)}\\right) \\\\ \\end{array}",
+                "math_type": "latex",
+                "image_source": {
+                    "path": "images/f27440cfeacd3ca978d8f4600f598b33bea831102396cf5c0e3f8128e2a1f5cb.jpg"
+                }
+            },
+            "bbox": [
+                145,
+                148,
+                468,
+                246
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "where "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                257,
+                122,
+                271
+            ]
+        },
+        {
+            "type": "equation_interline",
+            "content": {
+                "math_content": "a _ {2} ^ {(k)} := \\sum_ {j = 1} ^ {N} q _ {2} ^ {(j, k)}, \\bar {a} _ {1} ^ {(i)} := \\sum_ {j = 1} ^ {N} q _ {1} ^ {(i, j)}. \\tag {8}",
+                "math_type": "latex",
+                "image_source": {
+                    "path": "images/5ddbf884db2f2dd4d6d40bf0d18342f273774c2ff7782cb70088b7d1b8095022.jpg"
+                }
+            },
+            "bbox": [
+                148,
+                281,
+                468,
+                325
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Each "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "a _ { 2 } ^ { ( k ) }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "or "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "\\bar { a } _ { 1 } ^ { ( i ) }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "takes only "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "N"
+                    },
+                    {
+                        "type": "text",
+                        "content": "additions to compute, so they collectively take only "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "2 N ^ { 2 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "additions. The rest of the cost of the evaluation of (7) is almost entirely concentrated in the core integer matrix multiplication accumulation "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                337,
+                468,
+                401
+            ]
+        },
+        {
+            "type": "equation_interline",
+            "content": {
+                "math_content": "\\sum_ {j = 1} ^ {N} q _ {1} ^ {(i, j)} q _ {2} ^ {(j, k)} \\tag {9}",
+                "math_type": "latex",
+                "image_source": {
+                    "path": "images/7d64afd774fe2703f777d4b0d32c616ad908cbb38f724d7cd955a50ef2a6ef6a.jpg"
+                }
+            },
+            "bbox": [
+                222,
+                412,
+                468,
+                454
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "which takes "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "2 N ^ { 3 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "arithmetic operations; indeed, everything else involved in (7) is "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "O ( N ^ { 2 } )"
+                    },
+                    {
+                        "type": "text",
+                        "content": "with a small constant in the "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "O"
+                    },
+                    {
+                        "type": "text",
+                        "content": ". Thus, the expansion into the form (7) and the factored-out computation of "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "a _ { 2 } ^ { ( k ) }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "and "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "\\bar { a } _ { 1 } ^ { ( i ) }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "enable low-overhead handling of arbitrary zero-points for anything but the smallest values of "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "N"
+                    },
+                    {
+                        "type": "text",
+                        "content": ", reducing the problem to the same core integer matrix multiplication accumulation (9) as we would have to compute in any other zero-points-free quantization scheme. "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                467,
+                468,
+                592
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "2.4. Implementation of a typical fused layer "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                76,
+                601,
+                413,
+                618
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "We continue the discussion of section 2.3, but now explicitly define the data types of all quantities involved, and modify the quantized matrix multiplication (7) to merge the bias-addition and activation function evaluation directly into it. This fusing of whole layers into a single operation is not only an optimization. As we must reproduce in inference code the same arithmetic that is used in training, the granularity of fused operators in inference code (taking an 8-bit quantized input and producing an 8-bit quantized output) must match the placement of “fake quantization” operators in the training graph (section 3). "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                625,
+                468,
+                792
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "For our implementation on ARM and "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "\\mathbf { \\boldsymbol { x } } 8 6"
+                    },
+                    {
+                        "type": "text",
+                        "content": "CPU architectures, we use the gemmlowp library [18], whose GemmWithOutputPipeline entry point provides supports the fused operations that we now describe5. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                792,
+                468,
+                853
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "We take the "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "q _ { 1 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "matrix to be the weights, and the "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "q _ { 2 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "matrix to be the activations. Both the weights and activations are of type uint8 (we could have equivalently chosen int8, with suitably modified zero-points). Accumulating products of uint8 values requires a 32-bit accumulator, and we choose a signed type for the accumulator for a reason that will soon become clear. The sum in (9) is thus of the form: "
+                    }
+                ]
+            },
+            "bbox": [
+                500,
+                90,
+                893,
+                196
+            ]
+        },
+        {
+            "type": "equation_interline",
+            "content": {
+                "math_content": "i n t 3 2 + = u i n t 8 * u i n t 8. \\tag {10}",
+                "math_type": "latex",
+                "image_source": {
+                    "path": "images/d8bf24dec2444309965682f540ef79c721a3e3f1c6eef2a4e7d28ce4c5918689.jpg"
+                }
+            },
+            "bbox": [
+                584,
+                213,
+                890,
+                227
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "In order to have the quantized bias-addition be the addition of an int32 bias into this int32 accumulator, the bias-vector is quantized such that: it uses int32 as its quantized data type; it uses 0 as its quantization zero-point "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "Z _ { \\mathrm { b i a s } }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "; and its quantization scale "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "S _ { \\mathrm { b i a s } }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "is the same as that of the accumulators, which is the product of the scales of the weights and of the input activations. In the notation of section 2.3, "
+                    }
+                ]
+            },
+            "bbox": [
+                498,
+                244,
+                893,
+                349
+            ]
+        },
+        {
+            "type": "equation_interline",
+            "content": {
+                "math_content": "S _ {\\text {b i a s}} = S _ {1} S _ {2}, \\quad Z _ {\\text {b i a s}} = 0. \\tag {11}",
+                "math_type": "latex",
+                "image_source": {
+                    "path": "images/a3393c886ee8879fc86614165feec3705b5563da3e16dcd9e8a6d6ec1bb73f7a.jpg"
+                }
+            },
+            "bbox": [
+                604,
+                367,
+                890,
+                383
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Although the bias-vectors are quantized as 32-bit values, they account for only a tiny fraction of the parameters in a neural network. Furthermore, the use of higher precision for bias vectors meets a real need: as each bias-vector entry is added to many output activations, any quantization error in the bias-vector tends to act as an overall bias (i.e. an error term with nonzero mean), which must be avoided in order to preserve good end-to-end neural network accuracy6. "
+                    }
+                ]
+            },
+            "bbox": [
+                498,
+                398,
+                890,
+                518
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "With the final value of the int32 accumulator, there remain three things left to do: scale down to the final scale used by the 8-bit output activations, cast down to uint8 and apply the activation function to yield the final 8-bit output activation. "
+                    }
+                ]
+            },
+            "bbox": [
+                498,
+                521,
+                890,
+                595
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "The down-scaling corresponds to multiplication by the multiplier "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "M"
+                    },
+                    {
+                        "type": "text",
+                        "content": "in equation (7). As explained in section 2.2, it is implemented as a fixed-point multiplication by a normalized multiplier "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "M _ { 0 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "and a rounding bit-shift. Afterwards, we perform a saturating cast to uint8, saturating to the range [0, 255]. "
+                    }
+                ]
+            },
+            "bbox": [
+                498,
+                599,
+                890,
+                689
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "We focus on activation functions that are mere clamps, e.g. ReLU, ReLU6. Mathematical functions are discussed in appendix A.1 and we do not currently fuse them into such layers. Thus, the only thing that our fused activation functions need to do is to further clamp the uint8 value to some sub-interval of [0, 255] before storing the final uint8 output activation. In practice, the quantized training process (section 3) tends to learn to make use of the whole output uint8 [0, 255] interval so that the activation function no longer does anything, its effect being subsumed in the clamping to [0, 255] implied in the saturating cast to uint8. "
+                    }
+                ]
+            },
+            "bbox": [
+                498,
+                691,
+                892,
+                858
+            ]
+        },
+        {
+            "type": "page_footnote",
+            "content": {
+                "page_footnote_content": [
+                    {
+                        "type": "text",
+                        "content": "5The discussion in this section is implemented in TensorFlow Lite [5] for e.g. a Convolutional operator (reference code is self-contained, optimized code calls into gemmlowp [18]). "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                862,
+                468,
+                900
+            ]
+        },
+        {
+            "type": "page_footnote",
+            "content": {
+                "page_footnote_content": [
+                    {
+                        "type": "text",
+                        "content": "6The quantization of bias-vectors discussed here is implemented here in the TensorFlow Lite [5] Converter. "
+                    }
+                ]
+            },
+            "bbox": [
+                500,
+                875,
+                890,
+                900
+            ]
+        }
+    ],
+    [
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "3. Training with simulated quantization "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                76,
+                89,
+                413,
+                107
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "A common approach to training quantized networks is to train in floating point and then quantize the resulting weights (sometimes with additional post-quantization training for fine-tuning). We found that this approach works sufficiently well for large models with considerable representational capacity, but leads to significant accuracy drops for small models. Common failure modes for simple posttraining quantization include: 1) large differences (more than "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "1 0 0 \\times"
+                    },
+                    {
+                        "type": "text",
+                        "content": ") in ranges of weights for different output channels (section 2 mandates that all channels of the same layer be quantized to the same resolution, which causes weights in channels with smaller ranges to have much higher relative error) and 2) outlier weight values that make all remaining weights less precise after quantization. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                114,
+                468,
+                325
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "We propose an approach that simulates quantization effects in the forward pass of training. Backpropagation still happens as usual, and all weights and biases are stored in floating point so that they can be easily nudged by small amounts. The forward propagation pass however simulates quantized inference as it will happen in the inference engine, by implementing in floating-point arithmetic the rounding behavior of the quantization scheme that we introduced in section 2: "
+                    }
+                ]
+            },
+            "bbox": [
+                73,
+                328,
+                470,
+                464
+            ]
+        },
+        {
+            "type": "list",
+            "content": {
+                "list_type": "text_list",
+                "list_items": [
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "• Weights are quantized before they are convolved with the input. If batch normalization (see [17]) is used for the layer, the batch normalization parameters are “folded into” the weights before quantization, see section 3.2. "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "• Activations are quantized at points where they would be during inference, e.g. after the activation function is applied to a convolutional or fully connected layer’s output, or after a bypass connection adds or concatenates the outputs of several layers together such as in ResNets. "
+                            }
+                        ]
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                479,
+                468,
+                622
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "For each layer, quantization is parameterized by the number of quantization levels and clamping range, and is performed by applying point-wise the quantization function "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "q"
+                    },
+                    {
+                        "type": "text",
+                        "content": "defined as follows: "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                637,
+                468,
+                698
+            ]
+        },
+        {
+            "type": "equation_interline",
+            "content": {
+                "math_content": "\\begin{array}{l} \\operatorname {c l a m p} (r; a, b) := \\min  (\\max  (x, a), b) \\\\ s (a, b, n) := \\frac {b - a}{n - 1} \\\\ q (r; a, b, n) := \\left\\lfloor \\frac {\\operatorname {c l a m p} (r ; a , b) - a}{s (a , b , n)} \\right] s (a, b, n) + a, \\tag {12} \\\\ \\end{array}",
+                "math_type": "latex",
+                "image_source": {
+                    "path": "images/ac93980c774d1bf633a1bbc5ae65c014d3865304512225576f886ff8d92c42fd.jpg"
+                }
+            },
+            "bbox": [
+                89,
+                710,
+                468,
+                810
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "where "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "r"
+                    },
+                    {
+                        "type": "text",
+                        "content": "is a real-valued number to be quantized, "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "[ a ; b ]"
+                    },
+                    {
+                        "type": "text",
+                        "content": "is the quantization range, "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "n"
+                    },
+                    {
+                        "type": "text",
+                        "content": "is the number of quantization levels, and "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "\\lfloor \\cdot \\rceil"
+                    },
+                    {
+                        "type": "text",
+                        "content": "denotes rounding to the nearest integer. "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "n"
+                    },
+                    {
+                        "type": "text",
+                        "content": "is fixed for all layers in our experiments, e.g. "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "n = 2 ^ { 8 } = 2 5 6"
+                    },
+                    {
+                        "type": "text",
+                        "content": "for 8 bit quantization. "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                824,
+                468,
+                901
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "3.1. Learning quantization ranges "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                500,
+                90,
+                764,
+                107
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Quantization ranges are treated differently for weight quantization vs. activation quantization: "
+                    }
+                ]
+            },
+            "bbox": [
+                500,
+                113,
+                893,
+                143
+            ]
+        },
+        {
+            "type": "list",
+            "content": {
+                "list_type": "text_list",
+                "list_items": [
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "• For weights, the basic idea is simply to set "
+                            },
+                            {
+                                "type": "equation_inline",
+                                "content": "a : = \\operatorname* { m i n } w"
+                            },
+                            {
+                                "type": "text",
+                                "content": ", "
+                            },
+                            {
+                                "type": "equation_inline",
+                                "content": "b : = \\operatorname* { m a x } w"
+                            },
+                            {
+                                "type": "text",
+                                "content": ". We apply a minor tweak to this so that the weights, once quantized as int8 values, only range in "
+                            },
+                            {
+                                "type": "equation_inline",
+                                "content": "[ - 1 2 7 , 1 2 7 ]"
+                            },
+                            {
+                                "type": "text",
+                                "content": "and never take the value "
+                            },
+                            {
+                                "type": "equation_inline",
+                                "content": "- 1 2 8"
+                            },
+                            {
+                                "type": "text",
+                                "content": ", as this enables a substantial optimization opportunity (for more details, see Appendix B). "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "• For activations, ranges depend on the inputs to the network. To estimate the ranges, we collect "
+                            },
+                            {
+                                "type": "equation_inline",
+                                "content": "[ a ; b ]"
+                            },
+                            {
+                                "type": "text",
+                                "content": "ranges seen on activations during training and then aggregate them via exponential moving averages (EMA) with the smoothing parameter being close to 1 so that observed ranges are smoothed across thousands of training steps. Given significant delay in the EMA updating activation ranges when the ranges shift rapidly, we found it useful to completely disable activation quantization at the start of training (say, for 50 thousand to 2 million steps). This allows the network to enter a more stable state where activation quantization ranges do not exclude a significant fraction of values. "
+                            }
+                        ]
+                    }
+                ]
+            },
+            "bbox": [
+                500,
+                148,
+                893,
+                439
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "In both cases, the boundaries "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "[ a ; b ]"
+                    },
+                    {
+                        "type": "text",
+                        "content": "are nudged so that value 0.0 is exactly representable as an integer "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "z ( a , b , n )"
+                    },
+                    {
+                        "type": "text",
+                        "content": "after quantization. As a result, the learned quantization parameters map to the scale "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "S"
+                    },
+                    {
+                        "type": "text",
+                        "content": "and zero-point "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "Z"
+                    },
+                    {
+                        "type": "text",
+                        "content": "in equation 1: "
+                    }
+                ]
+            },
+            "bbox": [
+                498,
+                444,
+                893,
+                506
+            ]
+        },
+        {
+            "type": "equation_interline",
+            "content": {
+                "math_content": "S = s (a, b, n), \\quad Z = z (a, b, n) \\tag {13}",
+                "math_type": "latex",
+                "image_source": {
+                    "path": "images/29463e0cd8077839f3ef2172e0046a1d691f1f925b1f838cb6cd4adcd65ca28a.jpg"
+                }
+            },
+            "bbox": [
+                591,
+                511,
+                890,
+                527
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Below we depict simulated quantization assuming that the computations of a neural network are captured as a TensorFlow graph [1]. A typical workflow is described in Algorithm 1. Optimization of the inference graph by fusing "
+                    }
+                ]
+            },
+            "bbox": [
+                498,
+                532,
+                893,
+                594
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "Algorithm 1 Quantized graph training and inference "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                500,
+                606,
+                849,
+                621
+            ]
+        },
+        {
+            "type": "list",
+            "content": {
+                "list_type": "text_list",
+                "list_items": [
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "1: Create a training graph of the floating-point model. "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "2: Insert fake quantization TensorFlow operations in locations where tensors will be downcasted to fewer bits during inference according to equation 12. "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "3: Train in simulated quantized mode until convergence. "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "4: Create and optimize the inference graph for running in a low bit inference engine. "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "5: Run inference using the quantized inference graph. "
+                            }
+                        ]
+                    }
+                ]
+            },
+            "bbox": [
+                509,
+                626,
+                890,
+                746
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "and removing operations is outside the scope of this paper. Source code for graph modifications (inserting fake quantization operations, creating and optimizing the inference graph) and a low bit inference engine has been opensourced with TensorFlow contributions in [19]. "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                763,
+                893,
+                839
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Figure 1.1a and b illustrate TensorFlow graphs before and after quantization for a simple convolutional layer. Illustrations of the more complex convolution with a bypass connection in figure C.3 can be found in figure C.4. "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                839,
+                893,
+                900
+            ]
+        }
+    ],
+    [
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Note that the biases are not quantized because they are represented as 32-bit integers in the inference process, with a much higher range and precision compared to the 8 bit weights and activations. Furthermore, quantization parameters used for biases are inferred from the quantization parameters of the weights and activations. See section 2.4. "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                90,
+                468,
+                181
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Typical TensorFlow code illustrating use of [19] follows: "
+                    }
+                ]
+            },
+            "bbox": [
+                96,
+                184,
+                467,
+                200
+            ]
+        },
+        {
+            "type": "algorithm",
+            "content": {
+                "algorithm_caption": [],
+                "algorithm_content": [
+                    {
+                        "type": "text",
+                        "content": "from tf.contrib quantize \\ import quantize_graph as qg   \n "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "\\mathsf{g} = \\mathsf{tf}.G"
+                    },
+                    {
+                        "type": "text",
+                        "content": " raph()   \nwith g.as_default(): output  "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "= \\ldots"
+                    },
+                    {
+                        "type": "text",
+                        "content": " total_loss  "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "= \\ldots"
+                    },
+                    {
+                        "type": "text",
+                        "content": " optimizer  "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "= \\ldots"
+                    },
+                    {
+                        "type": "text",
+                        "content": " train_tensor  "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "= \\ldots"
+                    },
+                    {
+                        "type": "text",
+                        "content": "   \nif is_training: quantized_graph  "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "= \\backslash"
+                    },
+                    {
+                        "type": "text",
+                        "content": " qg.create_training_graph(g)   \nelse: quantized_graph  "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "= \\backslash"
+                    },
+                    {
+                        "type": "text",
+                        "content": " qg.create_eval_graph(g)   \n# Train or evaluate quantized_graph. "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                214,
+                398,
+                436
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "3.2. Batch normalization folding "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                76,
+                473,
+                328,
+                489
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "For models that use batch normalization (see [17]), there is additional complexity: the training graph contains batch normalization as a separate block of operations, whereas the inference graph has batch normalization parameters “folded” into the convolutional or fully connected layer’s weights and biases, for efficiency. To accurately simulate quantization effects, we need to simulate this folding, and quantize weights after they have been scaled by the batch normalization parameters. We do so with the following: "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                500,
+                468,
+                636
+            ]
+        },
+        {
+            "type": "equation_interline",
+            "content": {
+                "math_content": "w _ {\\text {f o l d}} := \\frac {\\gamma w}{\\sqrt {E M A \\left(\\sigma_ {B} ^ {2}\\right) + \\varepsilon}}. \\tag {14}",
+                "math_type": "latex",
+                "image_source": {
+                    "path": "images/9a3bb40b7c4a0630484a358f9528796bde2013781a4afada10b9f9f92e4450ad.jpg"
+                }
+            },
+            "bbox": [
+                174,
+                652,
+                468,
+                685
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Here "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "\\gamma"
+                    },
+                    {
+                        "type": "text",
+                        "content": "is the batch normalization’s scale parameter, "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "E M A ( \\sigma _ { B } ^ { 2 } )"
+                    },
+                    {
+                        "type": "text",
+                        "content": "is the moving average estimate of the variance of convolution results across the batch, and "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "\\varepsilon"
+                    },
+                    {
+                        "type": "text",
+                        "content": "is just a small constant for numerical stability. "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                700,
+                468,
+                762
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "After folding, the batch-normalized convolutional layer reduces to the simple convolutional layer depicted in figure 1.1a with the folded weights "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "w _ { \\mathrm { f o l d } }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "and the corresponding folded biases. Therefore the same recipe in figure 1.1b applies. See the appendix for the training graph (figure C.5) for a batch-normalized convolutional layer, the corresponding inference graph (figure C.6), the training graph after batch-norm folding (figure C.7) and the training graph after both folding and quantization (figure C.8). "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                763,
+                468,
+                901
+            ]
+        },
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/456e785f54f0b2b51bd4167136a3d7d7a6f3d3f23bade7916cb87320202cd994.jpg"
+                },
+                "table_caption": [
+                    {
+                        "type": "text",
+                        "content": "Table 4.1: ResNet on ImageNet: Floating-point vs quantized network accuracy for various network depths. "
+                    }
+                ],
+                "table_footnote": [],
+                "html": "<table><tr><td>ResNet depth</td><td>50</td><td>100</td><td>150</td></tr><tr><td>Floating-point accuracy</td><td>76.4%</td><td>78.0%</td><td>78.8%</td></tr><tr><td>Integer-quantized accuracy</td><td>74.9%</td><td>76.6%</td><td>76.7%</td></tr></table>",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                504,
+                88,
+                887,
+                150
+            ]
+        },
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/f4ce6c33ec494a947e27dc56730442fd99fc321ac01ddc64bc9fd26fd69af7c8.jpg"
+                },
+                "table_caption": [
+                    {
+                        "type": "text",
+                        "content": "Table 4.2: ResNet on ImageNet: Accuracy under various quantization schemes, including binary weight networks (BWN [21, 15]), ternary weight networks (TWN [21, 22]), incremental network quantization (INQ [33]) and fine-grained quantization (FGQ [26]) "
+                    }
+                ],
+                "table_footnote": [],
+                "html": "<table><tr><td>Scheme</td><td>BWN</td><td>TWN</td><td>INQ</td><td>FGQ</td><td>Ours</td></tr><tr><td>Weight bits</td><td>1</td><td>2</td><td>5</td><td>2</td><td>8</td></tr><tr><td>Activation bits</td><td>float32</td><td>float32</td><td>float32</td><td>8</td><td>8</td></tr><tr><td>Accuracy</td><td>68.7%</td><td>72.5%</td><td>74.8%</td><td>70.8%</td><td>74.9%</td></tr></table>",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                503,
+                217,
+                888,
+                297
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "4. Experiments "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                500,
+                410,
+                632,
+                428
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "We conducted two set of experiments, one showcasing the effectiveness of quantized training (Section. 4.1), and the other illustrating the improved latency-vs-accuracy tradeoff of quantized models on common hardware (Section. 4.2). The most performance-critical part of the inference workload on the neural networks being benchmarked is matrix multiplication (GEMM). The 8-bit and 32-bit floating-point GEMM inference code uses the gemmlowp library [18] for 8-bit quantized inference, and the Eigen library [6] for 32-bit floating-point inference. "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                436,
+                890,
+                589
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "4.1. Quantized training of Large Networks "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                500,
+                599,
+                831,
+                616
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "We apply quantized training to ResNets [9] and InceptionV3 [30] on the ImageNet dataset. These popular networks are too computationally intensive to be deployed on mobile devices, but are included for comparison purposes. Training protocols are discussed in Appendix D.1 and D.2. "
+                    }
+                ]
+            },
+            "bbox": [
+                498,
+                625,
+                890,
+                700
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "4.1.1 ResNets "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                500,
+                722,
+                609,
+                736
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "We compare floating-point vs integer-quantized ResNets for various depths in table 4.1. Accuracies of integer-only quantized networks are within "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "2 \\%"
+                    },
+                    {
+                        "type": "text",
+                        "content": "of their floating-point counterparts. "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                748,
+                890,
+                808
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "We also list ResNet50 accuracies under different quantization schemes in table 4.2. As expected, integer-only quantization outperforms FGQ [26], which uses 2 bits for weight quantization. INQ [33] (5-bit weight floating-point activation) achieves a similar accuracy as ours, but we provide additional run-time improvements (see section 4.2). "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                810,
+                890,
+                900
+            ]
+        }
+    ],
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/9f5eada42a2d7d7f7c294f35a572e7f9bf9aead83061835ff04d18efafe61bb2.jpg"
+                },
+                "table_caption": [
+                    {
+                        "type": "text",
+                        "content": "Table 4.3: Inception v3 on ImageNet: Accuracy and recall 5 comparison of floating point and quantized models. "
+                    }
+                ],
+                "table_footnote": [],
+                "html": "<table><tr><td rowspan=\"2\">Act.</td><td rowspan=\"2\">type</td><td colspan=\"2\">accuracy</td><td colspan=\"2\">recall 5</td></tr><tr><td>mean</td><td>std. dev.</td><td>mean</td><td>std.dev.</td></tr><tr><td rowspan=\"3\">ReLU6</td><td>floats</td><td>78.4%</td><td>0.1%</td><td>94.1%</td><td>0.1%</td></tr><tr><td>8 bits</td><td>75.4%</td><td>0.1%</td><td>92.5%</td><td>0.1%</td></tr><tr><td>7 bits</td><td>75.0%</td><td>0.3%</td><td>92.4%</td><td>0.2%</td></tr><tr><td rowspan=\"3\">ReLU</td><td>floats</td><td>78.3%</td><td>0.1%</td><td>94.2%</td><td>0.1%</td></tr><tr><td>8 bits</td><td>74.2%</td><td>0.2%</td><td>92.2%</td><td>0.1%</td></tr><tr><td>7 bits</td><td>73.7%</td><td>0.3%</td><td>92.0%</td><td>0.1%</td></tr></table>",
+                "table_type": "complex_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                78,
+                88,
+                470,
+                238
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "4.1.2 Inception v3 on ImageNet "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                76,
+                316,
+                312,
+                333
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "We compare the Inception v3 model quantized into 8 and 7 bits, respectively. 7-bit quantization is obtained by setting the number of quantization levels in equation 12 to "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "n = 2 ^ { 7 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": ". We additionally probe the sensitivity of activation quantization by comparing networks with two activation nonlinearities, ReLU6 and ReLU. The training protocol is in Appendix D.2. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                340,
+                468,
+                445
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Table 4.3 shows that 7-bit quantized training produces model accuracies close to that of 8-bit quantized training, and quantized models with ReLU6 have less accuracy degradation. The latter can be explained by noticing that ReLU6 introduces the interval [0, 6] as a natural range for activations, while ReLU allows activations to take values from a possibly larger interval, with different ranges in different channels. Values in a fixed range are easier to quantize with high precision. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                446,
+                470,
+                583
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "4.2. Quantization of MobileNets "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                76,
+                592,
+                326,
+                608
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "MobileNets are a family of architectures that achieve a state-of-the-art tradeoff between on-device latency and ImageNet classification accuracy. In this section we demonstrate how integer-only quantization can further improve the tradeoff on common hardware. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                616,
+                468,
+                691
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "4.2.1 ImageNet "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                76,
+                710,
+                200,
+                724
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "We benchmarked the MobileNet architecture with varying depth-multipliers (DM) and resolutions on ImageNet on three types of Qualcomm cores, which represent three different micro-architectures: 1) Snapdragon 835 LITTLE core, (figure. 1.1c), a power-efficient processor found in Google Pixel 2; 2) Snapdragon 835 big core (figure. 4.1), a high-performance core employed by Google Pixel 2; and 3) Snapdragon 821 big core (figure. 4.2), a high-performance core used in Google Pixel 1. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                734,
+                468,
+                869
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Integer-only quantized MobileNets achieve higher accuracies than floating-point MobileNets given the same run-"
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                869,
+                468,
+                901
+            ]
+        },
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/f721eede6e73437d95c674b25637518044273d147eecd5f1575a42877ae43562.jpg"
+                },
+                "image_caption": [],
+                "image_footnote": []
+            },
+            "bbox": [
+                535,
+                87,
+                864,
+                270
+            ]
+        },
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/1050372d7caf8c1b15405d13bb87d11809d144472e4dd40764aab7568a5dd9d3.jpg"
+                },
+                "image_caption": [
+                    {
+                        "type": "text",
+                        "content": "Figure 4.1: ImageNet classifier on Qualcomm Snapdragon 835 big cores: Latency-vs-accuracy tradeoff of floatingpoint and integer-only MobileNets. "
+                    },
+                    {
+                        "type": "text",
+                        "content": "Figure 4.2: ImageNet classifier on Qualcomm Snapdragon 821: Latency-vs-accuracy tradeoff of floating-point and integer-only MobileNets. "
+                    }
+                ],
+                "image_footnote": []
+            },
+            "bbox": [
+                532,
+                342,
+                864,
+                526
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "time budget. The accuracy gap is quite substantial "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "( \\sim 1 0 \\% )"
+                    },
+                    {
+                        "type": "text",
+                        "content": "for Snapdragon 835 LITTLE cores at the 33ms latency needed for real-time (30 fps) operation. While most of the quantization literature focuses on minimizing accuracy loss for a given architecture, we advocate for a more comprehensive latency-vs-accuracy tradeoff as a better measure. Note that this tradeoff depends critically on the relative speed of floating-point vs integer-only arithmetic in hardware. Floating-point computation is better optimized in the Snapdragon 821, for example, resulting in a less noticeable reduction in latency for quantized models. "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                612,
+                893,
+                779
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "4.2.2 COCO "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                500,
+                800,
+                602,
+                814
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "We evaluated quantization in the context of mobile real time object detection, comparing the performance of quantized 8-bit and float models of MobileNet SSD [10, 25] on the COCO dataset [24]. We replaced all the regular convolutions in the SSD prediction layers with separable convolu-"
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                824,
+                893,
+                902
+            ]
+        }
+    ],
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/0fa5e6ea2c7cf527c178c1bd57db88addaa04b83f1b6a764215d11edca3d8dc7.jpg"
+                },
+                "table_caption": [
+                    {
+                        "type": "text",
+                        "content": "Table 4.4: Object detection speed and accuracy on COCO dataset of floating point and integer-only quantized models. Latency (ms) is measured on Qualcomm Snapdragon 835 big and LITTLE cores. "
+                    }
+                ],
+                "table_footnote": [],
+                "html": "<table><tr><td>DM</td><td>Type</td><td>mAP</td><td>LITTLE (ms)</td><td>big (ms)</td></tr><tr><td rowspan=\"2\">100%</td><td>floats</td><td>22.1</td><td>778</td><td>370</td></tr><tr><td>8 bits</td><td>21.7</td><td>687</td><td>272</td></tr><tr><td rowspan=\"2\">50%</td><td>floats</td><td>16.7</td><td>270</td><td>121</td></tr><tr><td>8 bits</td><td>16.6</td><td>146</td><td>61</td></tr></table>",
+                "table_type": "complex_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                94,
+                88,
+                447,
+                186
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "tions (depthwise followed by "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "1 \\times 1"
+                    },
+                    {
+                        "type": "text",
+                        "content": "projection). This modification is consistent with the overall design of MobileNets and makes them more computationally efficient. We utilized the Open Source TensorFlow Object Detection API [12] to train and evaluate our models. The training protocol is described in Appendix D.3. We also delayed quantization for 500 thousand steps (see section 3.1), finding that it significantly decreases the time to convergence. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                292,
+                468,
+                412
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Table 4.4 shows the latency-vs-accuracy tradeoff between floating-point and integer-quantized models. Latency was measured on a single thread using Snapdragon 835 cores (big and LITTLE). Quantized training and inference results in up to a "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "5 0 \\%"
+                    },
+                    {
+                        "type": "text",
+                        "content": "reduction in running time, with a minimal loss in accuracy "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "( - 1 . 8 \\%"
+                    },
+                    {
+                        "type": "text",
+                        "content": "relative). "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                415,
+                468,
+                505
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "4.2.3 Face detection "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                76,
+                515,
+                232,
+                529
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "To better examine quantized MobileNet SSD on a smaller scale, we benchmarked face detection on the face attribute classification dataset (a Flickr-based dataset used in [10]). We contacted the authors of [10] to evaluate our quantized MobileNets on detection and face attributes following the same protocols (detailed in Appendix D.4). "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                539,
+                468,
+                630
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "As indicated by tables 4.5 and 4.6, quantization provides close to a "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "2 \\times"
+                    },
+                    {
+                        "type": "text",
+                        "content": "latency reduction with a Qualcomm Snapdragon 835 big or LITTLE core at the cost of a "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "\\sim 2 \\%"
+                    },
+                    {
+                        "type": "text",
+                        "content": "drop in the average precision. Notably, quantization allows the "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "2 5 \\%"
+                    },
+                    {
+                        "type": "text",
+                        "content": "face detector to run in real-time "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "( 1 K / 2 8 \\approx 3 6 "
+                    },
+                    {
+                        "type": "text",
+                        "content": "fps) on a single big core, whereas the floating-point model remains slower than real-time "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "1 K / 4 4 \\approx 2 3"
+                    },
+                    {
+                        "type": "text",
+                        "content": "fps). "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                630,
+                468,
+                734
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "We additionally examine the effect of multi-threading on the latency of quantized models. Table 4.6 shows a 1.5 to "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "2 . 2 \\times \\phantom { 2 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": ") speedup when using 4 cores. The speedup ratios are comparable between the two cores, and are higher for larger models where the overhead of multi-threading occupies a smaller fraction of the total computation. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                736,
+                468,
+                825
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "4.2.4 Face attributes "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                76,
+                845,
+                235,
+                859
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Figure 4.3 shows the latency-vs-accuracy tradeoff of face attribute classification on the Qualcomm Snapdragon 821. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                869,
+                468,
+                900
+            ]
+        },
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/6043fb6b3d11e5bb9b46b20a0bdebf87e1a96043393d177a7a45ee6b9004c7b6.jpg"
+                },
+                "table_caption": [],
+                "table_footnote": [],
+                "html": "<table><tr><td>DM</td><td>type</td><td>Precision</td><td>Recall</td></tr><tr><td>100%</td><td>floats</td><td>68%</td><td>76%</td></tr><tr><td></td><td>8 bits</td><td>66%</td><td>75%</td></tr><tr><td>50%</td><td>floats</td><td>65%</td><td>70%</td></tr><tr><td></td><td>8 bits</td><td>62%</td><td>70%</td></tr><tr><td>25%</td><td>floats</td><td>56%</td><td>64%</td></tr><tr><td></td><td>8 bits</td><td>54%</td><td>63%</td></tr></table>",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                565,
+                88,
+                823,
+                224
+            ]
+        },
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/774760fb97b133c4a01f0e787e04bb009b6ac2254b1a15e987324f2a9bd2b9eb.jpg"
+                },
+                "table_caption": [
+                    {
+                        "type": "text",
+                        "content": "Table 4.5: Face detection accuracy of floating point and integer-only quantized models. The reported precision / recall is averaged over different precision / recall values where an IOU of "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "x"
+                    },
+                    {
+                        "type": "text",
+                        "content": "between the groundtruth and predicted windows is considered a correct detection, for "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "x"
+                    },
+                    {
+                        "type": "text",
+                        "content": "in "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "\\{ 0 . 5 , 0 . 5 5 , \\hdots , 0 . 9 5 \\}"
+                    },
+                    {
+                        "type": "text",
+                        "content": ". "
+                    },
+                    {
+                        "type": "text",
+                        "content": "Table 4.6: Face detection: latency of floating point and quantized models on Qualcomm Snapdragon 835 cores. "
+                    }
+                ],
+                "table_footnote": [],
+                "html": "<table><tr><td rowspan=\"2\">DM</td><td rowspan=\"2\">type</td><td colspan=\"3\">LITTLE Cores</td><td colspan=\"3\">big Cores</td></tr><tr><td>1</td><td>2</td><td>4</td><td>1</td><td>2</td><td>4</td></tr><tr><td rowspan=\"2\">100%</td><td>floats</td><td>711</td><td>-</td><td>-</td><td>337</td><td>-</td><td>-</td></tr><tr><td>8 bits</td><td>372</td><td>238</td><td>167</td><td>154</td><td>100</td><td>69</td></tr><tr><td rowspan=\"2\">50%</td><td>floats</td><td>233</td><td>-</td><td>-</td><td>106</td><td>-</td><td>-</td></tr><tr><td>8 bits</td><td>134</td><td>96</td><td>74</td><td>56</td><td>40</td><td>30</td></tr><tr><td rowspan=\"2\">25%</td><td>floats</td><td>100</td><td>-</td><td>-</td><td>44</td><td>-</td><td>-</td></tr><tr><td>8 bits</td><td>67</td><td>52</td><td>43</td><td>28</td><td>22</td><td>18</td></tr></table>",
+                "table_type": "complex_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                506,
+                349,
+                883,
+                502
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Since quantized training results in little accuracy degradation, we see an improved tradeoff even though the Qualcomm Snapdragon 821 is highly optimized for floating point arithmetic (see Figure 4.2 for comparison). "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                580,
+                892,
+                643
+            ]
+        },
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/b3458fa9e91ae36bc970df6291c2846823af623abf91755b02bb8e24a5fe788a.jpg"
+                },
+                "image_caption": [
+                    {
+                        "type": "text",
+                        "content": "Figure 4.3: Face attribute classifier on Qualcomm Snapdragon 821: Latency-vs-accuracy tradeoff of floating-point and integer-only MobileNets. "
+                    }
+                ],
+                "image_footnote": []
+            },
+            "bbox": [
+                527,
+                655,
+                864,
+                792
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Ablation study To understand performance sensitivity to the quantization scheme, we further evaluate quantized "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                869,
+                893,
+                900
+            ]
+        }
+    ],
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/24b223b01eea94a63431cb2d7e992f315e613aa5517cbf2e432eabfbe5de7f35.jpg"
+                },
+                "table_caption": [],
+                "table_footnote": [],
+                "html": "<table><tr><td>wt. \\act.</td><td>8</td><td>7</td><td>6</td><td>5</td><td>4</td></tr><tr><td>8</td><td>-0.9%</td><td>-0.3%</td><td>-0.4%</td><td>-1.3%</td><td>-3.5%</td></tr><tr><td>7</td><td>-1.3%</td><td>-0.5%</td><td>-1.2%</td><td>-1.0%</td><td>-2.6%</td></tr><tr><td>6</td><td>-1.1%</td><td>-1.2%</td><td>-1.6%</td><td>-1.6%</td><td>-3.1%</td></tr><tr><td>5</td><td>-3.1%</td><td>-3.7%</td><td>-3.4%</td><td>-3.4%</td><td>-4.8%</td></tr><tr><td>4</td><td>-11.4%</td><td>-13.6%</td><td>-10.8%</td><td>-13.1%</td><td>-14.0%</td></tr></table>",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                81,
+                88,
+                467,
+                200
+            ]
+        },
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/b7af27167de19bbfbdf2e9ca2b33fe1d99060898293184b56ad21e8a401864c7.jpg"
+                },
+                "table_caption": [
+                    {
+                        "type": "text",
+                        "content": "Table 4.7: Face attributes: relative average category precision of integer-quantized MobileNets (varying weight and activation bit depths) compared with floating point. "
+                    },
+                    {
+                        "type": "text",
+                        "content": "Table 4.8: Face attributes: Age precision at difference of 5 years for quantized model (varying weight and activation bit depths) compared with floating point. "
+                    }
+                ],
+                "table_footnote": [],
+                "html": "<table><tr><td>wt. \\act.</td><td>8</td><td>7</td><td>6</td><td>5</td><td>4</td></tr><tr><td>8</td><td>-1.3%</td><td>-1.6%</td><td>-3.2%</td><td>-6.0%</td><td>-9.8%</td></tr><tr><td>7</td><td>-1.8%</td><td>-1.2%</td><td>-4.6%</td><td>-7.0%</td><td>-9.9%</td></tr><tr><td>6</td><td>-2.1%</td><td>-4.9%</td><td>-2.6%</td><td>-7.3%</td><td>-9.6%</td></tr><tr><td>5</td><td>-3.1%</td><td>-6.1%</td><td>-7.8%</td><td>-4.4%</td><td>-10.0%</td></tr><tr><td>4</td><td>-10.6%</td><td>-20.8%</td><td>-17.9%</td><td>-19.0%</td><td>-19.5%</td></tr></table>",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                81,
+                287,
+                467,
+                398
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "training with varying weight and activation quantization bit depths. The degradation in average precision for binary attributes and age precision relative to the floating-point baseline are shown in Tables 4.7 and 4.8, respectively. The tables suggest that 1) weights are more sensitive to reduced quantization bit depth than activations, 2) 8 and 7-bit quantized models perform similarly to floating point models, and 3) when the total bit-depths are equal, it is better to keep weight and activation bit depths the same. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                500,
+                468,
+                636
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "5. Discussion "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                76,
+                660,
+                191,
+                676
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "We propose a quantization scheme that relies only on integer arithmetic to approximate the floating-point computations in a neural network. Training that simulates the effect of quantization helps to restore model accuracy to near-identical levels as the original. In addition to the "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "4 \\times"
+                    },
+                    {
+                        "type": "text",
+                        "content": "reduction of model size, inference efficiency is improved via ARM NEON-based implementations. The improvement advances the state-of-the-art tradeoff between latency on common ARM CPUs and the accuracy of popular computer vision models. The synergy between our quantization scheme and efficient architecture design suggests that integer-arithmetic-only inference could be a key enabler that propels visual recognition technologies into the realtime and low-end phone market. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                688,
+                468,
+                900
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "References "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                501,
+                90,
+                596,
+                104
+            ]
+        },
+        {
+            "type": "list",
+            "content": {
+                "list_type": "reference_list",
+                "list_items": [
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[1] M. Abadi, A. Agarwal, P. Barham, E. Brevdo, Z. Chen, C. Citro, G. S. Corrado, A. Davis, J. Dean, M. Devin, et al. Tensorflow: Large-scale machine learning on heterogeneous systems, 2015. Software available from tensorflow. org, 1, 2015. 5, 11, 12, 13 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[2] W. Chen, J. T. Wilson, S. Tyree, K. Q. Weinberger, and Y. Chen. Compressing neural networks with the hashing trick. CoRR, abs/1504.04788, 2015. 1 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[3] J. Deng, W. Dong, R. Socher, L.-J. Li, K. Li, and L. Fei-Fei. Imagenet: A large-scale hierarchical image database. In Computer Vision and Pattern Recognition, 2009. CVPR 2009. IEEE Conference on, pages 248–255. IEEE, 2009. 2, 11 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[4] Y. Gong, L. Liu, M. Yang, and L. Bourdev. Compressing deep convolutional networks using vector quantization. arXiv preprint arXiv:1412.6115, 2014. 1 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[5] Google. TensorFlow Lite. https://www.tensorflow.org/mobile/tflite. 2, 3, 4, 11 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[6] G. Guennebaud, B. Jacob, et al. Eigen v3. http://eigen.tuxfamily.org. 6 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[7] S. Gupta, A. Agrawal, K. Gopalakrishnan, and P. Narayanan. Deep learning with limited numerical precision. In Proceedings of the 32nd International Conference on Machine Learning (ICML-15), pages 1737–1746, 2015. 2 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[8] S. Han, H. Mao, and W. J. Dally. Deep compression: Compressing deep neural network with pruning, trained quantization and huffman coding. CoRR, abs/1510.00149, 2, 2015. 1 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[9] K. He, X. Zhang, S. Ren, and J. Sun. Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pages 770–778, 2016. 6 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[10] A. G. Howard, M. Zhu, B. Chen, D. Kalenichenko, W. Wang, T. Weyand, M. Andreetto, and H. Adam. Mobilenets: Efficient convolutional neural networks for mobile vision applications. CoRR, abs/1704.04861, 2017. 1, 2, 7, 8, 12, 13 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[11] G. Huang, Z. Liu, L. van der Maaten, and K. Q. Weinberger. Densely connected convolutional networks. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), July 2017. 1 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[12] J. Huang, V. Rathod, D. Chow, C. Sun, and M. Zhu. Tensorflow object detection api, 2017. 8 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[13] J. Huang, V. Rathod, C. Sun, M. Zhu, A. Korattikara, A. Fathi, I. Fischer, Z. Wojna, Y. Song, S. Guadarrama, et al. Speed/accuracy trade-offs for modern convolutional object detectors. arXiv preprint arXiv:1611.10012, 2016. 12 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[14] I. Hubara, M. Courbariaux, D. Soudry, R. El-Yaniv, and Y. Bengio. Binarized neural networks. In Advances in neural information processing systems, pages 4107–4115, 2016. 1, 2 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[15] I. Hubara, M. Courbariaux, D. Soudry, R. El-Yaniv, and Y. Bengio. Quantized neural networks: Training neural networks with low precision weights and activations. arXiv preprint arXiv:1609.07061, 2016. 6 "
+                            }
+                        ]
+                    }
+                ]
+            },
+            "bbox": [
+                501,
+                114,
+                893,
+                900
+            ]
+        }
+    ],
+    [
+        {
+            "type": "list",
+            "content": {
+                "list_type": "reference_list",
+                "list_items": [
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[16] F. N. Iandola, M. W. Moskewicz, K. Ashraf, S. Han, W. J. Dally, and K. Keutzer. Squeezenet: Alexnet-level accuracy with 50x fewer parameters and¡ 1mb model size. arXiv preprint arXiv:1602.07360, 2016. 1 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[17] S. Ioffe and C. Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In Proceedings of the 32Nd International Conference on International Conference on Machine Learning - Volume 37, ICML’15, pages 448–456. JMLR.org, 2015. 5, 6 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[18] B. Jacob, P. Warden, et al. gemmlowp: a small self-contained low-precision gemm library. https://github.com/google/gemmlowp. 2, 4, 6, 11 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[19] S. Kligys, S. Sivakumar, et al. Tensorflow quantized training support. https://github.com/tensorflow/tensorflow 5, 6 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[20] A. Krizhevsky, I. Sutskever, and G. E. Hinton. Imagenet classification with deep convolutional neural networks. In Advances in neural information processing systems, pages 1097–1105, 2012. 1 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[21] C. Leng, H. Li, S. Zhu, and R. Jin. Extremely low bit neural network: Squeeze the last bit out with admm. arXiv preprint arXiv:1707.09870, 2017. 1, 6 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[22] F. Li, B. Zhang, and B. Liu. Ternary weight networks. arXiv preprint arXiv:1605.04711, 2016. 1, 6 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[23] T.-Y. Lin, M. Maire, S. Belongie, J. Hays, P. Perona, D. Ramanan, P. Doll´ar, and C. L. Zitnick. Microsoft coco: Common objects in context. In European conference on computer vision, pages 740–755. Springer, 2014. 2 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[24] T.-Y. Lin, M. Maire, S. Belongie, J. Hays, P. Perona, D. Ramanan, P. Doll´ar, and C. L. Zitnick. Microsoft COCO: Common objects in context. In ECCV, 2014. 7 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[25] W. Liu, D. Anguelov, D. Erhan, C. Szegedy, and S. Reed. Ssd: Single shot multibox detector. arXiv preprint arXiv:1512.02325, 2015. 7 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[26] N. Mellempudi, A. Kundu, D. Mudigere, D. Das, B. Kaul, and P. Dubey. Ternary neural networks with fine-grained quantization. arXiv preprint arXiv:1705.01462, 2017. 1, 6 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[27] M. Rastegari, V. Ordonez, J. Redmon, and A. Farhadi. Xnornet: Imagenet classification using binary convolutional neural networks. arXiv preprint arXiv:1603.05279, 2016. 1, 2 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[28] K. Simonyan and A. Zisserman. Very deep convolutional networks for large-scale image recognition. arXiv preprint arXiv:1409.1556, 2014. 1 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[29] C. Szegedy, W. Liu, Y. Jia, P. Sermanet, S. Reed, D. Anguelov, D. Erhan, V. Vanhoucke, and A. Rabinovich. Going deeper with convolutions. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 1–9, 2015. 1 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[30] C. Szegedy, V. Vanhoucke, S. Ioffe, J. Shlens, and Z. Wojna. Rethinking the inception architecture for computer vision. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 2818–2826, 2016. 6 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[31] V. Vanhoucke, A. Senior, and M. Z. Mao. Improving the speed of neural networks on cpus. In Proc. Deep Learning and Unsupervised Feature Learning NIPS Workshop, volume 1, page 4, 2011. 2 "
+                            }
+                        ]
+                    }
+                ]
+            },
+            "bbox": [
+                78,
+                90,
+                468,
+                898
+            ]
+        },
+        {
+            "type": "list",
+            "content": {
+                "list_type": "reference_list",
+                "list_items": [
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[32] X. Zhang, X. Zhou, M. Lin, and J. Sun. Shufflenet: An extremely efficient convolutional neural network for mobile devices. CoRR, abs/1707.01083, 2017. 1 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[33] A. Zhou, A. Yao, Y. Guo, L. Xu, and Y. Chen. Incremental network quantization: Towards lossless cnns with lowprecision weights. arXiv preprint arXiv:1702.03044, 2017. 1, 6 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[34] S. Zhou, Y. Wu, Z. Ni, X. Zhou, H. Wen, and Y. Zou. Dorefa-net: Training low bitwidth convolutional neural networks with low bitwidth gradients. arXiv preprint arXiv:1606.06160, 2016. 1, 2 "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "[35] C. Zhu, S. Han, H. Mao, and W. J. Dally. Trained ternary quantization. arXiv preprint arXiv:1612.01064, 2016. 1 "
+                            }
+                        ]
+                    }
+                ]
+            },
+            "bbox": [
+                501,
+                92,
+                890,
+                275
+            ]
+        }
+    ],
+    [
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "A. Appendix: Layer-specific details "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                76,
+                89,
+                375,
+                107
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "A.1. Mathematical functions "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                76,
+                114,
+                299,
+                128
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Math functions such as hyperbolic tangent, the logistic function, and softmax often appear in neural networks. No lookup tables are needed since these functions are implemented in pure fixed-point arithmetic similarly to how they would be implemented in floating-point arithmetic7. "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                137,
+                468,
+                214
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "A.2. Addition "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                76,
+                220,
+                186,
+                236
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Some neural networks use a plain Addition layer type, that simply adds two activation arrays together. Such Addition layers are more expensive in quantized inference compared to floating-point because rescaling is needed: one input needs to be rescaled onto the other’s scale using a fixedpoint multiplication by the multiplier "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "M = S _ { 1 } / S _ { 2 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "similar to what we have seen earlier (end of section 2.2), before the actual addition can be performed as a simple integer addition; finally, the result must be rescaled again to fit the output array’s scale8. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                244,
+                470,
+                396
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "A.3. Concatenation "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                76,
+                404,
+                230,
+                419
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Fully general support for concatenation layers poses the same rescaling problem as Addition layers. Because such rescaling of uint8 values would be a lossy operation, and as it seems that concatenation ought to be a lossless operation, we prefer to handle this problem differently: instead of implementing lossy rescaling, we introduce a requirement that all the input activations and the output activations in a Concatenation layer have the same quantization parameters. This removes the need for rescaling and concatenations are thus lossless and free of any arithmetic9. "
+                    }
+                ]
+            },
+            "bbox": [
+                75,
+                426,
+                468,
+                579
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "B. Appendix: ARM NEON details "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                76,
+                590,
+                366,
+                607
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "This section assumes familiarity with assembly programming on the ARM NEON instruction set. The instruction mnemonics below refer to the 64-bit ARM instruction set, but the discussion applies equally to 32-bit ARM instructions. "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                616,
+                468,
+                690
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "The fixed-point multiplications referenced throughout this article map exactly to the SQRDMULH instruction. It is very important to use the correctly-rounding instruction SQRDMULH and not SQDMULH1 "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                691,
+                468,
+                751
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "The rounding-to-nearest right-shifts referenced in section 2.2 do not map exactly to any ARM NEON instruction. "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                752,
+                468,
+                782
+            ]
+        },
+        {
+            "type": "list",
+            "content": {
+                "list_type": "text_list",
+                "list_items": [
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "7Pure-arithmetic, SIMD-ready, branch-free, fixed-point implementations of at least tanh and the logistic functions are given in gemmlowp [18]’s fixedpoint directory, with specializations for NEON and SSE instruction sets. One can see in TensorFlow Lite [5] how these are called. "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "8See the TensorFlow Lite [5] implementation. "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "9This is implemented in this part of the TensorFlow Lite [5] Converter "
+                            }
+                        ]
+                    },
+                    {
+                        "item_type": "text",
+                        "item_content": [
+                            {
+                                "type": "text",
+                                "content": "10The fixed-point math function implementations in gemmlowp [18] use such fixed-point multiplications, and ordinary (non-saturating) integer additions. We have no use for general saturated arithmetic. "
+                            }
+                        ]
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                789,
+                468,
+                898
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "The problem is that the “rounding right shift” instruction, RSHL with variable negative offset, breaks ties by rounding upward, instead of rounding them away from zero. For example, if we use RSHL to implement the division "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "- 1 2 / 2 ^ { 3 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": ", the result will be "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "- 1"
+                    },
+                    {
+                        "type": "text",
+                        "content": "whereas it should be "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "- 2"
+                    },
+                    {
+                        "type": "text",
+                        "content": "with “round to nearest”. This is problematic as it results in an overall upward bias, which has been observed to cause significant loss of end-to-end accuracy in neural network inference. A correct round-to-nearest right-shift can still be implemented using RSHL but with suitable fix-up arithmetic around it11. "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                90,
+                890,
+                242
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "For efficient NEON implementation of the matrix multiplication’s core accumulation, we use the following trick. In the multiply-add operation in (10), we first change the operands’ type from uint8 to int8 (which can be done by subtracting 128 from the quantized values and zero-points). Thus the core multiply-add becomes "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                243,
+                890,
+                335
+            ]
+        },
+        {
+            "type": "equation_interline",
+            "content": {
+                "math_content": "\\text {i n t 3 2} + = \\text {i n t 8} \\star \\text {i n t 8}. \\tag {B.1}",
+                "math_type": "latex",
+                "image_source": {
+                    "path": "images/c2ccd8f3656e1a9ef25344bdc9f694983c8f94f947d633237c69d1289a65607f.jpg"
+                }
+            },
+            "bbox": [
+                594,
+                351,
+                890,
+                367
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "As mentioned in section 3, with a minor tweak of the quantized training process, we can ensure that the weights, once quantized as int8 values, never take the value "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "- 1 2 8"
+                    },
+                    {
+                        "type": "text",
+                        "content": ". Hence, the product in (B.1) is never "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "- 1 2 8 * - 1 2 8"
+                    },
+                    {
+                        "type": "text",
+                        "content": ", and is therefore always less than "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "2 ^ { 1 4 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "in absolute value. Hence, (B.1) can accumulate two products on a local int16 accumulator before that needs to be accumulated into the true int32 accumulator. This allows the use of an 8-way SIMD multiplication (SMULL on int8 operands), followed by an 8-way SIMD multiply-add (SMLAL on int8 operands), followed by a pairwise-add-and-accumulate into the int32 accumulators (SADALP)12. "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                383,
+                892,
+                565
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "C. Appendix: Graph diagrams "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                500,
+                584,
+                761,
+                602
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "D. Experimental protocols "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                500,
+                612,
+                725,
+                630
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "D.1. ResNet protocol "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                500,
+                638,
+                663,
+                656
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Preprocessing. All images from ImageNet [3] are resized preserving aspect ratio so that the smallest side of the image is 256. Then the center "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "2 2 4 \\times 2 2 4"
+                    },
+                    {
+                        "type": "text",
+                        "content": "patch is cropped and the means are subtracted for each of the RGB channels. "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                664,
+                890,
+                724
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Optimization. We use the momentum optimizer from TensorFlow [1] with momentum 0.9 and a batch size of 32. The learning rate starts from "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "1 0 ^ { - 5 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "and decays in a staircase fashion by 0.1 for every 30 epochs. Activation quantization is delayed for 500, 000 steps for reasons discussed in section 3. Training uses 50 workers asynchronously, and stops after validation accuracy plateaus, normally after 100 epochs. "
+                    }
+                ]
+            },
+            "bbox": [
+                496,
+                727,
+                890,
+                834
+            ]
+        },
+        {
+            "type": "page_footnote",
+            "content": {
+                "page_footnote_content": [
+                    {
+                        "type": "text",
+                        "content": "11It is implemented here in gemmlowp [18]. "
+                    }
+                ]
+            },
+            "bbox": [
+                511,
+                849,
+                746,
+                863
+            ]
+        },
+        {
+            "type": "page_footnote",
+            "content": {
+                "page_footnote_content": [
+                    {
+                        "type": "text",
+                        "content": "12This technique is implemented in the optimized NEON kernel in gemmlowp [18], which is in particular what TensorFlow Lite uses (see the choice of L8R8WithLhsNonzeroBitDepthParams at this line). "
+                    }
+                ]
+            },
+            "bbox": [
+                501,
+                863,
+                890,
+                898
+            ]
+        }
+    ],
+    [
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/97825a15d499493d7d82c9523db31d78d447617a022c58007dca7c3eec356247.jpg"
+                },
+                "image_caption": [
+                    {
+                        "type": "text",
+                        "content": "Figure C.1: Simple graph: original "
+                    }
+                ],
+                "image_footnote": []
+            },
+            "bbox": [
+                178,
+                88,
+                369,
+                324
+            ]
+        },
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/571317a9e7f166e911cdff48b9da9e0032cb846471fb46e68f0028b7107c8f21.jpg"
+                },
+                "image_caption": [
+                    {
+                        "type": "text",
+                        "content": "Figure C.2: Simple graph: quantized "
+                    }
+                ],
+                "image_footnote": []
+            },
+            "bbox": [
+                174,
+                373,
+                372,
+                707
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "D.2. Inception protocol "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                76,
+                768,
+                256,
+                784
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "All results in table 4.3 were obtained after training for approximately 10 million steps, with batches of 32 samples, using 50 distributed workers, asynchronously. Training data were ImageNet 2012 "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": ", 2 9 9 \\times 2 9 9"
+                    },
+                    {
+                        "type": "text",
+                        "content": "images with labels. Image augmentation consisted of: random crops, random horizontal flips, and random color distortion. The optimizer used was RMSProp with learning rate starting at 0.045 and de-"
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                794,
+                470,
+                900
+            ]
+        },
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/b3df034d5fd760bdd72048c1e5325589177ce59ce26e59348f1ba0f398ff5d95.jpg"
+                },
+                "image_caption": [
+                    {
+                        "type": "text",
+                        "content": "Figure C.3: Layer with a bypass connection: original "
+                    }
+                ],
+                "image_footnote": []
+            },
+            "bbox": [
+                612,
+                89,
+                812,
+                375
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "caying exponentially and stepwise with factor 0.94 after every 2 epochs. Other RMSProp parameters were: 0.9 momentum, 0.9 decay, 1.0 epsilon term. Trained parameters were EMA averaged with decay 0.9999. "
+                    }
+                ]
+            },
+            "bbox": [
+                498,
+                428,
+                890,
+                491
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "D.3. COCO detection protocol "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                500,
+                497,
+                736,
+                513
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Preprocessing. During training, all images are randomly cropped and resized to "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "3 2 0 \\times 3 2 0"
+                    },
+                    {
+                        "type": "text",
+                        "content": ". During evaluation, all images are directly resized to "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "3 2 0 \\times 3 2 0"
+                    },
+                    {
+                        "type": "text",
+                        "content": ". All input values are normalized to "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "[ - 1 , 1 ]"
+                    },
+                    {
+                        "type": "text",
+                        "content": ". "
+                    }
+                ]
+            },
+            "bbox": [
+                498,
+                521,
+                890,
+                580
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Optimization. We used the RMSprop optimizer from TensorFlow [1] with a batch size of 32. The learning rate starts from "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "4 \\times 1 0 ^ { - 3 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "and decays in a staircase fashion by a factor of 0.1 for every 100 epochs. Activation quantization is delayed for 500, 000 steps for reasons discussed in section 3. Training uses 20 workers asynchronously, and stops after validation accuracy plateaus, normally after approximately 6 million steps. "
+                    }
+                ]
+            },
+            "bbox": [
+                498,
+                580,
+                890,
+                700
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Metrics. Evaluation results are reported with the COCO primary challenge metric: AP at IoU=.50:.05:.95. We follow the same train/eval split in [13]. "
+                    }
+                ]
+            },
+            "bbox": [
+                498,
+                702,
+                890,
+                747
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "D.4. Face detection and face attribute classification protocol "
+                    }
+                ],
+                "level": 1
+            },
+            "bbox": [
+                500,
+                756,
+                890,
+                787
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Preprocessing. Random 1:1 crops are taken from images in the Flickr-based dataset used in [10] and resized to "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "3 2 0 \\times 3 2 0"
+                    },
+                    {
+                        "type": "text",
+                        "content": "pixels for face detection and "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "1 2 8 \\times 1 2 8"
+                    },
+                    {
+                        "type": "text",
+                        "content": "pixels for face attribute classification. The resulting crops are flipped horizontally with a "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "5 0 \\%"
+                    },
+                    {
+                        "type": "text",
+                        "content": "probability. The values for each of the RGB channels are renormalized to be in the range "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "[ - 1 , 1 ]"
+                    },
+                    {
+                        "type": "text",
+                        "content": ". "
+                    }
+                ]
+            },
+            "bbox": [
+                498,
+                794,
+                890,
+                900
+            ]
+        }
+    ],
+    [
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/f828d4ce6dae5d8ed53f30136bca81203e6724752f0b3012457ca3a3b4a13d0b.jpg"
+                },
+                "image_caption": [
+                    {
+                        "type": "text",
+                        "content": "Figure C.4: Layer with a bypass connection: quantized "
+                    }
+                ],
+                "image_footnote": []
+            },
+            "bbox": [
+                187,
+                88,
+                395,
+                526
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Face Detection Optimization. We used the RMSprop optimizer from TensorFlow [1] with a batch size of 32. The learning rate starts from "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "4 \\times 1 0 ^ { - 3 }"
+                    },
+                    {
+                        "type": "text",
+                        "content": "and decays in a staircase fashion by a factor of 0.1 for every 100 epochs. Activation quantization is delayed for 500, 000 steps for reasons discussed in section 3. Training uses 20 workers asynchronously, and stops after validation accuracy plateaus, normally after approximately 3 million steps. "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                580,
+                468,
+                703
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Face Attribute Classification Optimization. We followed the optimization protocol in [10]. We used the Adagrad optimizer from Tensorflow[1] with a batch size of 32 and a constant learning rate of 0.1. Training uses 12 workers asynchronously, and stops at 20 million steps. "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                703,
+                468,
+                779
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "Latency Measurements. We created a binary that runs the face detection and face attributes classification models repeatedly on random inputs for 100 seconds. We pushed this binary to Pixel and Pixel 2 phones using the adb push command, and executed it on 1, 2, and 4 LITTLE cores, and 1, 2, and 4 big cores using the adb shell command with the appropriate taskset specified. We reported the average runtime of the face detector model on "
+                    }
+                ]
+            },
+            "bbox": [
+                76,
+                780,
+                470,
+                901
+            ]
+        },
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/2c76fb281af4d41f284dfd1a5f517b2a73b617702fbeaa6d014f41495040d43e.jpg"
+                },
+                "image_caption": [],
+                "image_footnote": []
+            },
+            "bbox": [
+                594,
+                89,
+                802,
+                395
+            ]
+        },
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/2ba7d9809484905f25014158a5dcfe9dfbdf06e58240a31296a84ddf12361ef1.jpg"
+                },
+                "image_caption": [
+                    {
+                        "type": "text",
+                        "content": "Figure C.5: Convolutional layer with batch normalization: training graph "
+                    },
+                    {
+                        "type": "text",
+                        "content": "Figure C.6: Convolutional layer with batch normalization: inference graph "
+                    }
+                ],
+                "image_footnote": []
+            },
+            "bbox": [
+                591,
+                453,
+                802,
+                688
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "equation_inline",
+                        "content": "3 2 0 \\times 3 2 0"
+                    },
+                    {
+                        "type": "text",
+                        "content": "inputs, and of the face attributes classifier model on "
+                    },
+                    {
+                        "type": "equation_inline",
+                        "content": "1 2 8 \\times 1 2 8"
+                    },
+                    {
+                        "type": "text",
+                        "content": "inputs. "
+                    }
+                ]
+            },
+            "bbox": [
+                498,
+                757,
+                890,
+                789
+            ]
+        }
+    ],
+    [
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/93c168bbbc556bcb9eb94f0e7d1ed82cf1837b18d5e6787538d0cc388c1f4827.jpg"
+                },
+                "image_caption": [
+                    {
+                        "type": "text",
+                        "content": "Figure C.7: Convolutional layer with batch normalization: training graph, folded "
+                    }
+                ],
+                "image_footnote": []
+            },
+            "bbox": [
+                181,
+                261,
+                410,
+                681
+            ]
+        },
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/255b33988a6fdf31aad0e4ad06cf2b93052e16bdae9629629300f4a465e972aa.jpg"
+                },
+                "image_caption": [
+                    {
+                        "type": "text",
+                        "content": "Figure C.8: Convolutional layer with batch normalization: training graph, folded and quantized "
+                    }
+                ],
+                "image_footnote": []
+            },
+            "bbox": [
+                598,
+                210,
+                846,
+                734
+            ]
+        }
+    ]
+]
