@@ -42,4 +42,5 @@ Before changing the wiki:
 - Preserve the raw/wiki boundary.
 - Keep the wiki English-first.
 - Prefer updating existing pages over creating near-duplicates.
+- For ad hoc requests to ingest or save a video URL, run `uv run python src/cron/add_video.py "<url>"` to create the descriptor; do not manually edit `raw/` or run reindex/lint unless requested.
 - Rebuild `wiki/index.md` and append `wiki/log.md` whenever an ingest or lint run changes the wiki.

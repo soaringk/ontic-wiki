@@ -10,10 +10,12 @@ from pathlib import Path
 
 import requests
 
+from client.dashscope_asr import DashScopeTranscriptionError
 from client.mineru import MineruParseError, MineruPrecisionClient
 
 from .config import (
     CONCEPTS_DIR,
+    DEFAULT_VIDEO_PARSER,
     DEBATES_DIR,
     EXTRACTED_DIR,
     INDEX_PATH,
@@ -25,11 +27,14 @@ from .config import (
     SOURCES_DIR,
     STATE_DIR,
     SUPPORTED_EXTENSIONS,
+    SUPPORTED_VIDEO_PARSERS,
     SYNTHESIS_DIR,
     TOPICS_DIR,
     WIKI_DIR,
     source_roots,
 )
+from .frontmatter import parse_frontmatter
+from .video_materializer import VideoMaterializationError, materialize_video
 
 
 ISO_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
@@ -87,6 +92,29 @@ def guess_title(path: Path, source_type: str) -> str:
         except OSError:
             pass
     return path.stem.replace("_", " ").replace("-", " ").strip() or path.name
+
+
+def read_markdown_frontmatter(path: Path) -> tuple[dict, str]:
+    if path.suffix.lower() != ".md":
+        return {}, ""
+    try:
+        return parse_frontmatter(path.read_text(encoding="utf-8", errors="ignore"))
+    except OSError:
+        return {}, ""
+
+
+def detect_source_type(path: Path, frontmatter: dict) -> str | None:
+    declared_type = str(frontmatter.get("source_type") or "").strip().lower()
+    if declared_type == "video" or path.name.endswith(".video.md"):
+        return "video"
+    return SUPPORTED_EXTENSIONS.get(path.suffix.lower())
+
+
+def metadata_title(path: Path, source_type: str, frontmatter: dict) -> str:
+    title = str(frontmatter.get("title") or "").strip()
+    if title:
+        return title
+    return guess_title(path, source_type)
 
 
 def file_sha256(path: Path) -> str:
@@ -181,26 +209,35 @@ def scan_sources() -> ScanSummary:
     for path in iter_source_files():
         relative_path = relative_to_root(path)
         seen_paths.add(relative_path)
-        suffix = path.suffix.lower()
-        source_type = SUPPORTED_EXTENSIONS.get(suffix)
+        frontmatter, body = read_markdown_frontmatter(path)
+        source_type = detect_source_type(path, frontmatter)
         record = manifest_sources.get(relative_path, {})
+        current_hash = file_sha256(path)
 
         entry = {
-            "current_hash": file_sha256(path),
+            "current_hash": current_hash,
             "current_mtime": path.stat().st_mtime,
             "current_size": path.stat().st_size,
             "last_seen_at": scan_time,
+            "asr_model": None,
+            "materialization_path": None,
+            "media_cache_key": None,
+            "metadata_path": None,
+            "parser": None,
             "raw_path": relative_path,
+            "raw_asr_path": None,
             "removed": False,
             "source_type": source_type or "unsupported",
             "text_error": None,
             "text_path": None,
             "text_status": None,
-            "title": guess_title(path, source_type or "unsupported"),
+            "title": metadata_title(path, source_type or "unsupported", frontmatter),
+            "transcript_path": None,
             "unsupported_reason": None,
         }
 
         if source_type is None:
+            suffix = path.suffix.lower()
             entry["unsupported_reason"] = f"unsupported extension: {suffix or '<none>'}"
             unsupported_paths.append(relative_path)
             manifest_sources[relative_path] = {**record, **entry}
@@ -208,6 +245,32 @@ def scan_sources() -> ScanSummary:
 
         if source_type in {"markdown", "text"}:
             entry["text_status"] = "ready"
+        elif source_type == "video":
+            parser = str(frontmatter.get("parser") or DEFAULT_VIDEO_PARSER).strip()
+            entry["parser"] = parser
+            if parser not in SUPPORTED_VIDEO_PARSERS:
+                entry["text_error"] = f"unsupported video parser: {parser}"
+                entry["text_status"] = "blocked"
+                blocked_paths.append(relative_path)
+            else:
+                extracted_name = extracted_bundle_dirname(relative_path, current_hash)
+                extracted_dir = EXTRACTED_DIR / extracted_name
+                try:
+                    materialized = materialize_video(path, frontmatter, body, extracted_dir, record, root_dir=ROOT_DIR)
+                except (DashScopeTranscriptionError, VideoMaterializationError, OSError, ValueError) as exc:
+                    entry["text_error"] = str(exc)
+                    entry["text_status"] = "blocked"
+                    blocked_paths.append(relative_path)
+                else:
+                    entry["text_error"] = None
+                    entry["text_path"] = relative_to_root(materialized.text_path)
+                    entry["metadata_path"] = relative_to_root(materialized.metadata_path)
+                    entry["raw_asr_path"] = relative_to_root(materialized.raw_asr_path)
+                    entry["transcript_path"] = relative_to_root(materialized.transcript_path)
+                    entry["materialization_path"] = relative_to_root(materialized.materialization_path)
+                    entry["media_cache_key"] = materialized.media_cache_key
+                    entry["asr_model"] = materialized.asr_model
+                    entry["text_status"] = "ready"
         else:
             cached_path = cached_text_path(record, entry["current_hash"])
             if cached_path is not None:
@@ -227,7 +290,13 @@ def scan_sources() -> ScanSummary:
                     entry["text_status"] = "ready"
 
         entry["source_id"] = slugify(relative_path.rsplit(".", 1)[0])
-        if entry["text_status"] == "ready" and record.get("last_ingested_hash") != entry["current_hash"]:
+        ingest_hash_changed = record.get("last_ingested_hash") != entry["current_hash"]
+        ingest_media_changed = (
+            entry["source_type"] == "video"
+            and entry.get("media_cache_key")
+            and record.get("last_ingested_media_cache_key") != entry.get("media_cache_key")
+        )
+        if entry["text_status"] == "ready" and (ingest_hash_changed or ingest_media_changed):
             pending_paths.append(relative_path)
 
         manifest_sources[relative_path] = {**record, **entry}
@@ -272,8 +341,16 @@ def write_ingest_report(
                     f"- current_hash: `{record['current_hash']}`",
                 ]
             )
+            if record.get("parser"):
+                lines.append(f"- parser: `{record['parser']}`")
+            if record.get("asr_model"):
+                lines.append(f"- asr_model: `{record['asr_model']}`")
             if record.get("text_path"):
                 lines.append(f"- text_path: `{record['text_path']}`")
+            if record.get("transcript_path"):
+                lines.append(f"- transcript_path: `{record['transcript_path']}`")
+            if record.get("raw_asr_path"):
+                lines.append(f"- raw_asr_path: `{record['raw_asr_path']}`")
             if record.get("text_error"):
                 lines.append(f"- error: `{record['text_error']}`")
             lines.append("")
@@ -312,6 +389,8 @@ def mark_paths_ingested(paths: list[str], ingested_at: str) -> None:
             continue
         record["last_ingested_at"] = ingested_at
         record["last_ingested_hash"] = record.get("current_hash")
+        if record.get("media_cache_key"):
+            record["last_ingested_media_cache_key"] = record.get("media_cache_key")
     save_manifest(manifest)
 
 

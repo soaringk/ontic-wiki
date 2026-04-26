@@ -22,6 +22,15 @@ If you want PDF parsing, set `MINERU_API_TOKEN` as well. The default `MINERU_OCR
 ## Daily use
 
 - Put `.md`, `.txt`, or `.pdf` files into [`raw/`](./raw/).
+- Add videos with `uv run python src/cron/add_video.py "<video-url>" --note "optional notes"`.
 - Wait for the nightly reindex run.
 - Ask the agent questions against the wiki.
 - If an answer is worth keeping, ask the agent to save it into [`wiki/synthesis/`](./wiki/synthesis/).
+
+## Video sources
+
+Video URLs are stored as Markdown descriptors under `raw/videos/` with `source_type: video` and `parser: asr`.
+The scanner downloads audio, transcribes it with DashScope Filetrans, and caches the generated transcript under `state/extracted/`.
+The default ASR model is `fun-asr` so speaker diarization is available for conversations and interviews.
+
+Video ingest requires `yt-dlp`, `ffmpeg`, `ffprobe`, `ossutil`, `DASHSCOPE_API_KEY`, and OSS settings in `.env`.

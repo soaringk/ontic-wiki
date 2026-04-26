@@ -18,6 +18,8 @@ Use local time. The intended pattern is one quiet late-night reindex run and one
 - Copy `.env.example` to `.env`. Leave `OPENCODE_PASSWORD` empty if your OpenCode server does not require auth.
 - Leave `OPENCODE_DIRECTORY` empty unless you need to override the repo root explicitly.
 - Set `MINERU_API_TOKEN` if you want PDFs parsed during reindex.
+- Set `DASHSCOPE_API_KEY`, OSS settings, and install `yt-dlp`, `ffmpeg`/`ffprobe`, and `ossutil` if you want video descriptors parsed during reindex.
+- Set `YTDLP_COOKIES_PATH` when YouTube or Bilibili metadata/audio downloads require cookies.
 - The cron examples use `WIKI_DIR` with a fallback to `$HOME/ontic-wiki` so the repo can be moved without rewriting every line.
 - The reindex job assumes the repo is quiet at the scheduled time.
 - Runtime logs are written to `/tmp/ontic-wiki-reindex.log` and `/tmp/ontic-wiki-lint.log`.

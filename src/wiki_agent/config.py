@@ -6,6 +6,7 @@ from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 RAW_DIR = ROOT_DIR / "raw"
+RAW_VIDEOS_DIR = RAW_DIR / "videos"
 WIKI_DIR = ROOT_DIR / "wiki"
 SOURCES_DIR = WIKI_DIR / "sources"
 TOPICS_DIR = WIKI_DIR / "topics"
@@ -29,6 +30,9 @@ SUPPORTED_EXTENSIONS = {
     ".txt": "text",
     ".pdf": "pdf",
 }
+SUPPORTED_VIDEO_PARSERS = {"asr"}
+DEFAULT_VIDEO_PARSER = "asr"
+DEFAULT_ASR_MODEL = os.getenv("DASHSCOPE_ASR_MODEL", "fun-asr")
 
 
 def source_roots() -> list[Path]:

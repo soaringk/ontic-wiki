@@ -16,13 +16,13 @@ The user workflow is intentionally small:
 
 - Path: `raw/`
 - Immutable inputs
-- Supported in v1: `.md`, `.txt`, `.pdf`
+- Supported in v1: `.md`, `.txt`, `.pdf`, and video descriptors with `source_type: video`
 
 ### Machine state
 
 - Path: `state/`
 - `manifest.json` tracks file hashes and ingest state
-- `extracted/` stores cached PDF-to-Markdown bundles, including `full.md` and extracted assets
+- `extracted/` stores cached parser bundles, including PDF `full.md` files and video ASR transcripts
 - `reports/` stores the latest ingest and lint reports
 
 ### Wiki
@@ -48,7 +48,8 @@ source_ids:
   - ...
 status: active
 raw_path: ...
-source_type: markdown|text|pdf
+source_type: markdown|text|pdf|video
+parser: ...
 published: ...
 created: ...
 updated: ...
@@ -132,3 +133,14 @@ The lint pass should repair the wiki directly when safe and log what changed. Fo
   - if the PDF appears to have a healthy text layer, parse with OCR disabled
   - if the PDF looks scanned or image-only, parse with OCR enabled
   - if a non-OCR parse fails or returns very weak output, retry once with OCR enabled
+
+## Video parsing
+
+- Video sources are Markdown descriptors under `raw/videos/`.
+- A video descriptor must use `source_type: video` and currently uses `parser: asr`.
+- The descriptor body is user-provided study context and should be included in downstream wiki ingest.
+- `src/cron/add_video.py` creates descriptors from a URL and fills frontmatter from `yt-dlp` metadata.
+- The scanner downloads audio with `yt-dlp`, normalizes it with `ffmpeg`, uploads the normalized audio through OSS, and transcribes it through DashScope Filetrans.
+- The default ASR model is `fun-asr`, with diarization enabled for multi-speaker material.
+- Generated video parser artifacts live under `state/extracted/`, including `yt_dlp_metadata.json`, `asr_result.json`, `transcript.md`, `materialization.json`, and `full.md`.
+- Video parser output is not actively chunked; large transcript segmented reading is the ingest agent's responsibility.

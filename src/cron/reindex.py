@@ -27,6 +27,7 @@ Execution requirements:
 3. For each pending source:
    - read the raw file directly for markdown/text sources
    - read the extracted PDF markdown sidecar when `text_path` exists
+   - read the generated video parser output when `source_type` is `video` and `text_path` exists
    - create or update one source page under `wiki/sources/`
    - update any affected topic and concept pages under `wiki/topics/` and `wiki/concepts/`
 4. Rebuild `wiki/index.md` so it reflects the current wiki contents.
@@ -38,6 +39,9 @@ Important constraints:
 - Never modify files under `raw/`.
 - Prefer updating existing pages over creating near-duplicates.
 - The wiki is the durable artifact. The chat response can stay brief.
+- For video sources, treat descriptor body content as user-provided notes and incorporate it when relevant.
+- For video sources, treat transcripts as raw ASR that may contain recognition errors and colloquial phrasing.
+- Preserve `source_type: video`, `parser: asr`, and real `published` metadata in source-page frontmatter when available.
 """.strip()
 
 
