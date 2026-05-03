@@ -88,3 +88,10 @@ Append-only timeline of ingest, synthesis, and lint activity.
 - Found no broken internal links, no orphan content pages, no obvious duplicate pages, and no debate/synthesis duplication in the current inventory.
 - Strengthened reciprocal navigation by adding missing source-to-topic and source-to-concept links on `Inference without Interference`, `Efficient Memory Management for Large Language Model Serving with PagedAttention`, and `MemServe`.
 - Left `wiki/index.md` unchanged because page inventory and index summaries did not change.
+
+## [2026-05-04] lint | normalized unknown publication metadata on source pages
+
+- Audited the local wiki for broken links, orphan pages, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.
+- Found no broken internal links, no orphan content pages, no obvious duplicate pages, and no debate/synthesis duplication in the current inventory.
+- Added explicit `published: unknown` frontmatter to source pages whose raw material was blank, missing, or ambiguous on publication time, so chronology-sensitive queries do not silently fall back to local maintenance dates.
+- Left `wiki/index.md` unchanged because page inventory and index summaries did not change.

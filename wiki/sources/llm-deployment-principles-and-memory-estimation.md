@@ -7,6 +7,7 @@ source_ids:
 status: active
 raw_path: raw/llm_model_calculation_cheat_sheet.md
 source_type: markdown
+published: unknown
 created: 2026-04-11
 updated: 2026-04-11
 ---
