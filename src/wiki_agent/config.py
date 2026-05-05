@@ -5,6 +5,23 @@ from pathlib import Path
 
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
+ENV_PATH = ROOT_DIR / ".env"
+
+
+def load_env_file(path: Path = ENV_PATH) -> None:
+    if not path.exists():
+        return
+
+    for line in path.read_text(encoding="utf-8").splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#") or "=" not in stripped:
+            continue
+        key, value = stripped.split("=", 1)
+        os.environ.setdefault(key.strip(), value.strip())
+
+
+load_env_file()
+
 RAW_DIR = ROOT_DIR / "raw"
 RAW_VIDEOS_DIR = RAW_DIR / "videos"
 WIKI_DIR = ROOT_DIR / "wiki"
