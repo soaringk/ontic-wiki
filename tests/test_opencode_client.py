@@ -50,7 +50,7 @@ class OpenCodeClientAuthTests(unittest.TestCase):
                 request_mock.return_value.raise_for_status.return_value = None
                 request_mock.return_value.text = "{}"
                 request_mock.return_value.json.return_value = {"ok": True}
-                client.send_message("session-1", "hello", model_id="openai/gpt-5.4")
+                client.send_message("session-1", "hello", model_id="openai/gpt-5.5")
 
         self.assertEqual(request_mock.call_args.kwargs["timeout"], 9999)
 

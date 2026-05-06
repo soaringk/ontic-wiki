@@ -238,11 +238,8 @@ def fetch_video_metadata(url: str) -> dict[str, Any]:
 def download_audio(url: str, audio_dir: Path) -> Path:
     args = [
         "yt-dlp",
-        "--extract-audio",
-        "--audio-format",
-        "webm",
-        "--audio-quality",
-        "0",
+        "--format",
+        "bestaudio/best",
         "--output",
         str(audio_dir / "%(id)s.%(ext)s"),
     ]
