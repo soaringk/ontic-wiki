@@ -1,0 +1,9 @@
+{
+  "asr_model": "fun-asr",
+  "audio_normalization_version": "mono-opus-16k-v1",
+  "materialized_at": "2026-05-06T02:56:56Z",
+  "media_cache_key": "2089fc986115cb9c809e8800bfe947acb9a6dd5c60f832d9faa51a0ac74a8466",
+  "parser": "asr",
+  "source": "/home/cody/ontic-wiki/raw/videos/20260505_youtube_et3gjrsi-0_ai.video.md",
+  "url": "https://www.youtube.com/watch?v=-Et3GJRSI_0"
+}

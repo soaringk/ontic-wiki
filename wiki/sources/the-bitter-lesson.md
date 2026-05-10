@@ -7,9 +7,10 @@ source_ids:
 status: active
 raw_path: raw/the-bitter-lesson.md
 source_type: markdown
+parser: direct
 published: 2019-03-13
 created: 2026-04-20
-updated: 2026-04-20
+updated: 2026-05-11
 ---
 
 # Summary

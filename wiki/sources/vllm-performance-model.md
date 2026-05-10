@@ -7,9 +7,10 @@ source_ids:
 status: active
 raw_path: raw/vllm-perf-model.md
 source_type: markdown
+parser: direct
 published: unknown
 created: 2026-04-25
-updated: 2026-04-25
+updated: 2026-05-11
 ---
 
 # Summary

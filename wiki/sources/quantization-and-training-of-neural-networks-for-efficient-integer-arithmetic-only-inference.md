@@ -7,9 +7,10 @@ source_ids:
 status: active
 raw_path: raw/Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference.pdf
 source_type: pdf
+parser: mineru
 published: unknown
 created: 2026-04-25
-updated: 2026-04-25
+updated: 2026-05-11
 ---
 
 # Summary

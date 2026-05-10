@@ -7,9 +7,10 @@ source_ids:
 status: active
 raw_path: raw/Orca A Distributed Serving System for Transformer-Based Generative Models.pdf
 source_type: pdf
+parser: mineru
 published: 2022-07
 created: 2026-04-25
-updated: 2026-04-25
+updated: 2026-05-11
 ---
 
 # Summary

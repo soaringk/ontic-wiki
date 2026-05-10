@@ -1,9 +1,9 @@
 # Latest Lint Report
 
-- scan_time: `2026-05-03T21:00:01Z`
-- source_pages: `18`
-- topic_pages: `6`
-- concept_pages: `16`
+- scan_time: `2026-05-10T21:02:07Z`
+- source_pages: `19`
+- topic_pages: `7`
+- concept_pages: `17`
 - debate_pages: `0`
 - synthesis_pages: `1`
 
@@ -12,6 +12,7 @@
 - `wiki/sources/cuda-c-programming-introduction-parallel-computing.md`
 - `wiki/sources/distserve-disaggregating-prefill-and-decoding-for-goodput-optimized-large-language-model-serving.md`
 - `wiki/sources/efficient-memory-management-for-large-language-model-serving-with-pagedattention.md`
+- `wiki/sources/how-should-we-learn-again-when-ai-defeats-exam-oriented-education.md`
 - `wiki/sources/inference-without-interference-disaggregate-llm-inference-for-mixed-downstream-workloads.md`
 - `wiki/sources/llm-deployment-principles-and-memory-estimation.md`
 - `wiki/sources/llm-inference-performance-engineering-best-practices.md`
@@ -27,6 +28,7 @@
 - `wiki/sources/vllm-performance-model.md`
 - `wiki/sources/welcome-to-the-era-of-experience.md`
 - `wiki/sources/were-at-ais-halftime.md`
+- `wiki/topics/ai-native-learning.md`
 - `wiki/topics/cuda-programming.md`
 - `wiki/topics/disaggregated-llm-inference.md`
 - `wiki/topics/experiential-ai.md`
@@ -34,6 +36,7 @@
 - `wiki/topics/private-credit.md`
 - `wiki/topics/transformer-architecture-and-attention.md`
 - `wiki/concepts/attention-mechanism.md`
+- `wiki/concepts/brain-inspired-ai.md`
 - `wiki/concepts/context-caching-in-llm-serving.md`
 - `wiki/concepts/cuda-thread-hierarchy.md`
 - `wiki/concepts/gpu-memory-hierarchy.md`

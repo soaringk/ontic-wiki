@@ -7,9 +7,10 @@ source_ids:
 status: active
 raw_path: raw/Efficient Memory Management for Large Language Model Serving with PagedAttention.pdf
 source_type: pdf
+parser: mineru
 published: 2023-10
 created: 2026-04-25
-updated: 2026-04-27
+updated: 2026-05-11
 ---
 
 # Summary

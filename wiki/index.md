@@ -5,6 +5,7 @@ This file is maintained by the agent.
 ## Sources
 
 - [Efficient Memory Management for Large Language Model Serving with PagedAttention](sources/efficient-memory-management-for-large-language-model-serving-with-pagedattention.md) - Paged KV-cache management paper behind vLLM that cuts fragmentation and raises effective serving batch size.
+- [How Should We Learn Again When AI Defeats Exam-Oriented Education?](sources/how-should-we-learn-again-when-ai-defeats-exam-oriented-education.md) - Video interview on AI-native learning, brain-inspired AI, System 1/System 2 intelligence, and why memorization-heavy education loses value.
 - [Inference without Interference: Disaggregate LLM Inference for Mixed Downstream Workloads](sources/inference-without-interference-disaggregate-llm-inference-for-mixed-downstream-workloads.md) - Mixed-workload serving paper that combines disaggregation, chunked prefill, and length-aware decode scheduling.
 - [The Bitter Lesson](sources/the-bitter-lesson.md) - Classic argument that scalable general methods using search, learning, and compute beat hand-built human knowledge in the long run.
 - [DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving](sources/distserve-disaggregating-prefill-and-decoding-for-goodput-optimized-large-language-model-serving.md) - Goodput-oriented serving design that separates prefill and decode to satisfy TTFT and TPOT together.
@@ -26,6 +27,7 @@ This file is maintained by the agent.
 ## Topics
 
 - [CUDA Programming](topics/cuda-programming.md) - Durable overview of CUDA execution, synchronization, and performance-sensitive design.
+- [AI-Native Learning](topics/ai-native-learning.md) - Shift from memorization and exam drilling toward self-directed, first-principles, AI-assisted open-ended learning.
 - [Disaggregated LLM Inference](topics/disaggregated-llm-inference.md) - Serving view that separates prefill and decode so each phase can be scheduled, provisioned, and cached on its own terms.
 - [Experiential AI](topics/experiential-ai.md) - View of advanced agents as long-lived, grounded learners, plus the live dispute over human-derived priors, algorithms, evaluation, and reliability.
 - [LLM Deployment and Capacity Planning](topics/llm-deployment-and-capacity-planning.md) - Operating view of model serving focused on memory planning, latency metrics, batching, and incident response.
@@ -35,6 +37,7 @@ This file is maintained by the agent.
 ## Concepts
 
 - [Attention Mechanism](concepts/attention-mechanism.md) - The context-dependent weighting operation that lets each token gather information from other tokens.
+- [Brain-Inspired AI](concepts/brain-inspired-ai.md) - Neuroscience-informed view that future AI may need richer neural complexity, long-range feedback, parallel perception, and embodied action loops.
 - [Context Caching in LLM Serving](concepts/context-caching-in-llm-serving.md) - Reuse of prefix KV state across requests to reduce repeated prefill work.
 - [CUDA Thread Hierarchy](concepts/cuda-thread-hierarchy.md) - The `Grid -> Block -> Thread` structure that defines CUDA work partitioning.
 - [Grounded Rewards](concepts/grounded-rewards.md) - Environmental feedback signals used to optimize agent behavior beyond human prejudgement.

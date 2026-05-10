@@ -8,6 +8,7 @@ The utility problem is the gap between high performance on common AI evaluations
 - Teams may optimize for easily measured scores instead of for user outcomes, workflow fit, or persistence across time.
 - The problem explains why rapid gains in model capability do not automatically show up as equally large changes in GDP, business processes, or end-user leverage.
 - Utility claims can also be overstated when they are extrapolated from eye-catching demos instead of from capabilities that work with near-100% reliability.
+- A task can be impressive inside a closed dataset while still failing to transfer to open-ended situations, which is why exam performance, robotic demonstrations, and benchmark scores need separate utility validation.
 
 ## Design Implications
 
@@ -20,8 +21,10 @@ The utility problem is the gap between high performance on common AI evaluations
 
 - [Experiential AI](../topics/experiential-ai.md)
 - [Streams of Experience](streams-of-experience.md)
+- [AI-Native Learning](../topics/ai-native-learning.md)
 
 ## Sources
 
 - [We're at AI's Halftime](../sources/were-at-ais-halftime.md)
 - [Two Lessons from ICLR 2025](../sources/two-lessons-from-iclr-2025.md)
+- [How Should We Learn Again When AI Defeats Exam-Oriented Education?](../sources/how-should-we-learn-again-when-ai-defeats-exam-oriented-education.md)

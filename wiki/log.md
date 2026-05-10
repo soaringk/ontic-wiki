@@ -2,6 +2,29 @@
 
 Append-only timeline of ingest, synthesis, and lint activity.
 
+## [2026-05-11] lint | normalized source parser metadata
+
+- Audited the local wiki for broken links, orphan pages, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.
+- Found no broken internal links, no orphan content pages, no obvious duplicate pages, and no debate/synthesis duplication in the current inventory.
+- Added explicit `parser` frontmatter to non-video source pages: `direct` for Markdown sources and `mineru` for PDF sources.
+- Left `wiki/index.md` unchanged because page inventory and index summaries did not change.
+
+## [2026-05-06] reindex | processed 1 pending video source
+
+- Added source page for `raw/videos/20260505_youtube_et3gjrsi-0_ai.video.md` using the generated ASR parser output at `state/extracted/raw-videos-20260505-youtube-et3gjrsi-0-ai-video-md-5fcb4c03ffd7/full.md`.
+- Added topic page `AI-Native Learning` and concept page `Brain-Inspired AI`.
+- Updated `Experiential AI` and `Utility Problem` with the source's claims about open-ended learning, grounded perception-action, and closed-dataset evaluation limits.
+- Rebuilt `wiki/index.md`.
+- Blocked sources: none. Unsupported sources: none.
+
+## [2026-05-06] reindex | no pending sources; logged blocked video
+
+- Processed pending sources from `state/reports/latest_reindex_report.md`: none.
+- Left source, topic, and concept pages unchanged because no supported pending source was available to ingest.
+- Rechecked `wiki/index.md`; page inventory and summaries were already current.
+- Blocked source: `raw/videos/20260505_youtube_et3gjrsi-0_ai.video.md` (`source_type: video`, `parser: asr`) failed audio download because `yt-dlp` rejected audio format `webm`.
+- Unsupported sources: none.
+
 ## [2026-04-25] reindex | processed 10 pending serving and transformer sources
 
 - Added 10 source pages for the pending PDFs and markdown notes from the latest reindex report.

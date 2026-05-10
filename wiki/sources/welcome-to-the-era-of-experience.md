@@ -7,9 +7,10 @@ source_ids:
 status: active
 raw_path: raw/The Era of Experience Paper.pdf
 source_type: pdf
+parser: mineru
 published: unknown
 created: 2026-04-13
-updated: 2026-04-13
+updated: 2026-05-11
 ---
 
 # Summary
