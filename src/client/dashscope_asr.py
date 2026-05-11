@@ -211,17 +211,10 @@ def transcription_url_from_task(payload: Any, model: str) -> str:
     if not isinstance(payload, dict):
         return ""
     output = payload.get("output")
-    if not isinstance(output, dict):
-        return ""
-    if is_fun_asr_model(model):
-        results = output.get("results")
-        if isinstance(results, list) and results:
-            first = results[0]
-            if isinstance(first, dict):
-                return str(first.get("transcription_url") or "")
-        return ""
-    result = output.get("result")
-    if isinstance(result, dict):
-        return str(result.get("transcription_url") or "")
+    task_payload = output if isinstance(output, dict) else payload
+    results = task_payload.get("results")
+    if isinstance(results, list) and results:
+        first = results[0]
+        if isinstance(first, dict):
+            return str(first.get("transcription_url") or "")
     return ""
-

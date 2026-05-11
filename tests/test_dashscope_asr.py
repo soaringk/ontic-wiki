@@ -56,7 +56,14 @@ class DashScopeAsrTests(unittest.TestCase):
 
         self.assertEqual(url, "https://result.example/asr.json")
 
+    def test_transcription_url_accepts_top_level_results_payload(self) -> None:
+        url = transcription_url_from_task(
+            {"results": [{"transcription_url": "https://result.example/top-level.json"}]},
+            "qwen3-asr-flash-filetrans",
+        )
+
+        self.assertEqual(url, "https://result.example/top-level.json")
+
 
 if __name__ == "__main__":
     unittest.main()
-
