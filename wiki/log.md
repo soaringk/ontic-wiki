@@ -2,6 +2,13 @@
 
 Append-only timeline of ingest, synthesis, and lint activity.
 
+## [2026-05-18] lint | refreshed wiki audit
+
+- Audited the local wiki for broken links, orphan pages, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.
+- Found no broken internal links, no orphan content pages, no obvious duplicate pages, and no debate/synthesis duplication in the current inventory.
+- Refreshed `state/reports/latest_lint_report.md`; page counts remained 19 sources, 7 topics, 17 concepts, 0 debates, and 1 synthesis.
+- Left `wiki/index.md` unchanged because page inventory and index summaries did not change.
+
 ## [2026-05-11] lint | normalized source parser metadata
 
 - Audited the local wiki for broken links, orphan pages, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.
