@@ -47,7 +47,6 @@ Important constraints:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Nightly autonomous reindex for the study wiki.")
-    parser.add_argument("--model", default=DEFAULT_REINDEX_MODEL, help="Model ID to use")
     parser.add_argument("--scan-only", action="store_true", help="Only refresh manifest and reports")
     parser.add_argument("--delete", action="store_true", help="Delete the OpenCode session after completion")
     args = parser.parse_args()
@@ -69,7 +68,7 @@ def main() -> int:
         agents_path=AGENTS_PATH,
         workflow_path=WORKFLOW_PATH,
     )
-    client.send_message(session_id, prompt, model_id=args.model)
+    client.send_message(session_id, prompt, model_id=DEFAULT_REINDEX_MODEL)
     completed = client.wait_for_session_complete(session_id)
     if not completed:
         print("reindex session did not complete before timeout", file=sys.stderr)

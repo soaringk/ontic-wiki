@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import re
 import subprocess
 import sys
@@ -18,13 +17,14 @@ if str(SRC_ROOT) not in sys.path:
 from wiki_agent.config import RAW_DIR
 from wiki_agent.frontmatter import parse_frontmatter, render_frontmatter
 
+DEFAULT_YTDLP_COOKIES_PATH = Path("/home/cody/cookies.txt")
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Create a raw video descriptor for Ontic Wiki ingest.")
     parser.add_argument("url", help="YouTube, Bilibili, or other yt-dlp supported video URL")
     parser.add_argument("--note", default="", help="Optional note to place in the descriptor body")
     parser.add_argument("--note-file", help="Path to a Markdown file whose contents become the descriptor body")
-    parser.add_argument("--cookies", help="Cookies file passed to yt-dlp for metadata fetch")
     args = parser.parse_args()
 
     note = args.note
@@ -32,7 +32,7 @@ def main() -> int:
         note = Path(args.note_file).read_text(encoding="utf-8")
 
     try:
-        metadata = fetch_metadata(args.url, cookies=configured_cookies_path(args.cookies))
+        metadata = fetch_metadata(args.url)
     except VideoAddError as exc:
         print(str(exc), file=sys.stderr)
         return 1
@@ -60,15 +60,9 @@ class VideoAddError(RuntimeError):
     pass
 
 
-def configured_cookies_path(explicit_cookies: str | None = None) -> str | None:
-    cookies = explicit_cookies or os.getenv("YTDLP_COOKIES_PATH", "").strip()
-    return cookies or None
-
-
-def fetch_metadata(url: str, *, cookies: str | None = None) -> dict[str, Any]:
+def fetch_metadata(url: str) -> dict[str, Any]:
     args = ["yt-dlp", "--dump-json", "--skip-download"]
-    if cookies:
-        args.extend(["--cookies", cookies])
+    args.extend(ytdlp_cookie_args())
     args.append(url)
     try:
         completed = subprocess.run(args, check=True, capture_output=True, text=True)
@@ -85,6 +79,12 @@ def fetch_metadata(url: str, *, cookies: str | None = None) -> dict[str, Any]:
     if not isinstance(payload, dict):
         raise VideoAddError("yt-dlp returned invalid metadata")
     return payload
+
+
+def ytdlp_cookie_args() -> list[str]:
+    if DEFAULT_YTDLP_COOKIES_PATH.exists():
+        return ["--cookies", str(DEFAULT_YTDLP_COOKIES_PATH)]
+    return []
 
 
 def descriptor_metadata(url: str, metadata: dict[str, Any]) -> dict[str, Any]:

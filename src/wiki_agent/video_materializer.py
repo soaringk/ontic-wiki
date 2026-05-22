@@ -23,6 +23,7 @@ from .frontmatter import parse_frontmatter, render_frontmatter
 
 
 AUDIO_NORMALIZATION_VERSION = "mono-opus-16k-v1"
+DEFAULT_YTDLP_COOKIES_PATH = Path("/home/cody/cookies.txt")
 
 
 class VideoMaterializationError(RuntimeError):
@@ -224,9 +225,7 @@ def run_video_asr(
 
 def fetch_video_metadata(url: str) -> dict[str, Any]:
     args = ["yt-dlp", "--dump-json", "--skip-download"]
-    cookies = os.getenv("YTDLP_COOKIES_PATH", "").strip()
-    if cookies:
-        args.extend(["--cookies", cookies])
+    args.extend(ytdlp_cookie_args())
     args.append(url)
     completed = run_command(args, "yt-dlp metadata fetch")
     try:
@@ -243,15 +242,19 @@ def download_audio(url: str, audio_dir: Path) -> Path:
         "--output",
         str(audio_dir / "%(id)s.%(ext)s"),
     ]
-    cookies = os.getenv("YTDLP_COOKIES_PATH", "").strip()
-    if cookies:
-        args.extend(["--cookies", cookies])
+    args.extend(ytdlp_cookie_args())
     args.append(url)
     run_command(args, "yt-dlp audio download")
     candidates = [path for path in audio_dir.iterdir() if path.is_file()]
     if not candidates:
         raise VideoMaterializationError("yt-dlp audio download produced no file")
     return max(candidates, key=lambda path: path.stat().st_mtime)
+
+
+def ytdlp_cookie_args() -> list[str]:
+    if DEFAULT_YTDLP_COOKIES_PATH.exists():
+        return ["--cookies", str(DEFAULT_YTDLP_COOKIES_PATH)]
+    return []
 
 
 def probe_media(path: Path) -> dict[str, Any]:

@@ -72,7 +72,6 @@ Suggested CLI:
 uv run python src/cron/add_video.py URL
 uv run python src/cron/add_video.py URL --note "..."
 uv run python src/cron/add_video.py URL --note-file notes.md
-uv run python src/cron/add_video.py URL --cookies /path/to/cookies.txt
 ```
 
 Naming:
@@ -222,7 +221,6 @@ OSS_BUCKET=context-media
 OSS_PREFIX=ontic-wiki/
 OSS_SIGN_EXPIRES=24h
 ASR_TASK_TIMEOUT_MS=2700000
-YTDLP_COOKIES_PATH=
 ```
 
 Payload behavior:
@@ -416,4 +414,3 @@ The implementation is complete when:
 8. Existing Markdown, text, and PDF ingest behavior remains compatible.
 9. Reindex reports include enough paths and errors to debug blocked video sources.
 10. Unit tests cover metadata extraction, source detection, ASR payload/extraction, caching, and materializer output.
-

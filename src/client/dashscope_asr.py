@@ -41,7 +41,6 @@ def build_filetrans_payload(*, model: str, file_url: str) -> dict[str, Any]:
         "input": {"file_url": file_url},
         "parameters": {
             "channel_id": [0],
-            "language": "",
             "enable_itn": False,
             "enable_words": False,
         },
@@ -212,9 +211,14 @@ def transcription_url_from_task(payload: Any, model: str) -> str:
         return ""
     output = payload.get("output")
     task_payload = output if isinstance(output, dict) else payload
-    results = task_payload.get("results")
-    if isinstance(results, list) and results:
-        first = results[0]
-        if isinstance(first, dict):
-            return str(first.get("transcription_url") or "")
+    if is_fun_asr_model(model):
+        results = task_payload.get("results")
+        if isinstance(results, list) and results:
+            first = results[0]
+            if isinstance(first, dict):
+                return str(first.get("transcription_url") or "")
+    else:
+        result = task_payload.get("result")
+        if isinstance(result, dict):
+            return str(result.get("transcription_url") or "")
     return ""

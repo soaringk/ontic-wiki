@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import io
-import os
 import sys
 import tempfile
 import unittest
@@ -12,7 +11,6 @@ from unittest.mock import Mock, patch
 sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
 
 from cron import add_video
-from wiki_agent.config import load_env_file
 from wiki_agent.frontmatter import parse_frontmatter
 
 
@@ -43,20 +41,11 @@ class AddVideoTests(unittest.TestCase):
             with self.assertRaises(add_video.VideoAddError):
                 add_video.fetch_metadata("https://example.invalid/video")
 
-    def test_configured_cookies_path_reads_env_loaded_from_dotenv(self) -> None:
-        with tempfile.TemporaryDirectory() as temp_dir:
-            env_path = Path(temp_dir) / ".env"
-            env_path.write_text("YTDLP_COOKIES_PATH=/tmp/from-dotenv-cookies.txt\n", encoding="utf-8")
-
-            with patch.dict(os.environ, {}, clear=True):
-                load_env_file(env_path)
-
-                self.assertEqual(add_video.configured_cookies_path(), "/tmp/from-dotenv-cookies.txt")
-                self.assertEqual(add_video.configured_cookies_path("/tmp/explicit-cookies.txt"), "/tmp/explicit-cookies.txt")
-
-    def test_main_uses_configured_cookies_path_for_metadata_fetch(self) -> None:
+    def test_main_uses_fixed_cookie_file_when_available_for_metadata_fetch(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             raw = Path(temp_dir) / "raw"
+            cookies = Path(temp_dir) / "cookies.txt"
+            cookies.write_text("# Netscape HTTP Cookie File\n", encoding="utf-8")
             metadata = {
                 "id": "abc123",
                 "title": "A Demo Video",
@@ -65,14 +54,14 @@ class AddVideoTests(unittest.TestCase):
             completed = Mock(stdout=json.dumps(metadata), stderr="")
 
             with patch.object(add_video, "RAW_DIR", raw), patch(
+                "cron.add_video.DEFAULT_YTDLP_COOKIES_PATH",
+                cookies,
+            ), patch(
                 "cron.add_video.subprocess.run",
                 return_value=completed,
             ) as run, patch.object(sys, "argv", ["add_video.py", "https://youtu.be/abc123"]), patch(
                 "sys.stdout",
                 new_callable=io.StringIO,
-            ), patch.dict(
-                "os.environ",
-                {"YTDLP_COOKIES_PATH": "/tmp/ytdlp-cookies.txt"},
             ):
                 self.assertEqual(add_video.main(), 0)
 
@@ -84,7 +73,7 @@ class AddVideoTests(unittest.TestCase):
                     "--dump-json",
                     "--skip-download",
                     "--cookies",
-                    "/tmp/ytdlp-cookies.txt",
+                    str(cookies),
                     "https://youtu.be/abc123",
                 ],
             )
