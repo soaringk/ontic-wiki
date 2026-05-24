@@ -1,5 +1,26 @@
 # Wiki Log
 
+## [2026-05-24] lint | refreshed wiki audit
+
+- Audited the local wiki for broken links, orphan pages, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.
+- Found no broken internal links, no non-index orphan content pages, no obvious duplicate pages, no weak source-link candidates, and no debate/synthesis duplication in the current inventory.
+- Refreshed `state/reports/latest_lint_report.md`; page counts are 22 sources, 7 topics, 17 concepts, 0 debates, and 1 synthesis.
+- Left `wiki/index.md` unchanged because page inventory and index summaries did not change.
+
+## [2026-05-24] reindex | processed 1 self-attention markdown source
+
+- Added raw Defuddle extraction for `raw/self-attention-mechanism-deep-dive.md` with source publication date `2026-04-18`.
+- Added source page for `raw/self-attention-mechanism-deep-dive.md`.
+- Updated `Transformer Architecture and Attention`, `Attention Mechanism`, `KV Cache in LLM Serving`, and `Model Bandwidth Utilization` with self-attention, FlashAttention, and KV-cache compression details.
+- Rebuilt `wiki/index.md`.
+
+## [2026-05-20] reindex | processed 2 transformer markdown sources
+
+- Added source page for `raw/transformer-architecture-quick-start.md`.
+- Added source page for `raw/transformer-overview-and-code.md`.
+- Updated `Transformer Architecture and Attention`, `Attention Mechanism`, and `KV Cache in LLM Serving` with infrastructure-oriented Transformer details.
+- Rebuilt `wiki/index.md`.
+
 Append-only timeline of ingest, synthesis, and lint activity.
 
 ## [2026-05-18] lint | refreshed wiki audit

@@ -8,7 +8,8 @@ KV cache stores attention keys and values for prior tokens so later decoding ste
 - Maximum supported context length depends on how much cache memory is available and how much memory each token consumes.
 - Cache size depends on layer count, KV head count, head dimension, cache precision, and tensor parallelism.
 - Large batches and long generations can make cache growth the limiting factor for otherwise efficient shared serving.
-- GQA and MQA reduce KV-cache footprint by sharing keys and values across more attention heads.
+- GQA and MQA reduce KV-cache footprint because the model keeps many query heads but stores fewer key/value heads.
+- MLA reduces KV-cache pressure by caching a lower-dimensional latent representation and reconstructing key/value state when needed, trading extra projection work for lower stored state.
 - Cache management policy matters as much as cache size: fragmentation, sharing, reuse, transfer, and swapping all change effective capacity.
 - In disaggregated systems, KV cache becomes distributed state that may move across prefill, decode, DRAM, or lower storage tiers.
 
@@ -38,8 +39,10 @@ The factor of 2 comes from caching both K and V tensors.
 
 ## Sources
 
+- [Transformer Architecture Quick Start](../sources/transformer-architecture-quick-start.md)
 - [LLM Deployment Principles and Memory Estimation Cheat Sheet](../sources/llm-deployment-principles-and-memory-estimation.md)
 - [LLM Inference Performance Engineering Best Practices](../sources/llm-inference-performance-engineering-best-practices.md)
+- [Self-Attention Mechanism Deep Dive](../sources/self-attention-mechanism-deep-dive.md)
 - [Efficient Memory Management for Large Language Model Serving with PagedAttention](../sources/efficient-memory-management-for-large-language-model-serving-with-pagedattention.md)
 - [MemServe: Flexible Mem Pool for Building Disaggregated LLM Serving with Caching](../sources/memserve-flexible-mem-pool-for-building-disaggregated-llm-serving-with-caching.md)
 - [Mooncake: A KVCache-centric Disaggregated Architecture for LLM Serving](../sources/mooncake-a-kvcache-centric-disaggregated-architecture-for-llm-serving.md)

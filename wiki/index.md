@@ -19,7 +19,10 @@ This file is maintained by the agent.
 - [Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference](sources/quantization-and-training-of-neural-networks-for-efficient-integer-arithmetic-only-inference.md) - Quantization-aware training paper for practical integer-only inference on real hardware.
 - [Splitwise: Efficient Generative LLM Inference Using Phase Splitting](sources/splitwise-efficient-generative-llm-inference-using-phase-splitting.md) - Phase-splitting paper that maps compute-heavy prefill and memory-bound decode onto different hardware pools.
 - [Two Lessons from ICLR 2025](sources/two-lessons-from-iclr-2025.md) - Methodological critique that anchors AI progress in near-100%-reliable capabilities rather than hype and speculative roadmaps.
+- [Self-Attention Mechanism Deep Dive](sources/self-attention-mechanism-deep-dive.md) - Detailed attention guide covering QKV roles, scaled dot-product attention, softmax stability, MQA/GQA/MLA, causal masking, and FlashAttention IO behavior.
 - [Transformer and Attention, Explained Plainly](sources/transformer-and-attention-a-layman-guide.md) - Plain-language walkthrough of tokenization, attention, encoder/decoder structure, and autoregressive generation.
+- [Transformer Architecture Quick Start](sources/transformer-architecture-quick-start.md) - Infrastructure-oriented Transformer architecture guide connecting attention, FFN, RoPE, KV cache, tensor parallelism, and inference optimization.
+- [Transformer Overview and Code Implementation](sources/transformer-overview-and-code-implementation.md) - Full-map Transformer guide covering encoder-decoder structure, architecture variants, masks, tensor shapes, and a PyTorch implementation.
 - [How to Generate Tokens Faster: A vLLM Performance Model](sources/vllm-performance-model.md) - Systems-modeling note that explains vLLM serving behavior through throughput, TTFT, queueing, and interference.
 - [We're at AI's Halftime](sources/were-at-ais-halftime.md) - Essay arguing that AI progress is shifting from benchmark hillclimbing toward evaluation setups that better capture real utility.
 - [Welcome to the Era of Experience](sources/welcome-to-the-era-of-experience.md) - Position paper arguing that future AI progress will come from long-horizon, grounded learning from experience.
@@ -32,11 +35,11 @@ This file is maintained by the agent.
 - [Experiential AI](topics/experiential-ai.md) - View of advanced agents as long-lived, grounded learners, plus the live dispute over human-derived priors, algorithms, evaluation, and reliability.
 - [LLM Deployment and Capacity Planning](topics/llm-deployment-and-capacity-planning.md) - Operating view of model serving focused on memory planning, latency metrics, batching, and incident response.
 - [Private Credit](topics/private-credit.md) - Non-bank lending market spanning direct lending, asset-based finance, and increasingly entangled funding channels.
-- [Transformer Architecture and Attention](topics/transformer-architecture-and-attention.md) - Foundational model of tokenization, attention, causal masking, and why decoder-only serving creates KV cache.
+- [Transformer Architecture and Attention](topics/transformer-architecture-and-attention.md) - Foundational model of tokenization, attention, masks, RoPE, decoder-only blocks, KV cache, and serving optimization targets.
 
 ## Concepts
 
-- [Attention Mechanism](concepts/attention-mechanism.md) - The context-dependent weighting operation that lets each token gather information from other tokens.
+- [Attention Mechanism](concepts/attention-mechanism.md) - Q/K/V weighting operation behind self-attention, multi-head attention, causal masking, FlashAttention, and KV cache.
 - [Brain-Inspired AI](concepts/brain-inspired-ai.md) - Neuroscience-informed view that future AI may need richer neural complexity, long-range feedback, parallel perception, and embodied action loops.
 - [Context Caching in LLM Serving](concepts/context-caching-in-llm-serving.md) - Reuse of prefix KV state across requests to reduce repeated prefill work.
 - [CUDA Thread Hierarchy](concepts/cuda-thread-hierarchy.md) - The `Grid -> Block -> Thread` structure that defines CUDA work partitioning.

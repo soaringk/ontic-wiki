@@ -5,7 +5,11 @@ Attention is the operation that lets each token weight and aggregate information
 ## Why It Matters
 
 - It gives Transformer models flexible long-range dependency handling.
+- Scaled dot-product attention projects hidden states into Q, K, and V, scores token pairs with `QK^T / sqrt(d_k)`, normalizes scores with softmax, and uses the result to weight V.
+- The `sqrt(d_k)` scaling term keeps attention-score variance from growing with head dimension, reducing the risk that softmax saturates into near one-hot weights with weak gradients.
+- Multi-head attention repeats that operation across separate heads, then merges the head outputs back into the model dimension.
 - Decoder-only generation depends on causal attention that only sees past tokens.
+- Infrastructure optimizations often target this exact computation: FlashAttention reduces attention memory traffic through tiling and online softmax, tensor parallelism can split heads, and GQA/MQA reduce key/value head count.
 - The need to reuse prior keys and values is what creates KV cache during inference.
 
 ## Related Pages
@@ -15,4 +19,7 @@ Attention is the operation that lets each token weight and aggregate information
 
 ## Sources
 
+- [Transformer Architecture Quick Start](../sources/transformer-architecture-quick-start.md)
+- [Transformer Overview and Code Implementation](../sources/transformer-overview-and-code-implementation.md)
+- [Self-Attention Mechanism Deep Dive](../sources/self-attention-mechanism-deep-dive.md)
 - [Transformer and Attention, Explained Plainly](../sources/transformer-and-attention-a-layman-guide.md)

@@ -1,7 +1,7 @@
 # Latest Lint Report
 
-- scan_time: `2026-05-17T21:01:26Z`
-- source_pages: `19`
+- scan_time: `2026-05-24T21:01:36Z`
+- source_pages: `22`
 - topic_pages: `7`
 - concept_pages: `17`
 - debate_pages: `0`
@@ -21,9 +21,12 @@
 - `wiki/sources/orca-a-distributed-serving-system-for-transformer-based-generative-models.md`
 - `wiki/sources/private-credit-podcast.md`
 - `wiki/sources/quantization-and-training-of-neural-networks-for-efficient-integer-arithmetic-only-inference.md`
+- `wiki/sources/self-attention-mechanism-deep-dive.md`
 - `wiki/sources/splitwise-efficient-generative-llm-inference-using-phase-splitting.md`
 - `wiki/sources/the-bitter-lesson.md`
 - `wiki/sources/transformer-and-attention-a-layman-guide.md`
+- `wiki/sources/transformer-architecture-quick-start.md`
+- `wiki/sources/transformer-overview-and-code-implementation.md`
 - `wiki/sources/two-lessons-from-iclr-2025.md`
 - `wiki/sources/vllm-performance-model.md`
 - `wiki/sources/welcome-to-the-era-of-experience.md`

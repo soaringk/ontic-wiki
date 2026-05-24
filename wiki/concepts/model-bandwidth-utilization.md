@@ -7,6 +7,7 @@ Model Bandwidth Utilization (MBU) measures how much of a device's peak memory ba
 - MBU is the ratio of achieved memory bandwidth to peak memory bandwidth.
 - The source approximates achieved bandwidth as `(model parameter bytes + KV cache bytes) / TPOT`.
 - MBU is most informative during decode-heavy, small-batch inference where memory movement, not FLOPs, is the bottleneck.
+- Attention decode is a common example: each step handles one new token while reading model weights and the accumulated KV cache, so memory traffic can dominate available arithmetic.
 
 ## Why It Matters
 
@@ -28,3 +29,4 @@ Model Bandwidth Utilization (MBU) measures how much of a device's peak memory ba
 ## Sources
 
 - [LLM Inference Performance Engineering Best Practices](../sources/llm-inference-performance-engineering-best-practices.md)
+- [Self-Attention Mechanism Deep Dive](../sources/self-attention-mechanism-deep-dive.md)
