@@ -33,4 +33,4 @@ Video URLs are stored as Markdown descriptors under `raw/videos/` with `source_t
 The scanner downloads audio, transcribes it with DashScope Filetrans, and caches the generated transcript under `state/extracted/`.
 The default ASR model is `fun-asr` so speaker diarization is available for conversations and interviews.
 
-Video ingest requires `yt-dlp`, `ffmpeg`, `ffprobe`, `ossutil`, `DASHSCOPE_API_KEY`, and OSS settings in `.env`.
+Video parsing requires `yt-dlp`, `ffmpeg`, `ffprobe`, `ossutil`, `DASHSCOPE_API_KEY`, and OSS settings in `.env`.

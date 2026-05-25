@@ -10,6 +10,20 @@ The user workflow is intentionally small:
 2. let nightly automation process them
 3. query the wiki through the agent
 
+## Source capture
+
+When the user provides source material without asking for analysis or wiki updates, the task is only to add that material to `raw/` in the appropriate source format. Stop after the source is saved. Do not edit `wiki/`, `state/`, `wiki/index.md`, or `wiki/log.md`, and do not run reindex or lint unless explicitly requested.
+
+Supported capture inputs:
+
+- Raw text files (`.md`, `.txt`): place the user-provided file in `raw/`.
+- Mostly text web articles: use `defuddle` to save a readable Markdown capture in `raw/`.
+- PDF source links: download the original PDF into `raw/` by default.
+- Uploaded PDFs, papers, surveys, or books: place the original file in `raw/`.
+- Audio/video URLs: run `uv run python src/cron/add_video.py "<url>"` to create the standard raw video descriptor.
+
+Do not place agent-written summaries, metadata notes, parser outputs, extracted PDF text, ASR transcripts, or other derived artifacts in `raw/`. Derived machine artifacts belong under `state/`; durable synthesis belongs under `wiki/`.
+
 ## Layers
 
 ### Raw sources
@@ -21,9 +35,9 @@ The user workflow is intentionally small:
 ### Machine state
 
 - Path: `state/`
-- `manifest.json` tracks file hashes and ingest state
+- `manifest.json` tracks file hashes and reindex state
 - `extracted/` stores cached parser bundles, including PDF `full.md` files and video ASR transcripts
-- `reports/` stores the latest ingest and lint reports
+- `reports/` stores the latest reindex and lint reports
 
 ### Wiki
 
@@ -35,6 +49,16 @@ The user workflow is intentionally small:
   - `concept`
   - `debate`
   - `synthesis`
+
+## Page locations
+
+During reindex or lint maintenance, use:
+
+- Source pages: `wiki/sources/`
+- Topic pages: `wiki/topics/`
+- Concept pages: `wiki/concepts/`
+- Debate pages: `wiki/debates/`
+- Synthesis pages: `wiki/synthesis/`
 
 ## Source page shape
 
@@ -57,7 +81,7 @@ updated: ...
 
 - `published` should come from the source's actual raw metadata when available.
 - `created` and `updated` are local wiki maintenance timestamps and must not be used as substitutes for publication time.
-- If the raw `published` field is blank, missing, or ambiguous, leave it unknown rather than inferring it from ingest time.
+- If the raw `published` field is blank, missing, or ambiguous, leave it unknown rather than inferring it from local processing time.
 
 Recommended sections:
 
@@ -85,7 +109,7 @@ Recommended sections:
 - User-accepted conclusions should be distilled into `wiki/synthesis/`; topic pages should link to debates only as live or recently user-adjudicated tensions.
 - Follow [`debate_protocol.md`](./debate_protocol.md) for multi-agent debate roles, rounds, evidence rules, and promotion criteria.
 
-## Ingest workflow
+## Reindex workflow
 
 The nightly reindex job does this:
 
@@ -93,9 +117,9 @@ The nightly reindex job does this:
 2. detect new or changed supported files
 3. refresh cached PDF Markdown bundles under `state/extracted/` only for PDFs
 4. write a machine-readable and human-readable report under `state/reports/`
-5. trigger an agentic ingest pass
+5. trigger an agentic wiki-update pass
 6. update source/topic/concept pages
-7. open or update debate pages when the ingest raises contested cross-source interpretation; promote contested conclusions only after user acceptance
+7. open or update debate pages when reindex raises contested cross-source interpretation; promote contested conclusions only after user acceptance
 8. rebuild `wiki/index.md`
 9. append an entry to `wiki/log.md`
 10. mark successfully processed hashes in `state/manifest.json`
@@ -106,7 +130,7 @@ The nightly reindex job does this:
 - Read the most relevant pages
 - Answer in prose with local citations
 - Use source `published` metadata for chronology-sensitive analysis when available
-- If the answer is durable, save it as a `synthesis` page and update the index/log
+- If the answer is durable and the user explicitly asks to save it, save it as a `synthesis` page; normal `wiki/index.md` and `wiki/log.md` maintenance belongs to cron scripts
 - If the answer depends on disputed interpretation across curated sources, create or update a `debate` page first. Promote only after the user accepts the conclusion or explicitly asks for promotion.
 
 ## Lint workflow
@@ -138,9 +162,9 @@ The lint pass should repair the wiki directly when safe and log what changed. Fo
 
 - Video sources are Markdown descriptors under `raw/videos/`.
 - A video descriptor must use `source_type: video` and currently uses `parser: asr`.
-- The descriptor body is user-provided study context and should be included in downstream wiki ingest.
+- The descriptor body is user-provided study context and should be included in downstream wiki updates.
 - `src/cron/add_video.py` creates descriptors from a URL and fills frontmatter from `yt-dlp` metadata.
 - The scanner downloads audio with `yt-dlp`, normalizes it with `ffmpeg`, uploads the normalized audio through OSS, and transcribes it through DashScope Filetrans.
 - The default ASR model is `fun-asr`, with diarization enabled for multi-speaker material.
 - Generated video parser artifacts live under `state/extracted/`, including `yt_dlp_metadata.json`, `asr_result.json`, `transcript.md`, `materialization.json`, and `full.md`.
-- Video parser output is not actively chunked; large transcript segmented reading is the ingest agent's responsibility.
+- Video parser output is not actively chunked; large transcript segmented reading is the reindex agent's responsibility.

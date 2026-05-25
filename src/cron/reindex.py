@@ -33,7 +33,7 @@ Execution requirements:
 4. Rebuild `wiki/index.md` so it reflects the current wiki contents.
 5. Append a new `wiki/log.md` entry using `## [YYYY-MM-DD] reindex | ...`.
 6. If the report lists blocked or unsupported files, log them briefly in `wiki/log.md`.
-7. Keep the wiki English-first and avoid duplicate pages.
+7. Preserve the source language when it is useful; do not force English-first output. Avoid duplicate pages.
 
 Important constraints:
 - Never modify files under `raw/`.

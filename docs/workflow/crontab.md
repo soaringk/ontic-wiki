@@ -19,7 +19,7 @@ Use local time. The intended pattern is one quiet late-night reindex run and one
 - Leave `OPENCODE_DIRECTORY` empty unless you need to override the repo root explicitly.
 - Set `MINERU_API_TOKEN` if you want PDFs parsed during reindex.
 - Set `DASHSCOPE_API_KEY`, OSS settings, and install `yt-dlp`, `ffmpeg`/`ffprobe`, and `ossutil` if you want video descriptors parsed during reindex.
-- When YouTube or Bilibili metadata/audio downloads require cookies, the video ingest scripts use `/home/cody/cookies.txt` if it exists.
+- When YouTube or Bilibili metadata/audio downloads require cookies, the video parsing scripts use `/home/cody/cookies.txt` if it exists.
 - The cron examples use `WIKI_DIR` with a fallback to `$HOME/ontic-wiki` so the repo can be moved without rewriting every line.
 - The reindex job assumes the repo is quiet at the scheduled time.
 - Runtime logs are written to `/tmp/ontic-wiki-reindex.log` and `/tmp/ontic-wiki-lint.log`.

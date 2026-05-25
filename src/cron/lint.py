@@ -31,7 +31,7 @@ Execution requirements:
 
 Constraints:
 - Do not modify files under `raw/`.
-- Keep the wiki English-first.
+- Preserve source-language pages when appropriate; do not rewrite pages only to change language.
 - Prefer compact maintenance changes over broad rewrites.
 - Treat `wiki/debates/` as an argument-validation workbench and `wiki/synthesis/` as the durable resolved-conclusion layer.
 - Do not mark debates decided, archive debates, delete debates, or promote debate conclusions unless the user explicitly requested that action.

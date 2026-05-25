@@ -135,7 +135,7 @@ Confidence: high | medium | low
 Notes:
 ```
 
-Use each source's actual `published` metadata when chronology matters. Do not substitute local `created`, `updated`, ingest, or report dates.
+Use each source's actual `published` metadata when chronology matters. Do not substitute local `created`, `updated`, processing, or report dates.
 
 ### Round 2: Advocate Case
 
