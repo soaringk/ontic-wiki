@@ -15,6 +15,9 @@ Transformer architecture models sequences by repeatedly letting each token updat
 - RoPE, LayerNorm placement, residual connections, and FFN shape are part of the serving-relevant architecture because they affect kernel fusion, stability, parameter count, and long-context behavior.
 - KV cache exists because later decoding steps reuse previously computed attention keys and values instead of recomputing the full prefix each time.
 - Attention variants such as MQA, GQA, and MLA preserve many query pathways while reducing or compressing the key/value state that inference must store and read.
+- Sparse attention (NSA, DSA, CSA+HCA) reduces the number of tokens whose KV must be retained by selectively keeping only the most relevant history — from simple sliding windows (SWA) through learned sparse selection to hybrid compression (CSA 4:1, HCA 128:1).
+- Linear attention (Mamba/SSM, Gated DeltaNet) replaces the growing KV cache with a fixed-size hidden state, breaking the O(n) memory-sequences-length link at the cost of expressiveness. Hybrid architectures (Qwen3.5, Jamba) interleave linear attention layers with full-attention layers.
+- Cross-Layer Attention (CLA) reduces KVCache by having adjacent layers share K/V state instead of computing and storing them independently.
 
 ## Why It Matters For Serving
 
@@ -37,3 +40,4 @@ Transformer architecture models sequences by repeatedly letting each token updat
 - [Self-Attention Mechanism Deep Dive](../sources/self-attention-mechanism-deep-dive.md)
 - [Transformer and Attention, Explained Plainly](../sources/transformer-and-attention-a-layman-guide.md)
 - [Efficient Memory Management for Large Language Model Serving with PagedAttention](../sources/efficient-memory-management-for-large-language-model-serving-with-pagedattention.md)
+- [从 305 GB 到 7.4 GB：大模型 KVCache 架构演进全景](../sources/kv-cache-architecture-survey.md)

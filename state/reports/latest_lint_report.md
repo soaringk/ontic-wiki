@@ -1,9 +1,9 @@
 # Latest Lint Report
 
-- scan_time: `2026-05-24T21:01:36Z`
-- source_pages: `22`
-- topic_pages: `7`
-- concept_pages: `17`
+- scan_time: `2026-05-31T21:01:40Z`
+- source_pages: `26`
+- topic_pages: `10`
+- concept_pages: `22`
 - debate_pages: `0`
 - synthesis_pages: `1`
 
@@ -12,8 +12,11 @@
 - `wiki/sources/cuda-c-programming-introduction-parallel-computing.md`
 - `wiki/sources/distserve-disaggregating-prefill-and-decoding-for-goodput-optimized-large-language-model-serving.md`
 - `wiki/sources/efficient-memory-management-for-large-language-model-serving-with-pagedattention.md`
+- `wiki/sources/geometry-of-consolidation-v6.md`
 - `wiki/sources/how-should-we-learn-again-when-ai-defeats-exam-oriented-education.md`
 - `wiki/sources/inference-without-interference-disaggregate-llm-inference-for-mixed-downstream-workloads.md`
+- `wiki/sources/kv-cache-architecture-survey.md`
+- `wiki/sources/language-modeling-is-compression.md`
 - `wiki/sources/llm-deployment-principles-and-memory-estimation.md`
 - `wiki/sources/llm-inference-performance-engineering-best-practices.md`
 - `wiki/sources/memserve-flexible-mem-pool-for-building-disaggregated-llm-serving-with-caching.md`
@@ -28,29 +31,38 @@
 - `wiki/sources/transformer-architecture-quick-start.md`
 - `wiki/sources/transformer-overview-and-code-implementation.md`
 - `wiki/sources/two-lessons-from-iclr-2025.md`
+- `wiki/sources/vector-database-overview.md`
 - `wiki/sources/vllm-performance-model.md`
 - `wiki/sources/welcome-to-the-era-of-experience.md`
 - `wiki/sources/were-at-ais-halftime.md`
 - `wiki/topics/ai-native-learning.md`
+- `wiki/topics/compression-and-language-models.md`
 - `wiki/topics/cuda-programming.md`
 - `wiki/topics/disaggregated-llm-inference.md`
+- `wiki/topics/embedding-memory-geometry.md`
 - `wiki/topics/experiential-ai.md`
 - `wiki/topics/llm-deployment-and-capacity-planning.md`
 - `wiki/topics/private-credit.md`
 - `wiki/topics/transformer-architecture-and-attention.md`
+- `wiki/topics/vector-database-and-ann-search.md`
 - `wiki/concepts/attention-mechanism.md`
 - `wiki/concepts/brain-inspired-ai.md`
 - `wiki/concepts/context-caching-in-llm-serving.md`
 - `wiki/concepts/cuda-thread-hierarchy.md`
+- `wiki/concepts/effective-dimension.md`
 - `wiki/concepts/gpu-memory-hierarchy.md`
 - `wiki/concepts/grounded-rewards.md`
+- `wiki/concepts/hierarchical-navigable-small-worlds-hnsw.md`
 - `wiki/concepts/integer-only-quantization.md`
 - `wiki/concepts/iteration-level-scheduling.md`
 - `wiki/concepts/kv-cache-in-llm-serving.md`
 - `wiki/concepts/model-bandwidth-utilization.md`
+- `wiki/concepts/multi-head-latent-attention-mla.md`
 - `wiki/concepts/pagedattention.md`
 - `wiki/concepts/parallelism-in-llm-serving.md`
+- `wiki/concepts/prediction-compression-equivalence.md`
 - `wiki/concepts/prefill-decode-disaggregation.md`
+- `wiki/concepts/product-quantization.md`
 - `wiki/concepts/rated-note-feeders.md`
 - `wiki/concepts/streams-of-experience.md`
 - `wiki/concepts/unitranche-loans.md`

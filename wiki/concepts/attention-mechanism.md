@@ -10,6 +10,9 @@ Attention is the operation that lets each token weight and aggregate information
 - Multi-head attention repeats that operation across separate heads, then merges the head outputs back into the model dimension.
 - Decoder-only generation depends on causal attention that only sees past tokens.
 - Infrastructure optimizations often target this exact computation: FlashAttention reduces attention memory traffic through tiling and online softmax, tensor parallelism can split heads, and GQA/MQA reduce key/value head count.
+- MLA (Multi-head Latent Attention) compresses K and V jointly into a low-rank latent vector, caching the compressed representation and reconstructing on-the-fly — ~96% KV storage reduction at DeepSeek V3 scale.
+- Sparse attention (NSA, DSA, CSA+HCA) reduces attention computation by selecting only the most relevant KV tokens, using learned or heuristic sparsity to skip computation on unimportant history.
+- Linear attention (Mamba/SSM, Gated DeltaNet) replaces the QKV projection + softmax pattern with a fixed-size recurrent state, eliminating the need for KV cache entirely at the cost of reduced expressiveness.
 - The need to reuse prior keys and values is what creates KV cache during inference.
 
 ## Related Pages
@@ -23,3 +26,4 @@ Attention is the operation that lets each token weight and aggregate information
 - [Transformer Overview and Code Implementation](../sources/transformer-overview-and-code-implementation.md)
 - [Self-Attention Mechanism Deep Dive](../sources/self-attention-mechanism-deep-dive.md)
 - [Transformer and Attention, Explained Plainly](../sources/transformer-and-attention-a-layman-guide.md)
+- [从 305 GB 到 7.4 GB：大模型 KVCache 架构演进全景](../sources/kv-cache-architecture-survey.md)

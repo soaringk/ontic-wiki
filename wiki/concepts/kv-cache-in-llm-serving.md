@@ -8,10 +8,15 @@ KV cache stores attention keys and values for prior tokens so later decoding ste
 - Maximum supported context length depends on how much cache memory is available and how much memory each token consumes.
 - Cache size depends on layer count, KV head count, head dimension, cache precision, and tensor parallelism.
 - Large batches and long generations can make cache growth the limiting factor for otherwise efficient shared serving.
-- GQA and MQA reduce KV-cache footprint because the model keeps many query heads but stores fewer key/value heads.
-- MLA reduces KV-cache pressure by caching a lower-dimensional latent representation and reconstructing key/value state when needed, trading extra projection work for lower stored state.
+- GQA and MQA reduce KV-cache footprint by reducing key/value head count. GQA groups query heads and shares one KV pair per group; MQA shares a single KV pair across all query heads.
+- MLA reduces KV-cache pressure by caching a joint low-dimensional latent vector instead of full K/V tensors — ~96% dimension reduction at DeepSeek V3 scale (14,336 → 576 per layer per token) — trading extra projection work for much lower stored state.
 - Cache management policy matters as much as cache size: fragmentation, sharing, reuse, transfer, and swapping all change effective capacity.
 - In disaggregated systems, KV cache becomes distributed state that may move across prefill, decode, DRAM, or lower storage tiers.
+- Sparse attention (SWA, NSA, DSA, CSA+HCA) reduces the number of tokens requiring cached KV by selectively retaining only relevant history. DeepSeek V4's CSA (4:1 overlap-compressed + top-k sparse) and HCA (128:1 block-compressed) achieve ~10% of V3's KVCache at 1M context.
+- Linear attention (Mamba/SSM, Gated DeltaNet) replaces growing KV cache with a fixed-size hidden state — O(1) cache regardless of sequence length. Hybrid architectures (Qwen3.5) interleave linear attention layers (no KVCache) with full-attention layers (~75% KVCache reduction).
+- Cross-Layer Attention (CLA) shares K/V state across adjacent layers, halving KVCache — orthogonal to GQA/MLA.
+- FP8 and NVFP4 quantization reduce per-element storage from 16 bits to 8 or 4 bits with minimal quality loss. Vector compression (TurboQuant) reaches ~3.5 bits per dimension via polar-coordinate transform + online VQ.
+- MoE increases KVCache's relative memory share because reduced FFN activation memory makes KVCache dominate inference memory (60–80%).
 
 ## Durable Formula Shape
 
@@ -47,3 +52,4 @@ The factor of 2 comes from caching both K and V tensors.
 - [MemServe: Flexible Mem Pool for Building Disaggregated LLM Serving with Caching](../sources/memserve-flexible-mem-pool-for-building-disaggregated-llm-serving-with-caching.md)
 - [Mooncake: A KVCache-centric Disaggregated Architecture for LLM Serving](../sources/mooncake-a-kvcache-centric-disaggregated-architecture-for-llm-serving.md)
 - [Transformer and Attention, Explained Plainly](../sources/transformer-and-attention-a-layman-guide.md)
+- [从 305 GB 到 7.4 GB：大模型 KVCache 架构演进全景](../sources/kv-cache-architecture-survey.md)

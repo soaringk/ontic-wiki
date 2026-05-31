@@ -1,5 +1,39 @@
 # Wiki Log
 
+## [2026-06-01] lint | repaired weak compression-topic connectivity
+
+- Audited the local wiki for orphan pages, broken links, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.
+- Found no broken internal links, no link-orphan content pages, no duplicate titles, and no debate/synthesis duplication in the current inventory.
+- Added `wiki/concepts/prediction-compression-equivalence.md` and linked it from `Language Modeling Is Compression` and `Compression and Language Models` to strengthen the previously one-source/one-topic compression cluster.
+- Rebuilt `wiki/index.md` to include 22 concept pages.
+
+## [2026-05-26] reindex | consolidated duplicate Geometry of Consolidation source page
+
+- Removed duplicate source page `wiki/sources/geometry-of-consolidation-repo.md` because `raw/geometry-of-consolidation.md` is a companion GitHub README for the same work as `raw/GeometryOfConsolidation-v6.pdf`, not a separate durable wiki source.
+- Folded the README's repository and reproduction notes into `wiki/sources/geometry-of-consolidation-v6.md` and added both source IDs to that canonical source page.
+- Updated `wiki/index.md`, `Embedding Memory Geometry`, and `Effective Dimension` links. Current page counts are 26 sources, 10 topics, 21 concepts, 0 debates, and 1 synthesis.
+
+## [2026-05-26] reindex | processed 5 pending sources (2 PDF, 3 markdown)
+
+- Added source page for `raw/GeometryOfConsolidation-v6.pdf` (NeurIPS 2026 paper, published 2026-04-19) from extracted markdown sidecar.
+- Added source page for `raw/geometry-of-consolidation.md` (GitHub repository README for the same paper).
+- Added source page for `raw/Language Modeling Is Compression.pdf` (DeepMind paper on prediction-compression equivalence) from extracted markdown sidecar.
+- Added source page for `raw/kv-cache-architecture-survey.md` (Chinese KVCache architecture survey from Zhihu).
+- Added source page for `raw/vector-database.md` (Chinese vector database introduction, published 2023-07-15).
+- Added topic page `Embedding Memory Geometry` with the Consolidation-Interference Duality, tight/spread regime analysis, and centroid near-optimality on real text.
+- Added topic page `Compression and Language Models` covering prediction-compression equivalence, adjusted compression rates, and LLMs as general-purpose compressors.
+- Added topic page `Vector Database and ANN Search` covering ANN algorithms (K-Means, PQ, HNSW, LSH), similarity measures, and filtering strategies.
+- Added concept page `Effective Dimension` — participation ratio that governs the Consolidation-Interference Duality bound.
+- Added concept page `Multi-head Latent Attention (MLA)` — DeepSeek's 96% KV dimension compression via low-rank latent caching.
+- Added concept page `Product Quantization` — sub-vector codebook compression for billion-scale ANN search.
+- Added concept page `Hierarchical Navigable Small Worlds (HNSW)` — multi-layer graph-based ANN with top-down search.
+- Updated `Transformer Architecture and Attention` with sparse attention, linear attention, and cross-layer attention details.
+- Updated `KV Cache in LLM Serving` with MLA, CSA+HCA, linear attention, CLA, FP8/FP4 quantization, and MoE implications.
+- Updated `Attention Mechanism` with MLA, sparse attention, and linear attention variants.
+- Updated `Context Caching in LLM Serving` with MLA and KVCache survey connections.
+- Rebuilt `wiki/index.md` with 27 sources, 10 topics, 21 concepts, 0 debates, and 1 synthesis.
+- Blocked sources: none. Unsupported sources: none.
+
 ## [2026-05-24] lint | refreshed wiki audit
 
 - Audited the local wiki for broken links, orphan pages, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.

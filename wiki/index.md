@@ -26,6 +26,10 @@ This file is maintained by the agent.
 - [How to Generate Tokens Faster: A vLLM Performance Model](sources/vllm-performance-model.md) - Systems-modeling note that explains vLLM serving behavior through throughput, TTFT, queueing, and interference.
 - [We're at AI's Halftime](sources/were-at-ais-halftime.md) - Essay arguing that AI progress is shifting from benchmark hillclimbing toward evaluation setups that better capture real utility.
 - [Welcome to the Era of Experience](sources/welcome-to-the-era-of-experience.md) - Position paper arguing that future AI progress will come from long-horizon, grounded learning from experience.
+- [The Geometry of Consolidation v6 (Paper)](sources/geometry-of-consolidation-v6.md) - NeurIPS 2026 paper proving the Consolidation-Interference Duality, with companion repository reproduction notes folded into the same source page.
+- [Language Modeling Is Compression](sources/language-modeling-is-compression.md) - DeepMind paper showing LLMs as general-purpose compressors via the prediction-compression equivalence, with cross-modal compression results.
+- [从 305 GB 到 7.4 GB：大模型 KVCache 架构演进全景](sources/kv-cache-architecture-survey.md) - Comprehensive survey of KVCache optimization from MHA through sparse and linear attention, with concrete memory comparisons.
+- [向量数据库 (Vector Database)](sources/vector-database-overview.md) - Chinese introductory article on vector databases, ANN algorithms, similarity measurement, and database selection.
 
 ## Topics
 
@@ -36,6 +40,9 @@ This file is maintained by the agent.
 - [LLM Deployment and Capacity Planning](topics/llm-deployment-and-capacity-planning.md) - Operating view of model serving focused on memory planning, latency metrics, batching, and incident response.
 - [Private Credit](topics/private-credit.md) - Non-bank lending market spanning direct lending, asset-based finance, and increasingly entangled funding channels.
 - [Transformer Architecture and Attention](topics/transformer-architecture-and-attention.md) - Foundational model of tokenization, attention, masks, RoPE, decoder-only blocks, KV cache, and serving optimization targets.
+- [Embedding Memory Geometry](topics/embedding-memory-geometry.md) - Geometric study of semantic memory: effective dimension, consolidation limits, and the tight/spread phase boundary that determines centroid near-optimality on real text.
+- [Compression and Language Models](topics/compression-and-language-models.md) - Prediction-compression equivalence, LLMs as general-purpose cross-modal compressors, and scaling-law insights from adjusted compression rates.
+- [Vector Database and ANN Search](topics/vector-database-and-ann-search.md) - Vector databases for RAG and semantic search, covering ANN algorithms (K-Means, PQ, HNSW, LSH), similarity measures, and filtering strategies.
 
 ## Concepts
 
@@ -56,6 +63,11 @@ This file is maintained by the agent.
 - [Streams of Experience](concepts/streams-of-experience.md) - Long-lived action-observation trajectories that support adaptation and long-horizon optimization.
 - [Unitranche Loans](concepts/unitranche-loans.md) - Single-loan structures that merge senior and junior debt to trade clarity for execution speed.
 - [Utility Problem](concepts/utility-problem.md) - The gap between benchmark capability and durable real-world usefulness when evaluation setups miss how work actually happens.
+- [Effective Dimension](concepts/effective-dimension.md) - Participation ratio measuring how many truly independent directions a cluster's covariance occupies; governs the Consolidation-Interference Duality bound.
+- [Prediction-Compression Equivalence](concepts/prediction-compression-equivalence.md) - Information-theoretic bridge between probabilistic prediction, cross-entropy, and lossless compression.
+- [Multi-head Latent Attention (MLA)](concepts/multi-head-latent-attention-mla.md) - DeepSeek's attention variant that compresses KV state into a low-rank latent vector for ~96% KVCache reduction.
+- [Product Quantization](concepts/product-quantization.md) - Vector compression by sub-vector quantization with learned codebooks, the backbone of billion-scale ANN search.
+- [Hierarchical Navigable Small Worlds (HNSW)](concepts/hierarchical-navigable-small-worlds-hnsw.md) - Multi-layer graph-based ANN algorithm with top-down search from long-jump to dense-granularity layers.
 
 ## Synthesis
 
