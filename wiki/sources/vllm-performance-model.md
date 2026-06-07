@@ -1,6 +1,6 @@
 ---
 kind: source
-title: How to Generate Tokens Faster: A vLLM Performance Model
+title: "How to Generate Tokens Faster: A vLLM Performance Model"
 slug: vllm-performance-model
 source_ids:
   - raw-vllm-perf-model

@@ -5,6 +5,7 @@ Serving large models requires separating which parts of the model are split by t
 ## Main Distinction
 
 - Tensor parallelism (TP) usually slices weights across devices for dense layers and attention-related tensors.
+- Multi-head attention gives TP a natural split along attention heads, while FFN layers require separate column/row partitioning choices because they hold a large share of dense Transformer parameters.
 - Expert parallelism (EP) is mainly relevant for MoE routed experts.
 - Shared experts and dense prefixes may still follow TP-style partitioning even when routed experts use EP.
 - Increasing TP can reduce first-token and decode latency, but gains diminish as communication and utilization costs rise.
@@ -34,5 +35,6 @@ Serving large models requires separating which parts of the model are split by t
 
 - [LLM Deployment Principles and Memory Estimation Cheat Sheet](../sources/llm-deployment-principles-and-memory-estimation.md)
 - [LLM Inference Performance Engineering Best Practices](../sources/llm-inference-performance-engineering-best-practices.md)
+- [Transformer Architecture Quick Start](../sources/transformer-architecture-quick-start.md)
 - [DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving](../sources/distserve-disaggregating-prefill-and-decoding-for-goodput-optimized-large-language-model-serving.md)
 - [Splitwise: Efficient Generative LLM Inference Using Phase Splitting](../sources/splitwise-efficient-generative-llm-inference-using-phase-splitting.md)

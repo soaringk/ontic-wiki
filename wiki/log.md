@@ -1,5 +1,21 @@
 # Wiki Log
 
+## [2026-06-08] lint | normalized source frontmatter YAML
+
+- Audited the local wiki for orphan pages, broken links, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.
+- Found no broken internal links, no non-index orphan content pages, no duplicate titles or slugs, and no debate/synthesis duplication in the current inventory.
+- Quoted seven source-page `title` frontmatter values containing colons so all wiki frontmatter parses as valid YAML.
+- Refreshed `state/reports/latest_lint_report.md`; page counts remain 26 sources, 10 topics, 22 concepts, 0 debates, and 1 synthesis.
+- Left `wiki/index.md` unchanged because page inventory and index summaries did not change.
+
+## [2026-06-03] reindex | processed 2 duplicate Transformer markdown captures
+
+- Processed pending source `raw/3.2 Transformer全貌及代码实现.md` and folded it into the canonical source page `Transformer Overview and Code Implementation`.
+- Processed pending source `raw/🔥 Transformer架构：快速入门篇.md` and folded it into the canonical source page `Transformer Architecture Quick Start`.
+- Updated `Transformer Architecture and Attention`, `Attention Mechanism`, `Parallelism in LLM Serving`, and `Prefill-Decode Disaggregation` with reinforced mask, QKV, tensor-parallel, and prefill/decode details.
+- Rebuilt `wiki/index.md`; page counts remain 26 sources, 10 topics, 22 concepts, 0 debates, and 1 synthesis.
+- Blocked sources: none. Unsupported sources: none.
+
 ## [2026-06-01] lint | repaired weak compression-topic connectivity
 
 - Audited the local wiki for orphan pages, broken links, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.

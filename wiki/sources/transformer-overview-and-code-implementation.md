@@ -3,19 +3,20 @@ kind: source
 title: Transformer Overview and Code Implementation
 slug: transformer-overview-and-code-implementation
 source_ids:
+  - raw-3-2-transformer
   - raw-transformer-overview-and-code
 status: active
-raw_path: raw/transformer-overview-and-code.md
+raw_path: raw/3.2 Transformer全貌及代码实现.md
 source_type: markdown
 parser: direct
 published: 2026-03-31
 created: 2026-05-20
-updated: 2026-05-20
+updated: 2026-06-03
 ---
 
 # Summary
 
-This AI Infra Guide article, published on 2026-03-31, gives a full-map view of Transformer architecture before diving into module details. It starts with the original encoder-decoder Transformer, compares encoder-only, encoder-decoder, and decoder-only variants, then walks through a PyTorch implementation of masks, multi-head attention, positional encoding, FFN, encoder layers, decoder layers, and the full model.
+This Chinese AI Infra Guide article, published on 2026-03-31 as `3.2 Transformer全貌及代码实现`, gives a full-map view of Transformer architecture before diving into module details. It starts with the original encoder-decoder Transformer, compares encoder-only, encoder-decoder, and decoder-only variants, then walks through a PyTorch implementation of masks, multi-head attention, positional encoding, FFN, encoder layers, decoder layers, and the full model.
 
 # Key Claims
 
@@ -35,6 +36,11 @@ This source adds implementation-level grounding to the wiki's Transformer topic.
 - Topic: [Transformer Architecture and Attention](../topics/transformer-architecture-and-attention.md)
 - Concept: [Attention Mechanism](../concepts/attention-mechanism.md)
 - Concept: [KV Cache in LLM Serving](../concepts/kv-cache-in-llm-serving.md)
+
+# Source Notes
+
+- Canonical raw capture: `raw/3.2 Transformer全貌及代码实现.md`.
+- Earlier duplicate capture retained in manifest: `raw/transformer-overview-and-code.md`.
 
 # Open Questions
 

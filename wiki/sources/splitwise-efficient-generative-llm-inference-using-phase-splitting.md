@@ -1,6 +1,6 @@
 ---
 kind: source
-title: Splitwise: Efficient Generative LLM Inference Using Phase Splitting
+title: "Splitwise: Efficient Generative LLM Inference Using Phase Splitting"
 slug: splitwise-efficient-generative-llm-inference-using-phase-splitting
 source_ids:
   - raw-prefill-decode-separation-2311-18677v2

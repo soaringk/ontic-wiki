@@ -1,6 +1,6 @@
 ---
 kind: source
-title: Mooncake: A KVCache-centric Disaggregated Architecture for LLM Serving
+title: "Mooncake: A KVCache-centric Disaggregated Architecture for LLM Serving"
 slug: mooncake-a-kvcache-centric-disaggregated-architecture-for-llm-serving
 source_ids:
   - raw-prefill-decode-separation-2407-00079v4

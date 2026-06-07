@@ -3,19 +3,20 @@ kind: source
 title: Transformer Architecture Quick Start
 slug: transformer-architecture-quick-start
 source_ids:
+  - raw-transformer
   - raw-transformer-architecture-quick-start
 status: active
-raw_path: raw/transformer-architecture-quick-start.md
+raw_path: raw/🔥 Transformer架构：快速入门篇.md
 source_type: markdown
 parser: direct
 published: 2026-03-30
 created: 2026-05-20
-updated: 2026-05-20
+updated: 2026-06-03
 ---
 
 # Summary
 
-This AI Infra Guide article, published on 2026-03-30, explains Transformer architecture from the perspective of infrastructure work. It treats the model as the object being optimized by CUDA kernels, distributed training, inference runtimes, KV-cache managers, quantization, and long-context systems.
+This Chinese AI Infra Guide article, published on 2026-03-30 as `🔥 Transformer架构：快速入门篇`, explains Transformer architecture from the perspective of infrastructure work. It treats the model as the object being optimized by CUDA kernels, distributed training, inference runtimes, KV-cache managers, quantization, and long-context systems.
 
 # Key Claims
 
@@ -37,6 +38,11 @@ This source strengthens the wiki's bridge between Transformer mechanics and AI i
 - Concept: [KV Cache in LLM Serving](../concepts/kv-cache-in-llm-serving.md)
 - Concept: [Parallelism in LLM Serving](../concepts/parallelism-in-llm-serving.md)
 - Concept: [Prefill-Decode Disaggregation](../concepts/prefill-decode-disaggregation.md)
+
+# Source Notes
+
+- Canonical raw capture: `raw/🔥 Transformer架构：快速入门篇.md`.
+- Earlier duplicate capture retained in manifest: `raw/transformer-architecture-quick-start.md`.
 
 # Open Questions
 

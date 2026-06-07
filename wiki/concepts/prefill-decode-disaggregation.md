@@ -5,6 +5,7 @@ Prefill-decode disaggregation separates prompt processing from autoregressive to
 ## Why It Matters
 
 - Prefill and decode usually want different hardware, batch sizes, and parallelism strategies.
+- The distinction follows from decoder-only autoregression: prefill processes the prompt in parallel and builds KV state, while decode adds one token at a time and repeatedly reads the accumulated KV cache.
 - It removes direct contention between compute-heavy prompt work and memory-heavy decode work.
 - It enables per-phase SLO tuning around TTFT and TPOT or TBT.
 - It often increases goodput, but only if KV-cache transfer is fast enough.
@@ -26,3 +27,4 @@ Prefill-decode disaggregation separates prompt processing from autoregressive to
 - [DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving](../sources/distserve-disaggregating-prefill-and-decoding-for-goodput-optimized-large-language-model-serving.md)
 - [Inference without Interference: Disaggregate LLM Inference for Mixed Downstream Workloads](../sources/inference-without-interference-disaggregate-llm-inference-for-mixed-downstream-workloads.md)
 - [Mooncake: A KVCache-centric Disaggregated Architecture for LLM Serving](../sources/mooncake-a-kvcache-centric-disaggregated-architecture-for-llm-serving.md)
+- [Transformer Architecture Quick Start](../sources/transformer-architecture-quick-start.md)

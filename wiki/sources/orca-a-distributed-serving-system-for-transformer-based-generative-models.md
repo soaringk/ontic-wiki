@@ -1,6 +1,6 @@
 ---
 kind: source
-title: Orca: A Distributed Serving System for Transformer-Based Generative Models
+title: "Orca: A Distributed Serving System for Transformer-Based Generative Models"
 slug: orca-a-distributed-serving-system-for-transformer-based-generative-models
 source_ids:
   - raw-orca-a-distributed-serving-system-for-transformer-based-generative-models

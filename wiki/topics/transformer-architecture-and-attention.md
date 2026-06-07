@@ -10,6 +10,7 @@ Transformer architecture models sequences by repeatedly letting each token updat
 - Scaled dot-product attention scores token pairs with `QK^T / sqrt(d_k)`, normalizes the scores with softmax, and uses the result to aggregate V.
 - Multi-head attention runs several attention projections in parallel, giving the model multiple relation subspaces and giving infrastructure a natural tensor-parallel split point.
 - Decoder-side causal masking enforces autoregressive generation by blocking access to future tokens.
+- Padding masks, causal masks, and cross-attention masks encode different information boundaries and should not be collapsed into one generic "attention mask" mental model.
 - Encoder-decoder Transformers and decoder-only LLMs share attention primitives but differ in how generation is structured.
 - Modern decoder-only LLMs simplify the path to `Embedding -> repeated decoder blocks -> final norm -> LM head`, which makes KV-cache behavior and inference scheduling easier to reason about.
 - RoPE, LayerNorm placement, residual connections, and FFN shape are part of the serving-relevant architecture because they affect kernel fusion, stability, parameter count, and long-context behavior.
@@ -24,6 +25,7 @@ Transformer architecture models sequences by repeatedly letting each token updat
 - Prefill is the phase that processes the prompt and builds the initial KV cache.
 - Decode is slower and more sequential because each new token depends on all prior context.
 - Prefill attention usually looks like large matrix multiplication, while decode attention often becomes memory-bound because it reads weights and KV cache for one new token at a time.
+- Transformer code structure maps directly to infrastructure work: attention Q/K/V and output projections are GEMM targets, softmax is a fusion/IO target, FFN matrices dominate parameter count, and LayerNorm/RMSNorm plus residual paths are common kernel-fusion boundaries.
 - FlashAttention attacks the attention module's memory traffic and intermediate materialization costs by tiling attention and using online softmax to avoid writing the full attention matrix to high-bandwidth memory.
 - GQA and MQA reduce KV-cache footprint by using fewer key/value heads than query heads.
 - Many serving optimizations are really attempts to manage the memory, parallelism, and scheduling consequences of causal attention.

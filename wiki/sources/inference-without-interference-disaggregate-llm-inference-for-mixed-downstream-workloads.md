@@ -1,6 +1,6 @@
 ---
 kind: source
-title: Inference without Interference: Disaggregate LLM Inference for Mixed Downstream Workloads
+title: "Inference without Interference: Disaggregate LLM Inference for Mixed Downstream Workloads"
 slug: inference-without-interference-disaggregate-llm-inference-for-mixed-downstream-workloads
 source_ids:
   - raw-prefill-decode-separation-2401-11181v1

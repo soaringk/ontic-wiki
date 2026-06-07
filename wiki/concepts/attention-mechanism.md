@@ -8,7 +8,9 @@ Attention is the operation that lets each token weight and aggregate information
 - Scaled dot-product attention projects hidden states into Q, K, and V, scores token pairs with `QK^T / sqrt(d_k)`, normalizes scores with softmax, and uses the result to weight V.
 - The `sqrt(d_k)` scaling term keeps attention-score variance from growing with head dimension, reducing the risk that softmax saturates into near one-hot weights with weak gradients.
 - Multi-head attention repeats that operation across separate heads, then merges the head outputs back into the model dimension.
+- Multi-head attention has a concrete implementation shape: project to Q/K/V, split heads, run scaled dot-product attention independently per head, concatenate, then apply the output projection.
 - Decoder-only generation depends on causal attention that only sees past tokens.
+- Encoder self-attention, masked decoder self-attention, and cross-attention share the same scoring formula but differ in Q/K/V source and masking behavior.
 - Infrastructure optimizations often target this exact computation: FlashAttention reduces attention memory traffic through tiling and online softmax, tensor parallelism can split heads, and GQA/MQA reduce key/value head count.
 - MLA (Multi-head Latent Attention) compresses K and V jointly into a low-rank latent vector, caching the compressed representation and reconstructing on-the-fly — ~96% KV storage reduction at DeepSeek V3 scale.
 - Sparse attention (NSA, DSA, CSA+HCA) reduces attention computation by selecting only the most relevant KV tokens, using learned or heuristic sparsity to skip computation on unimportant history.

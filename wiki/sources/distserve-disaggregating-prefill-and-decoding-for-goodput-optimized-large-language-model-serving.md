@@ -1,6 +1,6 @@
 ---
 kind: source
-title: DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving
+title: "DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving"
 slug: distserve-disaggregating-prefill-and-decoding-for-goodput-optimized-large-language-model-serving
 source_ids:
   - raw-prefill-decode-separation-2401-09670v3
