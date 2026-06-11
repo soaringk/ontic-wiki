@@ -6,6 +6,7 @@ Serving large models requires separating which parts of the model are split by t
 
 - Tensor parallelism (TP) usually slices weights across devices for dense layers and attention-related tensors.
 - Multi-head attention gives TP a natural split along attention heads, while FFN layers require separate column/row partitioning choices because they hold a large share of dense Transformer parameters.
+- SwiGLU FFNs usually split gate/up projections by output columns and down projections by input rows, so each rank can compute its local gated intermediate before one final AllReduce.
 - Expert parallelism (EP) is mainly relevant for MoE routed experts.
 - Shared experts and dense prefixes may still follow TP-style partitioning even when routed experts use EP.
 - Increasing TP can reduce first-token and decode latency, but gains diminish as communication and utilization costs rise.
@@ -30,6 +31,7 @@ Serving large models requires separating which parts of the model are split by t
 - [KV Cache in LLM Serving](kv-cache-in-llm-serving.md)
 - [Model Bandwidth Utilization](model-bandwidth-utilization.md)
 - [Prefill-Decode Disaggregation](prefill-decode-disaggregation.md)
+- [Transformer Feed-Forward Network](transformer-feed-forward-network.md)
 
 ## Sources
 
@@ -38,3 +40,5 @@ Serving large models requires separating which parts of the model are split by t
 - [Transformer Architecture Quick Start](../sources/transformer-architecture-quick-start.md)
 - [DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving](../sources/distserve-disaggregating-prefill-and-decoding-for-goodput-optimized-large-language-model-serving.md)
 - [Splitwise: Efficient Generative LLM Inference Using Phase Splitting](../sources/splitwise-efficient-generative-llm-inference-using-phase-splitting.md)
+- [3.4 Transformer前馈网络FFN深入理解](../sources/transformer-ffn-deep-dive.md)
+- [3.7 Transformer Decoder Block完整解析](../sources/transformer-decoder-block-deep-dive.md)

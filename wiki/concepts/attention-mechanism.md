@@ -10,6 +10,7 @@ Attention is the operation that lets each token weight and aggregate information
 - Multi-head attention repeats that operation across separate heads, then merges the head outputs back into the model dimension.
 - Multi-head attention has a concrete implementation shape: project to Q/K/V, split heads, run scaled dot-product attention independently per head, concatenate, then apply the output projection.
 - Decoder-only generation depends on causal attention that only sees past tokens.
+- Self-attention is order-blind without an added position signal; RoPE injects relative position by rotating Q and K before dot-product scoring.
 - Encoder self-attention, masked decoder self-attention, and cross-attention share the same scoring formula but differ in Q/K/V source and masking behavior.
 - Infrastructure optimizations often target this exact computation: FlashAttention reduces attention memory traffic through tiling and online softmax, tensor parallelism can split heads, and GQA/MQA reduce key/value head count.
 - MLA (Multi-head Latent Attention) compresses K and V jointly into a low-rank latent vector, caching the compressed representation and reconstructing on-the-fly — ~96% KV storage reduction at DeepSeek V3 scale.
@@ -21,11 +22,15 @@ Attention is the operation that lets each token weight and aggregate information
 
 - [Transformer Architecture and Attention](../topics/transformer-architecture-and-attention.md)
 - [KV Cache in LLM Serving](kv-cache-in-llm-serving.md)
+- [Positional Encoding](positional-encoding.md)
+- [Autoregressive Generation](autoregressive-generation.md)
 
 ## Sources
 
 - [Transformer Architecture Quick Start](../sources/transformer-architecture-quick-start.md)
 - [Transformer Overview and Code Implementation](../sources/transformer-overview-and-code-implementation.md)
 - [Self-Attention Mechanism Deep Dive](../sources/self-attention-mechanism-deep-dive.md)
+- [3.5 Transformer位置编码深入理解](../sources/transformer-positional-encoding-deep-dive.md)
+- [3.7 Transformer Decoder Block完整解析](../sources/transformer-decoder-block-deep-dive.md)
 - [Transformer and Attention, Explained Plainly](../sources/transformer-and-attention-a-layman-guide.md)
 - [从 305 GB 到 7.4 GB：大模型 KVCache 架构演进全景](../sources/kv-cache-architecture-survey.md)

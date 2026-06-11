@@ -3,15 +3,14 @@ kind: source
 title: Transformer Architecture Quick Start
 slug: transformer-architecture-quick-start
 source_ids:
-  - raw-transformer
-  - raw-transformer-architecture-quick-start
+  - raw-aiinfraguide-transformer
 status: active
-raw_path: raw/🔥 Transformer架构：快速入门篇.md
+raw_path: raw/AIInfraGuide/Transformer架构快速入门.md
 source_type: markdown
 parser: direct
 published: 2026-03-30
 created: 2026-05-20
-updated: 2026-06-03
+updated: 2026-06-11
 ---
 
 # Summary
@@ -41,8 +40,7 @@ This source strengthens the wiki's bridge between Transformer mechanics and AI i
 
 # Source Notes
 
-- Canonical raw capture: `raw/🔥 Transformer架构：快速入门篇.md`.
-- Earlier duplicate capture retained in manifest: `raw/transformer-architecture-quick-start.md`.
+- Canonical raw capture: `raw/AIInfraGuide/Transformer架构快速入门.md`.
 
 # Open Questions
 

@@ -3,14 +3,14 @@ kind: source
 title: Self-Attention Mechanism Deep Dive
 slug: self-attention-mechanism-deep-dive
 source_ids:
-  - raw-self-attention-mechanism-deep-dive
+  - raw-aiinfraguide-3-3-self-attention
 status: active
-raw_path: raw/self-attention-mechanism-deep-dive.md
+raw_path: raw/AIInfraGuide/3.3 Self-Attention机制深入理解.md
 source_type: markdown
 parser: direct
 published: 2026-04-18
 created: 2026-05-24
-updated: 2026-05-24
+updated: 2026-06-11
 ---
 
 # Summary
@@ -37,6 +37,10 @@ This source turns the wiki's attention concept from a high-level operation into 
 - Concept: [Attention Mechanism](../concepts/attention-mechanism.md)
 - Concept: [KV Cache in LLM Serving](../concepts/kv-cache-in-llm-serving.md)
 - Concept: [Model Bandwidth Utilization](../concepts/model-bandwidth-utilization.md)
+
+# Source Notes
+
+- Canonical raw capture: `raw/AIInfraGuide/3.3 Self-Attention机制深入理解.md`.
 
 # Open Questions
 

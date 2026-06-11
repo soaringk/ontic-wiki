@@ -8,6 +8,8 @@ KV cache stores attention keys and values for prior tokens so later decoding ste
 - Maximum supported context length depends on how much cache memory is available and how much memory each token consumes.
 - Cache size depends on layer count, KV head count, head dimension, cache precision, and tensor parallelism.
 - Large batches and long generations can make cache growth the limiting factor for otherwise efficient shared serving.
+- Autoregressive generation creates KV cache because each decode step needs historical K/V while only the newest token's K/V must be appended.
+- Prefill builds the initial cache for the prompt; decode repeatedly reads and extends it, so KV memory affects both TTFT/TPOT trade-offs and batch capacity.
 - GQA and MQA reduce KV-cache footprint by reducing key/value head count. GQA groups query heads and shares one KV pair per group; MQA shares a single KV pair across all query heads.
 - MLA reduces KV-cache pressure by caching a joint low-dimensional latent vector instead of full K/V tensors — ~96% dimension reduction at DeepSeek V3 scale (14,336 → 576 per layer per token) — trading extra projection work for much lower stored state.
 - Cache management policy matters as much as cache size: fragmentation, sharing, reuse, transfer, and swapping all change effective capacity.
@@ -41,6 +43,8 @@ The factor of 2 comes from caching both K and V tensors.
 - [PagedAttention](pagedattention.md)
 - [Context Caching in LLM Serving](context-caching-in-llm-serving.md)
 - [Prefill-Decode Disaggregation](prefill-decode-disaggregation.md)
+- [Autoregressive Generation](autoregressive-generation.md)
+- [Positional Encoding](positional-encoding.md)
 
 ## Sources
 
@@ -53,3 +57,6 @@ The factor of 2 comes from caching both K and V tensors.
 - [Mooncake: A KVCache-centric Disaggregated Architecture for LLM Serving](../sources/mooncake-a-kvcache-centric-disaggregated-architecture-for-llm-serving.md)
 - [Transformer and Attention, Explained Plainly](../sources/transformer-and-attention-a-layman-guide.md)
 - [从 305 GB 到 7.4 GB：大模型 KVCache 架构演进全景](../sources/kv-cache-architecture-survey.md)
+- [3.5 Transformer位置编码深入理解](../sources/transformer-positional-encoding-deep-dive.md)
+- [3.7 Transformer Decoder Block完整解析](../sources/transformer-decoder-block-deep-dive.md)
+- [3.8 从Transformer到LLM自回归生成深入理解](../sources/transformer-to-llm-autoregressive-generation.md)

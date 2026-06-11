@@ -1,5 +1,22 @@
 # Wiki Log
 
+## [2026-06-11] lint | refreshed wiki audit
+
+- Audited the local wiki for orphan pages, broken links, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.
+- Found no broken internal links, no non-index orphan content pages, no duplicate titles or slugs, and no debate/synthesis duplication in the current inventory.
+- Verified source pages have complete required frontmatter and reviewed source connectivity; left content pages unchanged because no safe content repair was needed.
+- Refreshed `state/reports/latest_lint_report.md`; page counts remain 32 sources, 10 topics, 27 concepts, 0 debates, and 1 synthesis.
+- Left `wiki/index.md` unchanged because page inventory and summaries did not change.
+
+## [2026-06-11] reindex | processed 6 AIInfraGuide Transformer chapters
+
+- Processed pending Markdown sources `raw/AIInfraGuide/3.4 Transformer前馈网络FFN深入理解.md`, `3.5 Transformer位置编码深入理解.md`, `3.6 LayerNorm与残差连接深入理解.md`, `3.7 Transformer Decoder Block完整解析.md`, `3.8 从Transformer到LLM自回归生成深入理解.md`, and `3.9 Tokenization与词嵌入.md`.
+- Added six source pages under `wiki/sources/` with source publication dates preserved from raw frontmatter.
+- Added concept pages for `Transformer Feed-Forward Network`, `Positional Encoding`, `Transformer Normalization and Residuals`, `Autoregressive Generation`, and `Tokenization and Embeddings`.
+- Updated `Transformer Architecture and Attention`, `LLM Deployment and Capacity Planning`, `Attention Mechanism`, `KV Cache in LLM Serving`, `PagedAttention`, `Parallelism in LLM Serving`, and `Iteration-Level Scheduling` with source-backed connections.
+- Rebuilt `wiki/index.md`; page counts are 32 sources, 10 topics, 27 concepts, 0 debates, and 1 synthesis.
+- Blocked sources: none. Unsupported sources: none.
+
 ## [2026-06-08] lint | normalized source frontmatter YAML
 
 - Audited the local wiki for orphan pages, broken links, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.

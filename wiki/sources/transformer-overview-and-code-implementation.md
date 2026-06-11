@@ -3,15 +3,14 @@ kind: source
 title: Transformer Overview and Code Implementation
 slug: transformer-overview-and-code-implementation
 source_ids:
-  - raw-3-2-transformer
-  - raw-transformer-overview-and-code
+  - raw-aiinfraguide-3-2-transformer
 status: active
-raw_path: raw/3.2 Transformer全貌及代码实现.md
+raw_path: raw/AIInfraGuide/3.2 Transformer全貌及代码实现.md
 source_type: markdown
 parser: direct
 published: 2026-03-31
 created: 2026-05-20
-updated: 2026-06-03
+updated: 2026-06-11
 ---
 
 # Summary
@@ -39,8 +38,7 @@ This source adds implementation-level grounding to the wiki's Transformer topic.
 
 # Source Notes
 
-- Canonical raw capture: `raw/3.2 Transformer全貌及代码实现.md`.
-- Earlier duplicate capture retained in manifest: `raw/transformer-overview-and-code.md`.
+- Canonical raw capture: `raw/AIInfraGuide/3.2 Transformer全貌及代码实现.md`.
 
 # Open Questions
 

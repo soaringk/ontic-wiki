@@ -6,8 +6,10 @@ LLM deployment and capacity planning sits between model architecture and product
 
 - Deployment variants should separate public production models from test-only configurations.
 - Memory planning is not just parameter count; it includes runtime reservation, hardware reservation, and KV cache.
+- Decoder Block memory planning should be component-wise: embeddings and LM head scale with vocabulary, FFN dominates dense block parameters, attention KV state scales with KV head count, and optimizer/activation memory only applies to training.
 - User experience depends on separating TTFT, TPOT, overall latency, and throughput instead of collapsing them into one metric.
 - Decode speed is often constrained by memory bandwidth, so hardware bandwidth and serving-stack efficiency matter as much as raw compute.
+- Autoregressive serving separates prefill, which builds the initial KV Cache and often controls TTFT, from decode, which repeatedly reads weights and KV state and often controls TPOT.
 - Continuous batching is usually the right default for shared online serving, while static batching can still win for offline workloads.
 - Request-level scheduling is a poor fit for autoregressive generation; iteration-level control is the more durable systems model.
 - Prefill and decode often want different batch sizes, parallelism strategies, and sometimes different hardware entirely.
@@ -26,6 +28,8 @@ LLM deployment and capacity planning sits between model architecture and product
 - [PagedAttention](../concepts/pagedattention.md)
 - [Iteration-Level Scheduling](../concepts/iteration-level-scheduling.md)
 - [Prefill-Decode Disaggregation](../concepts/prefill-decode-disaggregation.md)
+- [Autoregressive Generation](../concepts/autoregressive-generation.md)
+- [Transformer Feed-Forward Network](../concepts/transformer-feed-forward-network.md)
 - [Context Caching in LLM Serving](../concepts/context-caching-in-llm-serving.md)
 - [Integer-Only Quantization](../concepts/integer-only-quantization.md)
 
@@ -42,3 +46,5 @@ LLM deployment and capacity planning sits between model architecture and product
 - [Mooncake: A KVCache-centric Disaggregated Architecture for LLM Serving](../sources/mooncake-a-kvcache-centric-disaggregated-architecture-for-llm-serving.md)
 - [Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference](../sources/quantization-and-training-of-neural-networks-for-efficient-integer-arithmetic-only-inference.md)
 - [How to Generate Tokens Faster: A vLLM Performance Model](../sources/vllm-performance-model.md)
+- [3.7 Transformer Decoder Block完整解析](../sources/transformer-decoder-block-deep-dive.md)
+- [3.8 从Transformer到LLM自回归生成深入理解](../sources/transformer-to-llm-autoregressive-generation.md)

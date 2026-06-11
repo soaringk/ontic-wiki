@@ -20,6 +20,12 @@ This file is maintained by the agent.
 - [Splitwise: Efficient Generative LLM Inference Using Phase Splitting](sources/splitwise-efficient-generative-llm-inference-using-phase-splitting.md) - Phase-splitting paper that maps compute-heavy prefill and memory-bound decode onto different hardware pools.
 - [Two Lessons from ICLR 2025](sources/two-lessons-from-iclr-2025.md) - Methodological critique that anchors AI progress in near-100%-reliable capabilities rather than hype and speculative roadmaps.
 - [Self-Attention Mechanism Deep Dive](sources/self-attention-mechanism-deep-dive.md) - Detailed attention guide covering QKV roles, scaled dot-product attention, softmax stability, MQA/GQA/MLA, causal masking, and FlashAttention IO behavior.
+- [3.4 Transformer前馈网络FFN深入理解](sources/transformer-ffn-deep-dive.md) - Chinese AI Infra Guide chapter on FFN structure, SwiGLU, parameter sizing, tensor parallel FFN splits, MoE experts, and FFN kernel fusion.
+- [3.5 Transformer位置编码深入理解](sources/transformer-positional-encoding-deep-dive.md) - Chinese AI Infra Guide chapter on positional encoding, RoPE, ALiBi, long-context RoPE scaling, kernel fusion, and KV-cache implications.
+- [3.6 LayerNorm与残差连接深入理解](sources/layernorm-and-residual-connections-deep-dive.md) - Chinese AI Infra Guide chapter on residual paths, LayerNorm, RMSNorm, Pre-Norm/Post-Norm, DeepNorm, and fused normalization kernels.
+- [3.7 Transformer Decoder Block完整解析](sources/transformer-decoder-block-deep-dive.md) - Chinese AI Infra Guide chapter decomposing decoder-only blocks, causal masking, parameter/FLOPs formulas, and memory planning.
+- [3.8 从Transformer到LLM自回归生成深入理解](sources/transformer-to-llm-autoregressive-generation.md) - Chinese AI Infra Guide chapter on autoregressive generation, sampling, prefill/decode, KV cache, PagedAttention, and serving metrics.
+- [3.9 Tokenization与词嵌入](sources/tokenization-and-word-embedding.md) - Chinese AI Infra Guide chapter on tokenization, BPE, embeddings, vocabulary size, positional information, and weight tying.
 - [Transformer and Attention, Explained Plainly](sources/transformer-and-attention-a-layman-guide.md) - Plain-language walkthrough of tokenization, attention, encoder/decoder structure, and autoregressive generation.
 - [Transformer Architecture Quick Start](sources/transformer-architecture-quick-start.md) - Chinese infrastructure-oriented Transformer architecture guide connecting attention, FFN, RoPE, KV cache, tensor parallelism, and inference optimization.
 - [Transformer Overview and Code Implementation](sources/transformer-overview-and-code-implementation.md) - Chinese full-map Transformer guide covering encoder-decoder structure, architecture variants, masks, tensor shapes, and a PyTorch implementation.
@@ -47,6 +53,7 @@ This file is maintained by the agent.
 ## Concepts
 
 - [Attention Mechanism](concepts/attention-mechanism.md) - Q/K/V weighting operation behind self-attention, multi-head attention implementation, masking variants, FlashAttention, and KV cache.
+- [Autoregressive Generation](concepts/autoregressive-generation.md) - Next-token generation loop that creates prefill/decode phases, KV-cache reuse, TTFT/TPOT trade-offs, and iteration-level scheduling needs.
 - [Brain-Inspired AI](concepts/brain-inspired-ai.md) - Neuroscience-informed view that future AI may need richer neural complexity, long-range feedback, parallel perception, and embodied action loops.
 - [Context Caching in LLM Serving](concepts/context-caching-in-llm-serving.md) - Reuse of prefix KV state across requests to reduce repeated prefill work.
 - [CUDA Thread Hierarchy](concepts/cuda-thread-hierarchy.md) - The `Grid -> Block -> Thread` structure that defines CUDA work partitioning.
@@ -65,7 +72,11 @@ This file is maintained by the agent.
 - [Utility Problem](concepts/utility-problem.md) - The gap between benchmark capability and durable real-world usefulness when evaluation setups miss how work actually happens.
 - [Effective Dimension](concepts/effective-dimension.md) - Participation ratio measuring how many truly independent directions a cluster's covariance occupies; governs the Consolidation-Interference Duality bound.
 - [Prediction-Compression Equivalence](concepts/prediction-compression-equivalence.md) - Information-theoretic bridge between probabilistic prediction, cross-entropy, and lossless compression.
+- [Positional Encoding](concepts/positional-encoding.md) - Order signal for Transformers, covering absolute encodings, RoPE Q/K rotation, ALiBi score bias, and long-context scaling.
 - [Multi-head Latent Attention (MLA)](concepts/multi-head-latent-attention-mla.md) - DeepSeek's attention variant that compresses KV state into a low-rank latent vector for ~96% KVCache reduction.
+- [Tokenization and Embeddings](concepts/tokenization-and-embeddings.md) - Text-to-token and token-to-vector input layer, including subword tokenization, embedding tables, vocabulary memory, and weight tying.
+- [Transformer Feed-Forward Network](concepts/transformer-feed-forward-network.md) - Per-token nonlinear Transformer sublayer covering standard FFN, SwiGLU, dense parameter share, tensor-parallel splits, and MoE expertization.
+- [Transformer Normalization and Residuals](concepts/transformer-normalization-and-residuals.md) - Stability machinery for deep Transformer stacks: residual identity paths, LayerNorm/RMSNorm, Pre-Norm, and fused residual-norm kernels.
 - [Product Quantization](concepts/product-quantization.md) - Vector compression by sub-vector quantization with learned codebooks, the backbone of billion-scale ANN search.
 - [Hierarchical Navigable Small Worlds (HNSW)](concepts/hierarchical-navigable-small-worlds-hnsw.md) - Multi-layer graph-based ANN algorithm with top-down search from long-jump to dense-granularity layers.
 
