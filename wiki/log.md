@@ -1,5 +1,15 @@
 # Wiki Log
 
+## [2026-06-11] reindex | refreshed AIInfraGuide autoregressive generation source
+
+- Processed pending Markdown source `raw/AIInfraGuide/3.8 从Transformer到LLM自回归生成深入理解.md` and updated the existing source page instead of creating a duplicate.
+- Preserved source publication metadata from raw frontmatter: `published: 2026-04-21`.
+- Recorded the section 6.2 erratum that no-cache autoregressive Attention sums to `O(N^3 d)`, while KV-cache decode sums to `O(N^2 d)`.
+- Added concept pages for `Token Sampling Strategies` and `Speculative Decoding`.
+- Updated `Transformer Architecture and Attention`, `LLM Deployment and Capacity Planning`, `Autoregressive Generation`, and `Prefill-Decode Disaggregation` with source-backed links and claims.
+- Rebuilt `wiki/index.md`; page counts are 32 sources, 10 topics, 29 concepts, 0 debates, and 1 synthesis.
+- Blocked sources: none. Unsupported sources: none.
+
 ## [2026-06-11] lint | refreshed wiki audit
 
 - Audited the local wiki for orphan pages, broken links, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.

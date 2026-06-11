@@ -24,7 +24,7 @@ This file is maintained by the agent.
 - [3.5 Transformer位置编码深入理解](sources/transformer-positional-encoding-deep-dive.md) - Chinese AI Infra Guide chapter on positional encoding, RoPE, ALiBi, long-context RoPE scaling, kernel fusion, and KV-cache implications.
 - [3.6 LayerNorm与残差连接深入理解](sources/layernorm-and-residual-connections-deep-dive.md) - Chinese AI Infra Guide chapter on residual paths, LayerNorm, RMSNorm, Pre-Norm/Post-Norm, DeepNorm, and fused normalization kernels.
 - [3.7 Transformer Decoder Block完整解析](sources/transformer-decoder-block-deep-dive.md) - Chinese AI Infra Guide chapter decomposing decoder-only blocks, causal masking, parameter/FLOPs formulas, and memory planning.
-- [3.8 从Transformer到LLM自回归生成深入理解](sources/transformer-to-llm-autoregressive-generation.md) - Chinese AI Infra Guide chapter on autoregressive generation, sampling, prefill/decode, KV cache, PagedAttention, and serving metrics.
+- [3.8 从Transformer到LLM自回归生成深入理解](sources/transformer-to-llm-autoregressive-generation.md) - Chinese AI Infra Guide chapter on autoregressive generation, sampling, prefill/decode, KV cache, PagedAttention, speculative decoding, and serving metrics.
 - [3.9 Tokenization与词嵌入](sources/tokenization-and-word-embedding.md) - Chinese AI Infra Guide chapter on tokenization, BPE, embeddings, vocabulary size, positional information, and weight tying.
 - [Transformer and Attention, Explained Plainly](sources/transformer-and-attention-a-layman-guide.md) - Plain-language walkthrough of tokenization, attention, encoder/decoder structure, and autoregressive generation.
 - [Transformer Architecture Quick Start](sources/transformer-architecture-quick-start.md) - Chinese infrastructure-oriented Transformer architecture guide connecting attention, FFN, RoPE, KV cache, tensor parallelism, and inference optimization.
@@ -45,7 +45,7 @@ This file is maintained by the agent.
 - [Experiential AI](topics/experiential-ai.md) - View of advanced agents as long-lived, grounded learners, plus the live dispute over human-derived priors, algorithms, evaluation, and reliability.
 - [LLM Deployment and Capacity Planning](topics/llm-deployment-and-capacity-planning.md) - Operating view of model serving focused on memory planning, latency metrics, batching, and incident response.
 - [Private Credit](topics/private-credit.md) - Non-bank lending market spanning direct lending, asset-based finance, and increasingly entangled funding channels.
-- [Transformer Architecture and Attention](topics/transformer-architecture-and-attention.md) - Foundational model of tokenization, attention, mask semantics, RoPE, decoder-only blocks, KV cache, and serving optimization targets.
+- [Transformer Architecture and Attention](topics/transformer-architecture-and-attention.md) - Foundational model of tokenization, attention, mask semantics, RoPE, decoder-only blocks, sampling, KV cache, and serving optimization targets.
 - [Embedding Memory Geometry](topics/embedding-memory-geometry.md) - Geometric study of semantic memory: effective dimension, consolidation limits, and the tight/spread phase boundary that determines centroid near-optimality on real text.
 - [Compression and Language Models](topics/compression-and-language-models.md) - Prediction-compression equivalence, LLMs as general-purpose cross-modal compressors, and scaling-law insights from adjusted compression rates.
 - [Vector Database and ANN Search](topics/vector-database-and-ann-search.md) - Vector databases for RAG and semantic search, covering ANN algorithms (K-Means, PQ, HNSW, LSH), similarity measures, and filtering strategies.
@@ -54,6 +54,8 @@ This file is maintained by the agent.
 
 - [Attention Mechanism](concepts/attention-mechanism.md) - Q/K/V weighting operation behind self-attention, multi-head attention implementation, masking variants, FlashAttention, and KV cache.
 - [Autoregressive Generation](concepts/autoregressive-generation.md) - Next-token generation loop that creates prefill/decode phases, KV-cache reuse, TTFT/TPOT trade-offs, and iteration-level scheduling needs.
+- [Token Sampling Strategies](concepts/token-sampling-strategies.md) - Greedy, temperature, Top-K, and Top-P policies for choosing the next token from logits during autoregressive generation.
+- [Speculative Decoding](concepts/speculative-decoding.md) - Decode acceleration technique where a draft model proposes candidate tokens and the target model verifies them in parallel.
 - [Brain-Inspired AI](concepts/brain-inspired-ai.md) - Neuroscience-informed view that future AI may need richer neural complexity, long-range feedback, parallel perception, and embodied action loops.
 - [Context Caching in LLM Serving](concepts/context-caching-in-llm-serving.md) - Reuse of prefix KV state across requests to reduce repeated prefill work.
 - [CUDA Thread Hierarchy](concepts/cuda-thread-hierarchy.md) - The `Grid -> Block -> Thread` structure that defines CUDA work partitioning.

@@ -19,6 +19,7 @@ KV cache stores attention keys and values for prior tokens so later decoding ste
 - Cross-Layer Attention (CLA) shares K/V state across adjacent layers, halving KVCache — orthogonal to GQA/MLA.
 - FP8 and NVFP4 quantization reduce per-element storage from 16 bits to 8 or 4 bits with minimal quality loss. Vector compression (TurboQuant) reaches ~3.5 bits per dimension via polar-coordinate transform + online VQ.
 - MoE increases KVCache's relative memory share because reduced FFN activation memory makes KVCache dominate inference memory (60–80%).
+- In naive no-cache autoregressive generation, each step reprocesses the full prefix, so Attention uses full $Q,K,V$ matrices and sums to $O(N^3 d)$ over $N$ generated tokens; KV cache changes decode to a single new query over cached K/V, summing to $O(N^2 d)$.
 
 ## Durable Formula Shape
 

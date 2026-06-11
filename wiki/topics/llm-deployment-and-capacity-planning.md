@@ -13,6 +13,7 @@ LLM deployment and capacity planning sits between model architecture and product
 - Continuous batching is usually the right default for shared online serving, while static batching can still win for offline workloads.
 - Request-level scheduling is a poor fit for autoregressive generation; iteration-level control is the more durable systems model.
 - Prefill and decode often want different batch sizes, parallelism strategies, and sometimes different hardware entirely.
+- Speculative decoding can improve decode throughput by verifying draft tokens in parallel, but capacity planning should treat the draft model, acceptance rate, and batching effects as workload-dependent variables.
 - Prefix reuse, cache placement, and KV-state transfer are now first-class deployment concerns rather than narrow engine details.
 - MoE deployments require explicit reasoning about what tensor parallelism splits and what expert parallelism splits.
 - More GPUs and higher tensor parallelism usually improve fit and latency only sub-linearly because communication overhead and utilization losses rise.
@@ -29,6 +30,7 @@ LLM deployment and capacity planning sits between model architecture and product
 - [Iteration-Level Scheduling](../concepts/iteration-level-scheduling.md)
 - [Prefill-Decode Disaggregation](../concepts/prefill-decode-disaggregation.md)
 - [Autoregressive Generation](../concepts/autoregressive-generation.md)
+- [Speculative Decoding](../concepts/speculative-decoding.md)
 - [Transformer Feed-Forward Network](../concepts/transformer-feed-forward-network.md)
 - [Context Caching in LLM Serving](../concepts/context-caching-in-llm-serving.md)
 - [Integer-Only Quantization](../concepts/integer-only-quantization.md)

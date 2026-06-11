@@ -28,3 +28,4 @@ Prefill-decode disaggregation separates prompt processing from autoregressive to
 - [Inference without Interference: Disaggregate LLM Inference for Mixed Downstream Workloads](../sources/inference-without-interference-disaggregate-llm-inference-for-mixed-downstream-workloads.md)
 - [Mooncake: A KVCache-centric Disaggregated Architecture for LLM Serving](../sources/mooncake-a-kvcache-centric-disaggregated-architecture-for-llm-serving.md)
 - [Transformer Architecture Quick Start](../sources/transformer-architecture-quick-start.md)
+- [3.8 从Transformer到LLM自回归生成深入理解](../sources/transformer-to-llm-autoregressive-generation.md)

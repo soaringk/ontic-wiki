@@ -19,6 +19,7 @@ Transformer architecture models sequences by repeatedly letting each token updat
 - Position encoding is the answer to self-attention's order blindness; RoPE is dominant because it injects relative position through Q/K rotation and works well with fused attention kernels.
 - Tokenization and embeddings define the model's actual discrete input space; vocabulary size changes both multilingual efficiency and embedding/LM-head memory.
 - Autoregressive generation turns architecture into a serving loop: prompt prefill builds KV state, decode appends one token at a time, and sampling policy chooses from the next-token distribution.
+- Sampling policies such as greedy decoding, temperature, Top-K, and Top-P operate after the LM head over logits; they change output behavior without changing the attention architecture.
 - KV cache exists because later decoding steps reuse previously computed attention keys and values instead of recomputing the full prefix each time.
 - Attention variants such as MQA, GQA, and MLA preserve many query pathways while reducing or compressing the key/value state that inference must store and read.
 - Sparse attention (NSA, DSA, CSA+HCA) reduces the number of tokens whose KV must be retained by selectively keeping only the most relevant history — from simple sliding windows (SWA) through learned sparse selection to hybrid compression (CSA 4:1, HCA 128:1).
@@ -44,6 +45,7 @@ Transformer architecture models sequences by repeatedly letting each token updat
 - [Positional Encoding](../concepts/positional-encoding.md)
 - [Transformer Normalization and Residuals](../concepts/transformer-normalization-and-residuals.md)
 - [Autoregressive Generation](../concepts/autoregressive-generation.md)
+- [Token Sampling Strategies](../concepts/token-sampling-strategies.md)
 - [Tokenization and Embeddings](../concepts/tokenization-and-embeddings.md)
 
 ## Sources
