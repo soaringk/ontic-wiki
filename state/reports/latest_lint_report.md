@@ -1,9 +1,9 @@
 # Latest Lint Report
 
-- scan_time: `2026-06-11T07:31:52Z`
+- scan_time: `2026-06-14T21:01:39Z`
 - source_pages: `32`
 - topic_pages: `10`
-- concept_pages: `27`
+- concept_pages: `29`
 - debate_pages: `0`
 - synthesis_pages: `1`
 
@@ -72,7 +72,9 @@
 - `wiki/concepts/prefill-decode-disaggregation.md`
 - `wiki/concepts/product-quantization.md`
 - `wiki/concepts/rated-note-feeders.md`
+- `wiki/concepts/speculative-decoding.md`
 - `wiki/concepts/streams-of-experience.md`
+- `wiki/concepts/token-sampling-strategies.md`
 - `wiki/concepts/tokenization-and-embeddings.md`
 - `wiki/concepts/transformer-feed-forward-network.md`
 - `wiki/concepts/transformer-normalization-and-residuals.md`
