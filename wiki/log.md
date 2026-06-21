@@ -1,5 +1,12 @@
 # Wiki Log
 
+## [2026-06-22] lint | refreshed wiki audit
+
+- Audited the local wiki for orphan pages, broken links, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.
+- Found no broken internal links, no non-index orphan content pages, no duplicate titles or slugs, no weak source connections, and no debate/synthesis duplication in the current inventory.
+- Refreshed `state/reports/latest_lint_report.md`; page counts remain 32 sources, 10 topics, 29 concepts, 0 debates, and 1 synthesis.
+- Left `wiki/index.md` unchanged because page inventory and index summaries did not change.
+
 ## [2026-06-15] lint | refreshed wiki audit
 
 - Audited the local wiki for orphan pages, broken links, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.
