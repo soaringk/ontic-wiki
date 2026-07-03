@@ -9,12 +9,13 @@ Disaggregated LLM inference separates the prompt-processing and token-generation
 - Disaggregation lets each phase choose different hardware, batch sizes, and parallelism strategies.
 - KV cache becomes the central systems object because phase separation only works if the cache can be moved, reused, or reconstructed efficiently.
 - Once KV cache persists across requests, context caching and disaggregation stop being separate features and start becoming one state-management problem.
+- Colocated schedulers such as Dynamic SplitFuse and Sarathi-Serve show a partial alternative: bound prompt work per iteration and mix it with decode tokens so prefill does not monopolize the running batch.
 - Good deployment decisions depend on workload shape, interconnect bandwidth, cache-hit structure, and overload behavior, not only raw tokens-per-second.
 
 ## Main Tensions
 
 - Disaggregation removes interference but adds transfer overhead and operational complexity.
-- Chunked prefill can partially mitigate interference inside a colocated system, but it does not fully remove the trade-off.
+- Chunked prefill can partially mitigate interference inside a colocated system, but it does not fully remove the trade-off or the need to reason about KV-cache placement.
 - Some systems optimize for goodput under SLOs, while others emphasize throughput per dollar, throughput per watt, or job completion time.
 - Cache reuse can lower compute cost, but remote cache fetches can still hurt TTFT if they are too slow or too contended.
 
@@ -24,6 +25,7 @@ Disaggregated LLM inference separates the prompt-processing and token-generation
 - [Context Caching in LLM Serving](../concepts/context-caching-in-llm-serving.md)
 - [KV Cache in LLM Serving](../concepts/kv-cache-in-llm-serving.md)
 - [Iteration-Level Scheduling](../concepts/iteration-level-scheduling.md)
+- [Chunked Prefill Scheduling](../concepts/chunked-prefill-scheduling.md)
 - [Parallelism in LLM Serving](../concepts/parallelism-in-llm-serving.md)
 - [PagedAttention](../concepts/pagedattention.md)
 
@@ -37,3 +39,5 @@ Disaggregated LLM inference separates the prompt-processing and token-generation
 - [MemServe: Flexible Mem Pool for Building Disaggregated LLM Serving with Caching](../sources/memserve-flexible-mem-pool-for-building-disaggregated-llm-serving-with-caching.md)
 - [Mooncake: A KVCache-centric Disaggregated Architecture for LLM Serving](../sources/mooncake-a-kvcache-centric-disaggregated-architecture-for-llm-serving.md)
 - [How to Generate Tokens Faster: A vLLM Performance Model](../sources/vllm-performance-model.md)
+- [DeepSpeed-FastGen: High-throughput Text Generation for LLMs via MII and DeepSpeed-Inference](../sources/deepspeed-fastgen-high-throughput-text-generation-for-llms.md)
+- [Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve](../sources/taming-throughput-latency-tradeoff-in-llm-inference-with-sarathi-serve.md)

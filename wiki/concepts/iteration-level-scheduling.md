@@ -9,21 +9,26 @@ Iteration-level scheduling means the serving system reconsiders the active batch
 - It enables continuous batching and other fine-grained policies that fit autoregressive generation.
 - It is a direct response to decode-time autoregression: each active request advances one token step, while completed requests leave and new requests join between steps.
 - It makes queueing behavior depend on token steps, not just request count.
+- Token-budgeted variants use each iteration as a scheduling boundary for both ongoing decodes and bounded prefill chunks, reducing long-prompt generation stalls.
 
 ## Limits
 
 - Fine-grained scheduling still needs compatible memory management and batch composition rules.
 - It reduces one kind of interference but does not itself solve cross-phase contention or decode-side resource hotspots.
+- Eagerly admitting full prefills can still harm tail TBT; iteration-level control needs a policy for how much prefill work is allowed into each step.
 
 ## Related Pages
 
 - [Disaggregated LLM Inference](../topics/disaggregated-llm-inference.md)
 - [PagedAttention](pagedattention.md)
 - [Autoregressive Generation](autoregressive-generation.md)
+- [Chunked Prefill Scheduling](chunked-prefill-scheduling.md)
 
 ## Sources
 
 - [Orca: A Distributed Serving System for Transformer-Based Generative Models](../sources/orca-a-distributed-serving-system-for-transformer-based-generative-models.md)
 - [Efficient Memory Management for Large Language Model Serving with PagedAttention](../sources/efficient-memory-management-for-large-language-model-serving-with-pagedattention.md)
 - [How to Generate Tokens Faster: A vLLM Performance Model](../sources/vllm-performance-model.md)
+- [DeepSpeed-FastGen: High-throughput Text Generation for LLMs via MII and DeepSpeed-Inference](../sources/deepspeed-fastgen-high-throughput-text-generation-for-llms.md)
+- [Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve](../sources/taming-throughput-latency-tradeoff-in-llm-inference-with-sarathi-serve.md)
 - [3.8 从Transformer到LLM自回归生成深入理解](../sources/transformer-to-llm-autoregressive-generation.md)

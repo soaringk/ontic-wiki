@@ -5,10 +5,13 @@ This file is maintained by the agent.
 ## Sources
 
 - [Efficient Memory Management for Large Language Model Serving with PagedAttention](sources/efficient-memory-management-for-large-language-model-serving-with-pagedattention.md) - Paged KV-cache management paper behind vLLM that cuts fragmentation and raises effective serving batch size.
+- [Accelerating Large Language Model Decoding with Speculative Sampling](sources/accelerating-large-language-model-decoding-with-speculative-sampling.md) - DeepMind speculative sampling paper that uses draft-model proposals plus target-model rejection sampling to speed decode while preserving the target distribution.
+- [DeepSpeed-FastGen: High-throughput Text Generation for LLMs via MII and DeepSpeed-Inference](sources/deepspeed-fastgen-high-throughput-text-generation-for-llms.md) - DeepSpeed serving paper introducing Dynamic SplitFuse to compose prompt and generation tokens into consistent token-budgeted forward passes.
 - [How Should We Learn Again When AI Defeats Exam-Oriented Education?](sources/how-should-we-learn-again-when-ai-defeats-exam-oriented-education.md) - Video interview on AI-native learning, brain-inspired AI, System 1/System 2 intelligence, and why memorization-heavy education loses value.
 - [Inference without Interference: Disaggregate LLM Inference for Mixed Downstream Workloads](sources/inference-without-interference-disaggregate-llm-inference-for-mixed-downstream-workloads.md) - Mixed-workload serving paper that combines disaggregation, chunked prefill, and length-aware decode scheduling.
 - [The Bitter Lesson](sources/the-bitter-lesson.md) - Classic argument that scalable general methods using search, learning, and compute beat hand-built human knowledge in the long run.
 - [DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving](sources/distserve-disaggregating-prefill-and-decoding-for-goodput-optimized-large-language-model-serving.md) - Goodput-oriented serving design that separates prefill and decode to satisfy TTFT and TPOT together.
+- [Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve](sources/taming-throughput-latency-tradeoff-in-llm-inference-with-sarathi-serve.md) - Scheduler paper using chunked prefills and stall-free batching to reduce generation stalls while preserving serving capacity.
 - [CUDA C Programming Introduction - Parallel Computing](sources/cuda-c-programming-introduction-parallel-computing.md) - Introductory CUDA notes on the host-device model, thread hierarchy, and memory-aware performance.
 - [LLM Inference Performance Engineering Best Practices](sources/llm-inference-performance-engineering-best-practices.md) - Serving guide covering TTFT/TPOT, batching, memory-bandwidth limits, and hardware trade-offs.
 - [LLM Deployment Principles and Memory Estimation Cheat Sheet](sources/llm-deployment-principles-and-memory-estimation.md) - Deployment notes covering redundancy, GPU memory estimation, KV cache sizing, and first-response recovery.
@@ -20,6 +23,7 @@ This file is maintained by the agent.
 - [Splitwise: Efficient Generative LLM Inference Using Phase Splitting](sources/splitwise-efficient-generative-llm-inference-using-phase-splitting.md) - Phase-splitting paper that maps compute-heavy prefill and memory-bound decode onto different hardware pools.
 - [Two Lessons from ICLR 2025](sources/two-lessons-from-iclr-2025.md) - Methodological critique that anchors AI progress in near-100%-reliable capabilities rather than hype and speculative roadmaps.
 - [Self-Attention Mechanism Deep Dive](sources/self-attention-mechanism-deep-dive.md) - Detailed attention guide covering QKV roles, scaled dot-product attention, softmax stability, MQA/GQA/MLA, causal masking, and FlashAttention IO behavior.
+- [Self-attention Does Not Need O(n^2) Memory](sources/self-attention-does-not-need-o-n2-memory.md) - Exact memory-efficient attention paper separating quadratic attention time from avoidable quadratic attention-matrix memory.
 - [3.4 Transformer前馈网络FFN深入理解](sources/transformer-ffn-deep-dive.md) - Chinese AI Infra Guide chapter on FFN structure, SwiGLU, parameter sizing, tensor parallel FFN splits, MoE experts, and FFN kernel fusion.
 - [3.5 Transformer位置编码深入理解](sources/transformer-positional-encoding-deep-dive.md) - Chinese AI Infra Guide chapter on positional encoding, RoPE, ALiBi, long-context RoPE scaling, kernel fusion, and KV-cache implications.
 - [3.6 LayerNorm与残差连接深入理解](sources/layernorm-and-residual-connections-deep-dive.md) - Chinese AI Infra Guide chapter on residual paths, LayerNorm, RMSNorm, Pre-Norm/Post-Norm, DeepNorm, and fused normalization kernels.
@@ -41,33 +45,34 @@ This file is maintained by the agent.
 
 - [CUDA Programming](topics/cuda-programming.md) - Durable overview of CUDA execution, synchronization, and performance-sensitive design.
 - [AI-Native Learning](topics/ai-native-learning.md) - Shift from memorization and exam drilling toward self-directed, first-principles, AI-assisted open-ended learning.
-- [Disaggregated LLM Inference](topics/disaggregated-llm-inference.md) - Serving view that separates prefill and decode so each phase can be scheduled, provisioned, and cached on its own terms.
+- [Disaggregated LLM Inference](topics/disaggregated-llm-inference.md) - Serving view that separates prefill and decode while tracking colocated chunked-prefill schedulers as a partial interference-mitigation alternative.
 - [Experiential AI](topics/experiential-ai.md) - View of advanced agents as long-lived, grounded learners, plus the live dispute over human-derived priors, algorithms, evaluation, and reliability.
-- [LLM Deployment and Capacity Planning](topics/llm-deployment-and-capacity-planning.md) - Operating view of model serving focused on memory planning, latency metrics, batching, and incident response.
+- [LLM Deployment and Capacity Planning](topics/llm-deployment-and-capacity-planning.md) - Operating view of model serving focused on memory planning, latency metrics, token-budgeted batching, and incident response.
 - [Private Credit](topics/private-credit.md) - Non-bank lending market spanning direct lending, asset-based finance, and increasingly entangled funding channels.
-- [Transformer Architecture and Attention](topics/transformer-architecture-and-attention.md) - Foundational model of tokenization, attention, mask semantics, RoPE, decoder-only blocks, sampling, KV cache, and serving optimization targets.
+- [Transformer Architecture and Attention](topics/transformer-architecture-and-attention.md) - Foundational model of tokenization, attention, mask semantics, RoPE, decoder-only blocks, sampling, KV cache, exact memory-efficient attention, and serving optimization targets.
 - [Embedding Memory Geometry](topics/embedding-memory-geometry.md) - Geometric study of semantic memory: effective dimension, consolidation limits, and the tight/spread phase boundary that determines centroid near-optimality on real text.
 - [Compression and Language Models](topics/compression-and-language-models.md) - Prediction-compression equivalence, LLMs as general-purpose cross-modal compressors, and scaling-law insights from adjusted compression rates.
 - [Vector Database and ANN Search](topics/vector-database-and-ann-search.md) - Vector databases for RAG and semantic search, covering ANN algorithms (K-Means, PQ, HNSW, LSH), similarity measures, and filtering strategies.
 
 ## Concepts
 
-- [Attention Mechanism](concepts/attention-mechanism.md) - Q/K/V weighting operation behind self-attention, multi-head attention implementation, masking variants, FlashAttention, and KV cache.
-- [Autoregressive Generation](concepts/autoregressive-generation.md) - Next-token generation loop that creates prefill/decode phases, KV-cache reuse, TTFT/TPOT trade-offs, and iteration-level scheduling needs.
+- [Attention Mechanism](concepts/attention-mechanism.md) - Q/K/V weighting operation behind self-attention, multi-head attention implementation, masking variants, online-softmax memory reductions, FlashAttention, and KV cache.
+- [Autoregressive Generation](concepts/autoregressive-generation.md) - Next-token generation loop that creates prefill/decode phases, KV-cache reuse, TTFT/TPOT trade-offs, and chunked iteration-level scheduling needs.
+- [Chunked Prefill Scheduling](concepts/chunked-prefill-scheduling.md) - Token-budgeted prompt processing technique that splits long prefills and mixes chunks with decode work to reduce generation stalls.
 - [Token Sampling Strategies](concepts/token-sampling-strategies.md) - Greedy, temperature, Top-K, and Top-P policies for choosing the next token from logits during autoregressive generation.
-- [Speculative Decoding](concepts/speculative-decoding.md) - Decode acceleration technique where a draft model proposes candidate tokens and the target model verifies them in parallel.
+- [Speculative Decoding](concepts/speculative-decoding.md) - Decode acceleration technique where a draft model proposes candidate tokens and target-model verification plus rejection sampling preserves the output distribution.
 - [Brain-Inspired AI](concepts/brain-inspired-ai.md) - Neuroscience-informed view that future AI may need richer neural complexity, long-range feedback, parallel perception, and embodied action loops.
 - [Context Caching in LLM Serving](concepts/context-caching-in-llm-serving.md) - Reuse of prefix KV state across requests to reduce repeated prefill work.
 - [CUDA Thread Hierarchy](concepts/cuda-thread-hierarchy.md) - The `Grid -> Block -> Thread` structure that defines CUDA work partitioning.
 - [Grounded Rewards](concepts/grounded-rewards.md) - Environmental feedback signals used to optimize agent behavior beyond human prejudgement.
 - [GPU Memory Hierarchy](concepts/gpu-memory-hierarchy.md) - The trade-offs among registers, shared memory, local memory, and global memory.
 - [Integer-Only Quantization](concepts/integer-only-quantization.md) - Low-bit deployment approach that pairs scale and zero-point with integer arithmetic and quantization-aware training.
-- [Iteration-Level Scheduling](concepts/iteration-level-scheduling.md) - Serving policy that re-forms batches after each generation step instead of at full-request granularity.
+- [Iteration-Level Scheduling](concepts/iteration-level-scheduling.md) - Serving policy that re-forms batches after each generation step and needs token-budget rules to prevent full-prefill stalls.
 - [KV Cache in LLM Serving](concepts/kv-cache-in-llm-serving.md) - Why attention cache dominates variable inference memory and how to estimate it.
-- [Model Bandwidth Utilization](concepts/model-bandwidth-utilization.md) - A normalized measure of how efficiently an inference stack uses available memory bandwidth.
+- [Model Bandwidth Utilization](concepts/model-bandwidth-utilization.md) - A normalized measure of inference memory-bandwidth efficiency and decode-side compute slack exploitable by bounded prefill work.
 - [PagedAttention](concepts/pagedattention.md) - Block-based KV-cache layout that trades contiguous allocation for much better utilization and sharing.
 - [Parallelism in LLM Serving](concepts/parallelism-in-llm-serving.md) - Tensor/expert parallelism distinctions, including attention-head and FFN split points for Transformer serving.
-- [Prefill-Decode Disaggregation](concepts/prefill-decode-disaggregation.md) - Separation of parallel prompt processing and sequential KV-cache-heavy token generation into different serving pools.
+- [Prefill-Decode Disaggregation](concepts/prefill-decode-disaggregation.md) - Separation of parallel prompt processing and sequential KV-cache-heavy token generation into different serving pools, contrasted with colocated chunked-prefill schedulers.
 - [Rated Note Feeders](concepts/rated-note-feeders.md) - Structured wrappers that make private-credit exposure easier for regulated investors to hold.
 - [Streams of Experience](concepts/streams-of-experience.md) - Long-lived action-observation trajectories that support adaptation and long-horizon optimization.
 - [Unitranche Loans](concepts/unitranche-loans.md) - Single-loan structures that merge senior and junior debt to trade clarity for execution speed.

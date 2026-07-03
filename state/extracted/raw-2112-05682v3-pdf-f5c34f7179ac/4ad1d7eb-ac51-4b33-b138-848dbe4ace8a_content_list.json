@@ -1,0 +1,1223 @@
+[
+    {
+        "type": "text",
+        "text": "SELF-ATTENTION DOES NOT NEED $O ( n ^ { 2 } )$ MEMORY",
+        "text_level": 1,
+        "bbox": [
+            187,
+            122,
+            810,
+            146
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "A PREPRINT",
+        "bbox": [
+            452,
+            181,
+            544,
+            195
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Markus N. Rabe and Charles Staats Google Research {mrabe,cstaats}@google.com",
+        "bbox": [
+            370,
+            222,
+            627,
+            265
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "ABSTRACT",
+        "text_level": 2,
+        "bbox": [
+            449,
+            314,
+            547,
+            329
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "We present a very simple algorithm for attention that requires $O ( 1 )$ memory with respect to sequence length and an extension to self-attention that requires $O ( \\log n )$ memory. This is in contrast with the frequently stated belief that self-attention requires $O ( n ^ { 2 } )$ memory. While the time complexity is still $O ( n ^ { \\bar { 2 } } )$ , device memory rather than compute capability is often the limiting factor on modern accelerators. Thus, reducing the memory requirements of attention allows processing of longer sequences than might otherwise be feasible. We provide a practical implementation for accelerators that requires $O ( { \\sqrt { n } } )$ memory, is numerically stable, and is within a few percent of the runtime of the standard implementation of attention. We also demonstrate how to differentiate the function while remaining memory-efficient. For sequence length 16384, the memory overhead of self-attention is reduced by 59X for inference and by 32X for differentiation.",
+        "bbox": [
+            169,
+            335,
+            826,
+            474
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "1 Introduction",
+        "text_level": 2,
+        "bbox": [
+            114,
+            494,
+            254,
+            508
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Attention (Bahdanau et al., 2015) is widely used in modern neural architectures. In particular, it is the heart of the Transformer architecture (Vaswani et al., 2017), which has revolutionized Natural Language Processing (Devlin et al., 2019), and found wide-spread adoption across several research areas since then.",
+        "bbox": [
+            111,
+            523,
+            885,
+            568
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Given a query $q \\in \\mathbb { R } ^ { d }$ and lists of keys and values $k _ { 1 } , \\ldots , k _ { n }$ and $v _ { 1 } , \\ldots , v _ { n } \\in \\mathbb { R } ^ { d }$ of length n, attention is defined as follows:",
+        "bbox": [
+            112,
+            571,
+            883,
+            599
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "equation",
+        "text": "$$\ns _ {i} = \\mathrm{dot} (q, k _ {i}), \\qquad s _ {i} ^ {\\prime} = \\frac {e ^ {s _ {i}}}{\\sum_ {j} e ^ {s _ {j}}}, \\qquad \\mathrm{attention} (q, k, v) = \\sum_ {i} v _ {i} s _ {i} ^ {\\prime}.\n$$",
+        "text_format": "latex",
+        "bbox": [
+            264,
+            599,
+            730,
+            632
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "The result of the attention operation for a single query, is hence a weighted sum of the value vectors, where the weights are the softmax of the dot products of the query and the keys.",
+        "bbox": [
+            111,
+            633,
+            883,
+            664
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "The straight-forward implementation of the attention operation above requires us to first compute and remember $s _ { i }$ for all i, leading to a $O ( n )$ time and memory complexity for each query. Transformers use self-attention, which issues a separate query for each position in the sequence, so the overall time and space complexity is $O ( n ^ { 2 } )$",
+        "bbox": [
+            111,
+            669,
+            885,
+            713
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "In many works the quadratic time and space complexity of self-attention has been used as the motivation for the investigation of variants of the original attention mechanism and architectures with more favorable complexity classes (Kitaev et al., 2020; Roy et al., 2021; Zaheer et al., 2020; Choromanski et al., 2020; Wang et al., 2020; Ren et al., 2021; Child et al., 2019; Tay et al., 2021; Wang et al., 2020; Ma et al., 2021; Shen et al., 2021; Qiu et al., 2020). Modern accelerator hardware, such as GPUs and TPUs, are often memory constrained for applications in deep learning, while compute is relatively cheap. So the space complexity of transformers is a particular concern, c.f. Kitaev et al. (2020); Roy et al. (2021); Zaheer et al. (2020).",
+        "bbox": [
+            111,
+            717,
+            887,
+            816
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "In this work, we present new algorithms for attention and self-attention that require only constant memory and logarithmic memory, respectively. The basic algorithm is very simple; but it requires a trick to make it numerically feasible (see Section 3). We also present an implementation in JAX (Bradbury et al., 2018), which runs efficiently on TPUs, and requires $O ( { \\sqrt { n } } )$ memory for self-attention (see Section 4).",
+        "bbox": [
+            111,
+            821,
+            887,
+            878
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Unlike other works that aim to reduce the memory complexity of attention, the memory-efficient algorithm for attention that we suggest is not an approximation, but computes the same function. We can hence use the memory-efficient algorithm as a drop-in replacement for other attention implementations to save memory. This may allow us to reconsider architecture choices, or scale to new datasets that require longer, dense attention. However, our algorithm still requires $O ( n ^ { 2 } )$ time complexity for self-attention and $O ( \\overset { \\cdot } { n } )$ time complexity for single-query attention, and the various efficient, long-context attention mechanisms remain an interesting alternative to (dense) attention.",
+        "bbox": [
+            111,
+            883,
+            885,
+            912
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "aside_text",
+        "text": "arXiv:2112.05682v3 [cs.LG] 10 Oct 2022",
+        "bbox": [
+            22,
+            239,
+            58,
+            679
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            109,
+            90,
+            887,
+            148
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "2 Algorithm",
+        "text_level": 2,
+        "bbox": [
+            112,
+            165,
+            236,
+            183
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "First, we present the algorithm for the attention operation with a single query and extend the algorithm to self-attention at the end of this Section. We observe that the division by $\\textstyle \\sum _ { j } e ^ { s _ { j } }$ can be moved to the very end of the attention operation using the distributive law:",
+        "bbox": [
+            111,
+            195,
+            883,
+            239
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "equation",
+        "text": "$$\ns _ {i} = \\mathrm{dot} (q, k _ {i}), \\qquad s _ {i} ^ {\\prime} = e ^ {s _ {i}}, \\qquad \\mathrm{attention} (q, k, v) = \\frac {\\sum_ {i} v _ {i} s _ {i} ^ {\\prime}}{\\sum_ {j} s _ {j} ^ {\\prime}}.\\tag{1}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            277,
+            239,
+            717,
+            276
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "After publishing our initial draft, we were made aware that (1) is a rediscovery of the “lazy softmax\" method of Jang et al. (2019, equation 4). Unfortunately their paper went in a different direction and did not discuss the memory complexity implications and other innovations we present in the remainder of this paper. For more details see Section 6.",
+        "bbox": [
+            109,
+            282,
+            885,
+            339
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "This can be computed with constant memory: The memory overhead of this algorithm consists of a vector $v ^ { * } \\in \\mathbb { R } ^ { d }$ and a scalar $s ^ { * } \\in \\mathbb { R }$ , both initialized with 0. Given the query q, keys $k _ { 1 } , \\ldots , k _ { n }$ and values $v _ { 1 } , \\ldots , v _ { n }$ , we process the keys and values in sequence. Given a key value pair $k _ { i } , v _ { i }$ , we compute $s _ { i } = \\operatorname* { d o t } ( \\boldsymbol q , \\boldsymbol k _ { i } )$ and update $v ^ { * }  v ^ { * } + v _ { i } e ^ { s _ { i } }$ and $s ^ { * }  s ^ { * } + e ^ { s _ { i } }$ . After processing all keys and values, we divide $\\frac { v ^ { * } } { s ^ { * } }$ to get the final result.",
+        "bbox": [
+            111,
+            344,
+            883,
+            404
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "The analysis of space complexity assumes that inputs are given in a particular order: we first read the query, and then a list of pairs of keys and values. If the inputs are provided in a different order, we have to additionally store an index into the sequence, requiring $O ( \\log n )$ memory instead.",
+        "bbox": [
+            111,
+            409,
+            883,
+            453
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "To extend this algorithm to self-attention, we compute the results to all queries sequentially. This requires just one additional index into the list of queries, giving rise to the $O ( \\log n )$ memory complexity. Note that the operation produces outputs that are linear in the size of the number of queries, i.e., O(n), which is not counted towards the space complexity.",
+        "bbox": [
+            111,
+            457,
+            885,
+            515
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "3 Numerical Stability",
+        "text_level": 2,
+        "bbox": [
+            112,
+            531,
+            310,
+            549
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "The formulation of standard attention that we presented in the Introduction, as well as our memory-efficient algorithm, are not numerically stable when using floating point arithmetic, because the softmax exponentiates the scores. For scores $\\geq 8 9$ the exponentiation results in inf (for bfloat16 and float32), which will be carried through to the final result of the attention operation. In practice, the softmax is implemented by subtracting the maximum score from all scores. This does not change the result of the softmax, but avoids this numerical problem.",
+        "bbox": [
+            111,
+            561,
+            885,
+            632
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "Our incremental computation of the sum of exponentiated scores (and the values times the scores) does not immediately allow for the same trick, as the maximum may depend on the last score in the sequence. But the subtraction cannot be delayed either, since the scores must be exponentiated before they can be added to the cumulative sum.",
+        "bbox": [
+            111,
+            637,
+            885,
+            681
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "To resolve this problem, we introduce an additional scalar, which keeps track of the maximum score that the incremental algorithm has seen so far, and we renormalize the sums of exponentiated values as needed: We initialize the vector $v ^ { * } \\in \\mathbb { R } ^ { d }$ and scalar $s ^ { * } \\in \\mathbb { R }$ with 0, and $m ^ { * }$ with inf. As before, given a key value pair $k _ { i } , v _ { i } ,$ we compute $s _ { i } = \\operatorname* { d o t } ( q , k _ { i } )$ , but then the algorithm differs slightly from Section 2. We first compute $m _ { i } = \\operatorname* { m a x } ( m ^ { * } , s _ { i } )$ and update $v ^ { * }  v ^ { * } e ^ { m ^ { * } - m _ { i } } + v _ { i } e ^ { s _ { i } - m _ { i } }$ and $s ^ { * }  s ^ { * } e ^ { m ^ { * } - m _ { i } } + e ^ { s _ { i } - m _ { i } }$ and $m ^ { * } \\gets m _ { i }$ . After processing all keys and queries, we divide $\\frac { v ^ { * } } { s ^ { * } }$ to get the final result.",
+        "bbox": [
+            111,
+            685,
+            885,
+            775
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "4 An Implementation For TPUs",
+        "text_level": 2,
+        "bbox": [
+            112,
+            791,
+            398,
+            808
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "In this section, we provide a version of the algorithm above that exploits the massive parallelism of modern hardware, such as GPUs or TPUs. The naive algorithm above is is not trivial to parallelize for a compiler, as the incremental sum introduces a dependency across all keys and values.",
+        "bbox": [
+            111,
+            821,
+            885,
+            864
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "We present the entire implementation, including the support for multiple attention heads and memory-efficient differentiation in Figure 1. The implementation does not optimize strictly for memory efficiency, but instead aims to strike a balance between simplicity, computational efficiency, and memory requirements.",
+        "bbox": [
+            109,
+            869,
+            885,
+            912
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "header",
+        "text": "Self-attention Does Not Need O(n ) Memory",
+        "bbox": [
+            344,
+            42,
+            651,
+            56
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "header",
+        "text": "A PREPRINT",
+        "bbox": [
+            800,
+            44,
+            883,
+            56
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "page_number",
+        "text": "2",
+        "bbox": [
+            493,
+            936,
+            504,
+            948
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "code",
+        "sub_type": "code",
+        "code_caption": [
+            "Figure 1: Implementation of memory-efficient attention suited for TPUs."
+        ],
+        "code_body": "```python\nimport functools, jax, math\nfrom jax import numpy as jnp\n\ndef _query_chunk_attention(query, key, value, precision, key_chunk_size=4096):\n    \"\"\"Multi-head dot product attention with a limited number of queries.\"\"\"\n    num_kv, num_heads, k_features = key.shape\n    v_features = value.shape[-1]\n    key_chunk_size = min(key_chunk_size, num_kv)\n    query = query / jnp.sqrt(k_features)\n\n@functools.partial(jax.checkpoint, prevent_cse=False)\ndef summarize_chunk(query, key, value):\n    attn_weights = jnp.einsum('qhd,khd->qhk', query, key, precision=precision)\n    max_score = jnp.max(attn_weights, axis=-1, keepdims=True)\n    max_score = jax.lax.stop_gradient(max_score)\n    exp_weights = jnp.exp(attn_weights - max_score)\n    exp_values = jnp.einsum('vhf,qhv->qhf', value, exp_weights, precision=precision)\n    return (exp_values, exp_weights.sum(axis=-1),\n    max_score.reshape((query.shape[0], num_heads)))\n\ndef chunk_scanner(chunk_idx):\n    key_chunk = jax.lax.dynamic_slice(\n    key, (chunk_idx, 0, 0),\n    slice_sizes=(key_chunk_size, num_heads, k_features))\n    value_chunk = jax.lax.dynamic_slice(\n    value, (chunk_idx, 0, 0),\n    slice_sizes=(key_chunk_size, num_heads, v_features))\n    return summarize_chunk(query, key_chunk, value_chunk)\n\nchunk_values, chunk_weights, chunk_max = jax.lax.map(\n    chunk_scanner, xs=jnp.arange(0, num_kv, key_chunk_size))\n\nglobal_max = jnp.max(chunk_max, axis=0, keepdims=True)\nmax_diffs = jnp.exp(chunk_max - global_max)\nchunk_values *= jnp.expand_dims(max_diffs, axis=-1)\nchunk_weights *= max_diffs\n\nall_values = chunk_values.sum(axis=0)\nall_weights = jnp.expand_dims(chunk_weights, -1).sum(axis=0)\nreturn all_values / all_weights\n\ndef attention(query, key, value, precision=jax.lax.Precision.HIGHEST,\n    query_chunk_size=1024):\n    \"\"\"Memory-efficient multi-head dot product attention.\"\"\"\n    num_q, num_heads, q_features = query.shape\n\ndef chunk_scanner(chunk_idx, ):\n    query_chunk = lax.dynamic_slice(\n    query, (chunk_idx, 0, 0),\n    slice_sizes=(min(query_chunk_size, num_q), num_heads, q_features))\n    return (chunk_idx + query_chunk_size,\n    _query_chunk_attention(query_chunk, key, value, precision=precision))\n    _, res = jax.lax.scan(\n    chunk_scanner, init=0, xs=None, length=Math.ceil(num_q / query_chunk_size))\n    return res.reshape(num_q, num_heads, value.shape[-1])\n```",
+        "bbox": [
+            99,
+            85,
+            862,
+            864
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "header",
+        "text": "Self-attention Does Not Need O(n<sup>2</sup>) Memory",
+        "bbox": [
+            344,
+            42,
+            651,
+            58
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "header",
+        "text": "A PREPRINT",
+        "bbox": [
+            800,
+            44,
+            883,
+            56
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "page_number",
+        "text": "3",
+        "bbox": [
+            493,
+            935,
+            504,
+            948
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "table",
+        "img_path": "images/20c7f56fcee46ee8f03dcd0c1a8ab9c9ae7ee6227e11ba4843ea00ec5186e93d.jpg",
+        "table_caption": [
+            "Table 2: Memory and time requirements of self-attention during inference."
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>Sequence length</td><td> $n = 2^8$ </td><td> $2^{10}$ </td><td> $2^{12}$ </td><td> $2^{14}$ </td><td> $2^{16}$ </td><td> $2^{18}$ </td><td> $2^{20}$ </td></tr><tr><td>Size of inputs and outputs</td><td>160KB</td><td>640KB</td><td>2.5MB</td><td>10MB</td><td>40MB</td><td>160MB</td><td>640MB</td></tr><tr><td>Memory overhead of standard attention</td><td>270KB</td><td>4.0MB</td><td>64MB</td><td>1GB</td><td>OOM</td><td>OOM</td><td>OOM</td></tr><tr><td>Memory overhead of memory-eff. attn.</td><td>270KB</td><td>4.0MB</td><td>16MB</td><td>17MB</td><td>21MB</td><td>64MB</td><td>256MB</td></tr><tr><td>Compute time on TPUv3</td><td>0.06ms</td><td>0.11ms</td><td>0.7ms</td><td>11.3ms</td><td>177ms</td><td>2.82s</td><td>45.2s</td></tr><tr><td>Relative compute speed</td><td>±5%</td><td>±5%</td><td>-8±2%</td><td>-13±2%</td><td>-</td><td>-</td><td>-</td></tr></table>",
+        "bbox": [
+            119,
+            85,
+            877,
+            176
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "To exploit the parallelism available in modern hardware, we split the computation into chunks at the cost of some additional memory. In the outer loop (lines 54-55), we split the queries in to chunks of constant size, resulting in a linear number of iterations. In each iteration of the outer loop, we call \\_query\\_chunk\\_attention, which itself processes the keys and values in chunks (lines 30-31). The chunks are processed sequentially and each chunk is summarized independently (lines 12 to 19). Assuming a chunk size of $\\sqrt { n }$ for the keys and values, we hence obtain $\\sqrt { n }$ summaries, giving rise to the $O ( { \\sqrt { n } } )$ memory complexity.",
+        "bbox": [
+            109,
+            244,
+            885,
+            330
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "After the summaries are computed, they need to be rescaled (lines 33 to 36) along the lines of Section 3, before we return the values divided by the weights (line 40). The result of each iteration of the outer loop is directly written to the output tensor res (line 54), so that no additional memory is consumed across iterations. (A multi-stage summarization approach could achieve $O ( \\log n )$ but would complicate the implementation.)",
+        "bbox": [
+            111,
+            334,
+            885,
+            391
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "While a constant chunk size for the queries and a chunk size of $\\sqrt { n }$ for the keys and values is optimal for memory consumption, the runtime is also affected by the choice of chunk size in practice, which is heavily affected by the choice of hardware. Ultimately, we have to leave this trade-off to the programmer, and expose the chunk sizes as arguments query\\_chunk\\_size and key\\_chunk\\_size. In Figure 1 we provide default values for the chunk sizes that lead to minimal runtime impact on TPU, while still providing significant memory savings.",
+        "bbox": [
+            109,
+            396,
+            885,
+            467
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "5 Empirical Analysis",
+        "text_level": 2,
+        "bbox": [
+            112,
+            494,
+            308,
+            512
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "In this section, we experimentally compare the memory requirements and runtime performance of the suggested algorithm compared to the implementation of attention currently provided by Flax (Heek et al. (2020), see flax/linen/attention.py). We open-sourced the code of our implementation and most of the evaluation as a colab to help others reproduce the results: https://github.com/google-research/google-research/tree/master/memory\\_efficient\\_attention.",
+        "bbox": [
+            109,
+            532,
+            885,
+            604
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "5.1 Inference",
+        "text_level": 2,
+        "bbox": [
+            112,
+            626,
+            223,
+            641
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "In Table 2 we compare the memory requirements and the compute time of the memory-efficient attention implementation and the Flax implementation of attention. The size of inputs and outputs includes the query, key, and value tensors of dtype bfloat16, and the output tensor of dtype float32. We measure the memory overhead as the TPUs peak memory in excess of the input and output tensors. All computations were done on a single TPUv3 chip. For this experiment, we only use one attention head.",
+        "bbox": [
+            109,
+            655,
+            885,
+            727
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Our memory-efficient implementation of attention removes the memory bottleneck of self-attention, scaling at least to a sequence length of 1M. At this sequence length the algorithm is multiplying over 1 trillion combinations of queries and keys. The time complexity is still quadratic.",
+        "bbox": [
+            109,
+            731,
+            885,
+            775
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "The “relative compute speed” of the implementations was computed as the median over 100 runs—but the numbers still fluctuated across multiple runs of the evaluation and we only provide them to demonstrate that the runtime performance is roughly similar. Please note that this experiment analyzes the attention operation in isolation; the measured relative performance is not necessarily the same when the operations are embedded in larger architectures. In fact, we observed a slight increase in steps/sec of about 4% when training a small Transformer.",
+        "bbox": [
+            109,
+            779,
+            885,
+            851
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "For all cases where the standard attention would not OOM (i.e. require > 16GB device memory), we checked that the results of the two implementations are within $1 . 8 \\times 1 0 ^ { - 7 }$ for inputs drawn from a normal distribution with standard deviation 1 (measured as the maximal absolute difference of any dimension in a self-attention over sequence length 2<sup>14</sup>).",
+        "bbox": [
+            111,
+            854,
+            885,
+            912
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "header",
+        "text": "Self-attention Does Not Need O(n ) Memory",
+        "bbox": [
+            344,
+            42,
+            651,
+            56
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "header",
+        "text": "A PREPRINT",
+        "bbox": [
+            800,
+            44,
+            883,
+            56
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "page_number",
+        "text": "4",
+        "bbox": [
+            493,
+            936,
+            504,
+            946
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "table",
+        "img_path": "images/1b3fd8b018774fc00f72d49be70ebce24f7e9f568ab24cca8adba73581ad02b0.jpg",
+        "table_caption": [
+            "Table 3: Memory and time requirements of self-attention during differentiation. Note that the slowdown in compute speed is expected due to the use of checkpointing in memory-efficient attention."
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>Sequence length</td><td> $n = 2^8$ </td><td> $2^{10}$ </td><td> $2^{12}$ </td><td> $2^{14}$ </td><td> $2^{16}$ </td><td> $2^{18}$ </td><td> $2^{20}$ </td></tr><tr><td>Size of inputs and outputs</td><td>192KB</td><td>768KB</td><td>2.9MB</td><td>12MB</td><td>47MB</td><td>188MB</td><td>750MB</td></tr><tr><td>Memory overhead of standard attention</td><td>532KB</td><td>8.0MB</td><td>128MB</td><td>2.0GB</td><td>OOM</td><td>OOM</td><td>OOM</td></tr><tr><td>Memory overhead of memory-eff. attn.</td><td>532KB</td><td>8.0MB</td><td>41MB</td><td>64MB</td><td>257MB</td><td>1.0GB</td><td>4.0GB</td></tr><tr><td>Compute time on TPUv3</td><td>0.1ms</td><td>0.18ms</td><td>1.4ms</td><td>21ms</td><td>336ms</td><td>5.3s</td><td>85s</td></tr><tr><td>Relative compute speed</td><td>±5%</td><td>±5%</td><td>-30±5%</td><td>-35±5%</td><td>-</td><td>-</td><td>-</td></tr></table>",
+        "bbox": [
+            114,
+            84,
+            887,
+            178
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "chart",
+        "img_path": "images/bf064894f8fc58af9ea532aaef299e019313da8ee06f39198924b517fabee502.jpg",
+        "content": "",
+        "chart_caption": [
+            "Figure 4: BLEU scores of a two Transformer models trained with standard attention and memory-efficient attention."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            339,
+            243,
+            661,
+            478
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "5.2 Differentiation",
+        "text_level": 2,
+        "bbox": [
+            112,
+            537,
+            259,
+            551
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "During the forward pass our algorithm saves memory by summarizing parts of the attention matrix sequentially, allow ing it to forget the parts of the attention matrix it has summarized already. A naive application of differentiation would have to store all those intermediate results and our algorithm would loose its memory advantage entirely. So we apply checkpointing (Chen et al., 2016) in line 11 to the function that summarizes the individual chunks. The intermediate results can thus be forgotten during the forward pass and recomputed during backpropagation.",
+        "bbox": [
+            111,
+            566,
+            887,
+            638
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "In Table 3 we compare runtime and peak memory during differentiation of our implementation to standard attention. We used the same setting as for the forward pass, but applied jax.grad to an arbitrarily chosen loss function (the sum of the results). The relative compute speed was reduced significantly compared to standard attention. This is expected when using checkpointing since some values must be recomputed during backpropagation.",
+        "bbox": [
+            111,
+            642,
+            885,
+            700
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Note that applying checkpointing to the standard attention algorithm would not achieve these results. The standard algorithm with checkpointing would forget the attention matrix after it is formed; our algorithm never forms the full attention matrix at all.",
+        "bbox": [
+            111,
+            704,
+            885,
+            747
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "5.3 Training",
+        "text_level": 2,
+        "bbox": [
+            112,
+            771,
+            217,
+            787
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "We integrated our memory-efficient implementation into a simple Transformer architecture provided in the Flax library, and ran the WMT en-de translation experiment with the standard attention module and with the memory-efficient attention module. Throughout the training, the two implementations behaved almost identically. After 100K training steps, the evaluation accuracy reached 62.69 for the memory-efficient implementation and 62.59 for the standard implementation. This demonstrates that our memory-efficient implementation of self-attention can be used to replace existing implementations. Figure 4 illustrates that both models resulted in very similar BLEU scores. We used the default settings for the WMT en-de experiment as given in the Flax implementation, except that we had to deactivate example packing to simplify the masking code. This also required us to lower the learning rate to 0.005.",
+        "bbox": [
+            109,
+            800,
+            887,
+            914
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "header",
+        "text": "Self-attention Does Not Need O(n ) Memory",
+        "bbox": [
+            344,
+            42,
+            651,
+            56
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "header",
+        "text": "A PREPRINT",
+        "bbox": [
+            800,
+            44,
+            883,
+            56
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "page_number",
+        "text": "5",
+        "bbox": [
+            493,
+            936,
+            504,
+            948
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "chart",
+        "img_path": "images/c5ada5b5bee1255bf9a0de4ea41059a4523c981b8e360d411eb1761239eb376c.jpg",
+        "content": "",
+        "chart_caption": [],
+        "chart_footnote": [],
+        "bbox": [
+            143,
+            90,
+            470,
+            328
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "chart",
+        "img_path": "images/336a3c92ed18062a96a4840a2d8726d38142bca44d78bef5af02c544c55a8e4b.jpg",
+        "content": "",
+        "chart_caption": [
+            "Figure 5: Left: Relative runtime of self-attention on sequence length $2 ^ { 1 5 }$ using query chunking compared to standard attention. Right: Relative runtime of self-attention using query chunking compared to our memory-efficient algorithm, where both are restricted to the same amount of memory."
+        ],
+        "chart_footnote": [],
+        "bbox": [
+            532,
+            93,
+            857,
+            328
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "5.4 Comparison to Query Chunking",
+        "text_level": 2,
+        "bbox": [
+            112,
+            396,
+            382,
+            412
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "The algorithms introduced in this work chunk both the keys and the queries. Chunking the only queries has been explored already by Kitaev et al. (2020), but it is folklore that it slows down the computation significantly. In Figure 5 (left), we plot the runtime of self-attention using query-chunking for different query chunk sizes compared to dense self-attention: we see that for small chunk sizes (e.g. 64) the performance suffers indeed, but for large chunk sizes, the loss of performance is less significant. So, while lower memory consumption can be achieved by query chunking alone, small values for query chunking are impractical.",
+        "bbox": [
+            111,
+            422,
+            885,
+            507
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "In comparison to query chunking, memory-efficient attention can save additional memory by chunking also the keys. This can help to keep the query chunk size at a desirable point given a fixed memory limit. In Figure 5, we constrained query chunking to the amount of memory that is used by memory-efficient attention with the default settings for key and query chunk size (see Table 2, “Memory overhead of memory-efficient att.”, we rounded the query chunk size towards the benefit of query chunking). We see that as the sequence length increases, query chunking eventually slows down significantly as the query chunk size has to be lowered $\\mathrm { t o } \\leq 6 4$ , while memory-efficient attention does not suffer a major slowdown (see Table 2, “Relative compute speed”). So, in memory-constrained scenarios, memory-efficient attention can outperform query chunking.",
+        "bbox": [
+            109,
+            512,
+            887,
+            625
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "6 Related Work",
+        "text_level": 2,
+        "bbox": [
+            112,
+            642,
+            264,
+            659
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "After publishing our initial draft, we were made aware that Jang et al. (2019) already observed that the division of the softmax operation can be delayed until the end of the attention operation (“lazy softmax”), similar to our Equation (1). But their paper does not discuss memory complexity at all. They also do not address numerical stability or backpropagation, and, as far as we know, there is no publicly available implementation of their work. Instead they use this algorithm to reduce the memory bandwidth for inference when sharding key-value pairs across multiple chips.",
+        "bbox": [
+            109,
+            672,
+            885,
+            744
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Dao et al. (2022) provide a CUDA implementation of memory-efficient attention and demonstrate that the reduced memory requirements can translate to significant speedups on GPUs. One reason why we do not observe the same performance gains in this paper is that standard self-attention already balances the available FLOPs and memory bandwidth of TPUs.",
+        "bbox": [
+            111,
+            750,
+            885,
+            805
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "7 Conclusion",
+        "text_level": 2,
+        "bbox": [
+            112,
+            824,
+            241,
+            840
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "This paper presents a simple trick to reduce the memory requirement of (self-)attention dramatically, which appears to have been simply overlooked by the community. We hope that this short paper raises awareness of the fact that attention is not intrinsically memory-hungry, which may allow us to revisit some of the design choices in popular neural architectures and hardware architectures.",
+        "bbox": [
+            109,
+            854,
+            885,
+            912
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "header",
+        "text": "Self-attention Does Not Need O(n<sup>2</sup>) Memory",
+        "bbox": [
+            344,
+            42,
+            651,
+            56
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "header",
+        "text": "A PREPRINT",
+        "bbox": [
+            800,
+            44,
+            883,
+            56
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "page_number",
+        "text": "6",
+        "bbox": [
+            493,
+            936,
+            504,
+            948
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Acknowledgements",
+        "text_level": 2,
+        "bbox": [
+            112,
+            90,
+            281,
+            107
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "We want to thank Andrew Jaegle for discussions on this paper, and for experimenting with memory-efficient attention in the context of Perceiver (Hawthorne et al., 2022). We are glad to see that the algorithm proposed here has already found interest and would like to thank Rezaei (2021) and Wang (2022) for reimplementations in JAX and PyTorch with additional features like masking. We also want to thank DeLesley Hutchins for detailed feedback on our draft.",
+        "bbox": [
+            109,
+            119,
+            885,
+            178
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "References",
+        "text_level": 2,
+        "bbox": [
+            112,
+            196,
+            210,
+            213
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. In Yoshua Bengio and Yann LeCun (eds.), ICLR, 2015.",
+        "bbox": [
+            112,
+            220,
+            883,
+            250
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "James Bradbury, Roy Frostig, Peter Hawkins, Matthew James Johnson, Chris Leary, Dougal Maclaurin, George Necula, Adam Paszke, Jake VanderPlas, Skye Wanderman-Milne, and Qiao Zhang. JAX: composable transformations of Python+NumPy programs, 2018. URL http://github.com/google/jax.",
+        "bbox": [
+            114,
+            253,
+            885,
+            296
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "Tianqi Chen, Bing Xu, Chiyuan Zhang, and Carlos Guestrin. Training deep nets with sublinear memory cost. CoRR, abs/1604.06174, 2016.",
+        "bbox": [
+            114,
+            300,
+            885,
+            328
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "Rewon Child, Scott Gray, Alec Radford, and Ilya Sutskever. Generating long sequences with sparse transformers. CoRR, abs/1904.10509, 2019. URL http://arxiv.org/abs/1904.10509.",
+        "bbox": [
+            114,
+            333,
+            885,
+            361
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "Krzysztof Choromanski, Valerii Likhosherstov, David Dohan, Xingyou Song, Andreea Gane, Tamás Sarlós, Peter Hawkins, Jared Davis, Afroz Mohiuddin, Lukasz Kaiser, David Belanger, Lucy J. Colwell, and Adrian Weller. Rethinking attention with performers. CoRR, abs/2009.14794, 2020. URL https://arxiv.org/abs/2009.14794.",
+        "bbox": [
+            114,
+            364,
+            885,
+            407
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "Tri Dao, Daniel Y. Fu, Stefano Ermon, Atri Rudra, and Christopher Ré. Flashattention: Fast and memory-efficient exact attention with io-awareness, 2022. URL https://arxiv.org/abs/2205.14135.",
+        "bbox": [
+            114,
+            412,
+            883,
+            441
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. BERT: pre-training of deep bidirectional transformers for language understanding. In Jill Burstein, Christy Doran, and Thamar Solorio (eds.), Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, NAACL-HLT 2019, Minneapolis, MN, USA, June 2-7, 2019, Volume 1 (Long and Short Papers), pp. 4171–4186. Association for Computational Linguistics, 2019. doi: 10.18653/v1/n19-1423. URL https://doi.org/10.18653/v1/n19-1423.",
+        "bbox": [
+            114,
+            445,
+            885,
+            527
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "Curtis Hawthorne, Andrew Jaegle, Cat˘ alina Cangea, Sebastian Borgeaud, Charlie Nash, Mateusz Ma˘ linowski, Sander Dieleman, Oriol Vinyals, Matthew Botvinick, Ian Simon, Hannah Sheahan, Neil Zeghidour, Jean-Baptiste Alayrac, João Carreira, and Jesse Engel. General-purpose, long-context autoregressive modeling with perceiver AR, 2022. URL https://arxiv.org/abs/2202.07765.",
+        "bbox": [
+            114,
+            532,
+            885,
+            588
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "Jonathan Heek, Anselm Levskaya, Avital Oliver, Marvin Ritter, Bertrand Rondepierre, Andreas Steiner, and Marc van Zee. Flax: A neural network library and ecosystem for JAX, 2020. URL http://github.com/google/flax.",
+        "bbox": [
+            114,
+            594,
+            883,
+            622
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "Hanhwi Jang, Joonsung Kim, Jae-Eon Jo, Jaewon Lee, and Jangwoo Kim. Mnnfast: A fast and scalable system architecture for memory-augmented neural networks. In 2019 ACM/IEEE 46th Annual International Symposium on Computer Architecture (ISCA), pp. 250–263, 2019.",
+        "bbox": [
+            114,
+            626,
+            883,
+            667
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "Nikita Kitaev, Łukasz Kaiser, and Anselm Levskaya. Reformer: The efficient transformer. arXiv preprint arXiv:2001.04451, 2020.",
+        "bbox": [
+            114,
+            672,
+            883,
+            700
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "Xuezhe Ma, Xiang Kong, Sinong Wang, Chunting Zhou, Jonathan May, Hao Ma, and Luke Zettlemoyer. Luna: Linear unified nested attention. CoRR, abs/2106.01540, 2021. URL https://arxiv.org/abs/2106.01540.",
+        "bbox": [
+            114,
+            705,
+            883,
+            734
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "Jiezhong Qiu, Hao Ma, Omer Levy, Wen-tau Yih, Sinong Wang, and Jie Tang. Blockwise self-attention for long document understanding. In Findings of the Association for Computational Linguistics: EMNLP 2020, pp. 2555– 2565, 2020.",
+        "bbox": [
+            114,
+            738,
+            885,
+            779
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "Hongyu Ren, Hanjun Dai, Zihang Dai, Mengjiao Yang, Jure Leskovec, Dale Schuurmans, and Bo Dai. Combiner: Full attention transformer with sparse computation cost. arXiv preprint arXiv:2107.05768, 2021.",
+        "bbox": [
+            114,
+            784,
+            885,
+            813
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "Amin Rezaei. Memory efficient attention, 2021. URL https://github.com/AminRezaei0x443/memory-efficient-attention.",
+        "bbox": [
+            114,
+            818,
+            991,
+            832
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "Aurko Roy, Mohammad Saffar, Ashish Vaswani, and David Grangier. Efficient content-based sparse attention with routing transformers. Trans. Assoc. Comput. Linguistics, 9:53–68, 2021. URL https://transacl.org/ojs/index.php/tacl/article/view/2405.",
+        "bbox": [
+            114,
+            837,
+            885,
+            878
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "Zhuoran Shen, Mingyuan Zhang, Haiyu Zhao, Shuai Yi, and Hongsheng Li. Efficient attention: Attention with linear complexities. In IEEE Winter Conference on Applications of Computer Vision, WACV 2021, Waikoloa,",
+        "bbox": [
+            114,
+            883,
+            885,
+            911
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "header",
+        "text": "Self-attention Does Not Need O(n<sup>2</sup>) Memory",
+        "bbox": [
+            344,
+            42,
+            651,
+            56
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "header",
+        "text": "A PREPRINT",
+        "bbox": [
+            800,
+            44,
+            883,
+            56
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "page_number",
+        "text": "7",
+        "bbox": [
+            493,
+            936,
+            504,
+            948
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "ref_text",
+        "text": "HI, USA, January 3-8, 2021, pp. 3530–3538. IEEE, 2021. doi: 10.1109/WACV48630.2021.00357. URL https://doi.org/10.1109/WACV48630.2021.00357.",
+        "bbox": [
+            127,
+            90,
+            883,
+            119
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "ref_text",
+        "text": "Yi Tay, Mostafa Dehghani, Samira Abnar, Yikang Shen, Dara Bahri, Philip Pham, Jinfeng Rao, Liu Yang, Sebastian Ruder, and Donald Metzler. Long range arena : A benchmark for efficient transformers. In 9th International Conference on Learning Representations, ICLR 2021, Virtual Event, Austria, May 3-7, 2021. OpenReview.net, 2021. URL https://openreview.net/forum?id=qVyeW-grC2k.",
+        "bbox": [
+            114,
+            125,
+            885,
+            179
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "ref_text",
+        "text": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Advances in neural information processing systems, pp. 5998–6008, 2017.",
+        "bbox": [
+            114,
+            184,
+            887,
+            213
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "ref_text",
+        "text": "Phil Wang. Memory efficient attention Pytorch, 2022. URL https://github.com/lucidrains/memory-efficient-attention-p",
+        "bbox": [
+            114,
+            215,
+            1000,
+            232
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "ref_text",
+        "text": "Sinong Wang, Belinda Z Li, Madian Khabsa, Han Fang, and Hao Ma. Linformer: Self-attention with linear complexity. arXiv preprint arXiv:2006.04768, 2020.",
+        "bbox": [
+            114,
+            234,
+            887,
+            263
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "ref_text",
+        "text": "Manzil Zaheer, Guru Guruganesh, Kumar Avinava Dubey, Joshua Ainslie, Chris Alberti, Santiago Ontañón, Philip Pham, Anirudh Ravula, Qifan Wang, Li Yang, and Amr Ahmed. Big bird: Transformers for longer sequences. In Hugo Larochelle, Marc’Aurelio Ranzato, Raia Hadsell, Maria-Florina Balcan, and Hsuan-Tien Lin (eds.), Advances in Neural Information Processing Systems 33: Annual Conference on Neural Information Processing Systems 2020, NeurIPS 2020, December 6-12, 2020, virtual, 2020. URL https://proceedings.neurips.cc/paper/2020/hash/c8512d142a2d849725f31a9a7a361ab9-Abstract.html",
+        "bbox": [
+            119,
+            268,
+            926,
+            352
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "header",
+        "text": "Self-attention Does Not Need O(n<sup>2</sup>) Memory",
+        "bbox": [
+            344,
+            42,
+            651,
+            56
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "header",
+        "text": "A PREPRINT",
+        "bbox": [
+            800,
+            44,
+            883,
+            56
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "page_number",
+        "text": "8",
+        "bbox": [
+            493,
+            935,
+            504,
+            948
+        ],
+        "page_idx": 7
+    }
+]

@@ -8,6 +8,7 @@ Model Bandwidth Utilization (MBU) measures how much of a device's peak memory ba
 - The source approximates achieved bandwidth as `(model parameter bytes + KV cache bytes) / TPOT`.
 - MBU is most informative during decode-heavy, small-batch inference where memory movement, not FLOPs, is the bottleneck.
 - Attention decode is a common example: each step handles one new token while reading model weights and the accumulated KV cache, so memory traffic can dominate available arithmetic.
+- Low arithmetic intensity in decode batches can leave compute slack; schedulers such as Sarathi-Serve exploit this by adding bounded prefill chunks without greatly increasing decode latency.
 
 ## Why It Matters
 
@@ -25,8 +26,10 @@ Model Bandwidth Utilization (MBU) measures how much of a device's peak memory ba
 - [LLM Deployment and Capacity Planning](../topics/llm-deployment-and-capacity-planning.md)
 - [KV Cache in LLM Serving](kv-cache-in-llm-serving.md)
 - [Parallelism in LLM Serving](parallelism-in-llm-serving.md)
+- [Chunked Prefill Scheduling](chunked-prefill-scheduling.md)
 
 ## Sources
 
 - [LLM Inference Performance Engineering Best Practices](../sources/llm-inference-performance-engineering-best-practices.md)
 - [Self-Attention Mechanism Deep Dive](../sources/self-attention-mechanism-deep-dive.md)
+- [Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve](../sources/taming-throughput-latency-tradeoff-in-llm-inference-with-sarathi-serve.md)

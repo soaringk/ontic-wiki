@@ -1,5 +1,21 @@
 # Wiki Log
 
+## [2026-07-02] reindex | processed 2 LLM serving scheduler PDFs
+
+- Processed pending PDF source `raw/2401.08671v1.pdf` from extracted sidecar `state/extracted/raw-2401-08671v1-pdf-5f26bd882b8a/full.md` and added source page `DeepSpeed-FastGen: High-throughput Text Generation for LLMs via MII and DeepSpeed-Inference`.
+- Processed pending PDF source `raw/2403.02310v3.pdf` from extracted sidecar `state/extracted/raw-2403-02310v3-pdf-45f59f4474de/full.md` and added source page `Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve`.
+- Added concept page `Chunked Prefill Scheduling` and updated `LLM Deployment and Capacity Planning`, `Disaggregated LLM Inference`, `Prefill-Decode Disaggregation`, `Iteration-Level Scheduling`, `Model Bandwidth Utilization`, and `Autoregressive Generation`.
+- Rebuilt `wiki/index.md`; page counts are 36 sources, 10 topics, 30 concepts, 0 debates, and 1 synthesis.
+- Blocked sources: none. Unsupported sources: none.
+
+## [2026-06-30] reindex | processed 2 attention and decoding PDFs
+
+- Processed pending PDF source `raw/2112.05682v3.pdf` from extracted sidecar `state/extracted/raw-2112-05682v3-pdf-f5c34f7179ac/full.md` and added source page `Self-attention Does Not Need O(n^2) Memory`.
+- Processed pending PDF source `raw/2302.01318v1.pdf` from extracted sidecar `state/extracted/raw-2302-01318v1-pdf-ffa03c6ae46f/full.md` and added source page `Accelerating Large Language Model Decoding with Speculative Sampling`.
+- Updated `Transformer Architecture and Attention`, `LLM Deployment and Capacity Planning`, `Attention Mechanism`, `Autoregressive Generation`, and `Speculative Decoding` with source-backed claims and links.
+- Rebuilt `wiki/index.md`; page counts are 34 sources, 10 topics, 29 concepts, 0 debates, and 1 synthesis.
+- Blocked sources: none. Unsupported sources: none.
+
 ## [2026-06-29] lint | refreshed wiki audit
 
 - Audited the local wiki for orphan pages, broken links, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.

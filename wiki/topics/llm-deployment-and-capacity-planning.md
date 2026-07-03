@@ -12,8 +12,10 @@ LLM deployment and capacity planning sits between model architecture and product
 - Autoregressive serving separates prefill, which builds the initial KV Cache and often controls TTFT, from decode, which repeatedly reads weights and KV state and often controls TPOT.
 - Continuous batching is usually the right default for shared online serving, while static batching can still win for offline workloads.
 - Request-level scheduling is a poor fit for autoregressive generation; iteration-level control is the more durable systems model.
+- Token-budgeted scheduling matters because forward-pass latency follows total tokens more than request count, and long prefills can create visible generation stalls if admitted without bounds.
 - Prefill and decode often want different batch sizes, parallelism strategies, and sometimes different hardware entirely.
-- Speculative decoding can improve decode throughput by verifying draft tokens in parallel, but capacity planning should treat the draft model, acceptance rate, and batching effects as workload-dependent variables.
+- Chunked prefill and stall-free batching are deployment levers for colocated serving when full prefill/decode disaggregation is too costly or operationally complex.
+- Speculative decoding can improve decode throughput by verifying draft tokens in parallel, but capacity planning should treat draft-model topology, acceptance rate, lookahead length, tail latency, and batching effects as workload-dependent variables.
 - Prefix reuse, cache placement, and KV-state transfer are now first-class deployment concerns rather than narrow engine details.
 - MoE deployments require explicit reasoning about what tensor parallelism splits and what expert parallelism splits.
 - More GPUs and higher tensor parallelism usually improve fit and latency only sub-linearly because communication overhead and utilization losses rise.
@@ -28,6 +30,7 @@ LLM deployment and capacity planning sits between model architecture and product
 - [Parallelism in LLM Serving](../concepts/parallelism-in-llm-serving.md)
 - [PagedAttention](../concepts/pagedattention.md)
 - [Iteration-Level Scheduling](../concepts/iteration-level-scheduling.md)
+- [Chunked Prefill Scheduling](../concepts/chunked-prefill-scheduling.md)
 - [Prefill-Decode Disaggregation](../concepts/prefill-decode-disaggregation.md)
 - [Autoregressive Generation](../concepts/autoregressive-generation.md)
 - [Speculative Decoding](../concepts/speculative-decoding.md)
@@ -50,3 +53,6 @@ LLM deployment and capacity planning sits between model architecture and product
 - [How to Generate Tokens Faster: A vLLM Performance Model](../sources/vllm-performance-model.md)
 - [3.7 Transformer Decoder Block完整解析](../sources/transformer-decoder-block-deep-dive.md)
 - [3.8 从Transformer到LLM自回归生成深入理解](../sources/transformer-to-llm-autoregressive-generation.md)
+- [Accelerating Large Language Model Decoding with Speculative Sampling](../sources/accelerating-large-language-model-decoding-with-speculative-sampling.md)
+- [DeepSpeed-FastGen: High-throughput Text Generation for LLMs via MII and DeepSpeed-Inference](../sources/deepspeed-fastgen-high-throughput-text-generation-for-llms.md)
+- [Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve](../sources/taming-throughput-latency-tradeoff-in-llm-inference-with-sarathi-serve.md)

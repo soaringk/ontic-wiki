@@ -14,12 +14,14 @@ Prefill-decode disaggregation separates prompt processing from autoregressive to
 
 - The benefit comes from less interference and better specialization.
 - The cost comes from model duplication, state transfer, placement complexity, and more operational machinery.
+- Chunked prefill schedulers are the main colocated alternative: they bound prompt work and mix it with decode tokens, reducing interference without moving the two phases to separate pools.
 
 ## Related Pages
 
 - [Disaggregated LLM Inference](../topics/disaggregated-llm-inference.md)
 - [Context Caching in LLM Serving](context-caching-in-llm-serving.md)
 - [KV Cache in LLM Serving](kv-cache-in-llm-serving.md)
+- [Chunked Prefill Scheduling](chunked-prefill-scheduling.md)
 
 ## Sources
 
@@ -27,5 +29,7 @@ Prefill-decode disaggregation separates prompt processing from autoregressive to
 - [DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving](../sources/distserve-disaggregating-prefill-and-decoding-for-goodput-optimized-large-language-model-serving.md)
 - [Inference without Interference: Disaggregate LLM Inference for Mixed Downstream Workloads](../sources/inference-without-interference-disaggregate-llm-inference-for-mixed-downstream-workloads.md)
 - [Mooncake: A KVCache-centric Disaggregated Architecture for LLM Serving](../sources/mooncake-a-kvcache-centric-disaggregated-architecture-for-llm-serving.md)
+- [DeepSpeed-FastGen: High-throughput Text Generation for LLMs via MII and DeepSpeed-Inference](../sources/deepspeed-fastgen-high-throughput-text-generation-for-llms.md)
+- [Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve](../sources/taming-throughput-latency-tradeoff-in-llm-inference-with-sarathi-serve.md)
 - [Transformer Architecture Quick Start](../sources/transformer-architecture-quick-start.md)
 - [3.8 从Transformer到LLM自回归生成深入理解](../sources/transformer-to-llm-autoregressive-generation.md)

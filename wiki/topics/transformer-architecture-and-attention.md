@@ -34,6 +34,7 @@ Transformer architecture models sequences by repeatedly letting each token updat
 - Transformer code structure maps directly to infrastructure work: attention Q/K/V and output projections are GEMM targets, softmax is a fusion/IO target, FFN matrices dominate parameter count, and LayerNorm/RMSNorm plus residual paths are common kernel-fusion boundaries.
 - Decoder Block arithmetic can be planned component by component: embeddings and LM head scale with vocabulary, attention scales with Q/K/V/O projections and KV-head count, FFN scales with intermediate width, and KV Cache scales with layer count, KV heads, head dimension, sequence length, batch, dtype, and tensor parallelism.
 - FlashAttention attacks the attention module's memory traffic and intermediate materialization costs by tiling attention and using online softmax to avoid writing the full attention matrix to high-bandwidth memory.
+- Exact attention does not have to materialize an `n x n` attention matrix: online softmax accumulation and chunking can preserve dense attention semantics while reducing activation memory, although time remains quadratic.
 - GQA and MQA reduce KV-cache footprint by using fewer key/value heads than query heads.
 - Many serving optimizations are really attempts to manage the memory, parallelism, and scheduling consequences of causal attention.
 
@@ -62,3 +63,5 @@ Transformer architecture models sequences by repeatedly letting each token updat
 - [Transformer and Attention, Explained Plainly](../sources/transformer-and-attention-a-layman-guide.md)
 - [Efficient Memory Management for Large Language Model Serving with PagedAttention](../sources/efficient-memory-management-for-large-language-model-serving-with-pagedattention.md)
 - [从 305 GB 到 7.4 GB：大模型 KVCache 架构演进全景](../sources/kv-cache-architecture-survey.md)
+- [Self-attention Does Not Need O(n^2) Memory](../sources/self-attention-does-not-need-o-n2-memory.md)
+- [Accelerating Large Language Model Decoding with Speculative Sampling](../sources/accelerating-large-language-model-decoding-with-speculative-sampling.md)
