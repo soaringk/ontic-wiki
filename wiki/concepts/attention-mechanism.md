@@ -12,7 +12,9 @@ Attention is the operation that lets each token weight and aggregate information
 - Decoder-only generation depends on causal attention that only sees past tokens.
 - Self-attention is order-blind without an added position signal; RoPE injects relative position by rotating Q and K before dot-product scoring.
 - Encoder self-attention, masked decoder self-attention, and cross-attention share the same scoring formula but differ in Q/K/V source and masking behavior.
-- Infrastructure optimizations often target this exact computation: memory-efficient exact attention and FlashAttention reduce attention memory traffic through chunking, tiling, and online softmax; tensor parallelism can split heads; and GQA/MQA reduce key/value head count.
+- Infrastructure optimizations often target this exact computation: memory-efficient exact attention and FlashAttention reduce attention memory traffic through chunking, tiling, online softmax, and recomputation; tensor parallelism can split heads; and GQA/MQA reduce key/value head count.
+- FlashAttention evolves across GPU bottlenecks: V1 avoids `n x n` HBM materialization, FlashAttention-2 improves sequence and warp-level work partitioning, and FlashAttention-3 exploits Hopper asynchrony plus FP8 paths with block quantization.
+- FlashAttention V2/Flash-Decoding show that prefill and decode need different kernel organization: dense prompt attention is dominated by tiled matrix work, while decode must create parallelism around one query reading many cached K/V tokens.
 - MLA (Multi-head Latent Attention) compresses K and V jointly into a low-rank latent vector, caching the compressed representation and reconstructing on-the-fly — ~96% KV storage reduction at DeepSeek V3 scale.
 - Sparse attention (NSA, DSA, CSA+HCA) reduces attention computation by selecting only the most relevant KV tokens, using learned or heuristic sparsity to skip computation on unimportant history.
 - Linear attention (Mamba/SSM, Gated DeltaNet) replaces the QKV projection + softmax pattern with a fixed-size recurrent state, eliminating the need for KV cache entirely at the cost of reduced expressiveness.
@@ -24,6 +26,8 @@ Attention is the operation that lets each token weight and aggregate information
 - [KV Cache in LLM Serving](kv-cache-in-llm-serving.md)
 - [Positional Encoding](positional-encoding.md)
 - [Autoregressive Generation](autoregressive-generation.md)
+- [Long Context Extrapolation](long-context-extrapolation.md)
+- [FlashAttention](flashattention.md)
 
 ## Sources
 
@@ -35,3 +39,10 @@ Attention is the operation that lets each token weight and aggregate information
 - [Transformer and Attention, Explained Plainly](../sources/transformer-and-attention-a-layman-guide.md)
 - [从 305 GB 到 7.4 GB：大模型 KVCache 架构演进全景](../sources/kv-cache-architecture-survey.md)
 - [Self-attention Does Not Need O(n^2) Memory](../sources/self-attention-does-not-need-o-n2-memory.md)
+- [探秘Transformer系列之（10）--- 自注意力](../sources/cnblogs-transformer-series-10-self-attention.md)
+- [探秘Transformer系列之（12）--- 多头自注意力](../sources/cnblogs-transformer-series-12-multi-head-self-attention.md)
+- [探秘Transformer系列之（18）--- FlashAttention](../sources/cnblogs-transformer-series-18-flashattention.md)
+- [探秘Transformer系列之（19）----FlashAttention V2 及升级版本](../sources/cnblogs-transformer-series-19-flashattention-v2-and-beyond.md)
+- [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](../sources/flashattention-fast-and-memory-efficient-exact-attention-with-io-awareness.md)
+- [FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](../sources/flashattention-2-faster-attention-with-better-parallelism-and-work-partitioning.md)
+- [FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-precision](../sources/flashattention-3-fast-and-accurate-attention-with-asynchrony-and-low-precision.md)

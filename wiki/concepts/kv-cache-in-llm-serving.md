@@ -20,6 +20,8 @@ KV cache stores attention keys and values for prior tokens so later decoding ste
 - FP8 and NVFP4 quantization reduce per-element storage from 16 bits to 8 or 4 bits with minimal quality loss. Vector compression (TurboQuant) reaches ~3.5 bits per dimension via polar-coordinate transform + online VQ.
 - MoE increases KVCache's relative memory share because reduced FFN activation memory makes KVCache dominate inference memory (60–80%).
 - In naive no-cache autoregressive generation, each step reprocesses the full prefix, so Attention uses full $Q,K,V$ matrices and sums to $O(N^3 d)$ over $N$ generated tokens; KV cache changes decode to a single new query over cached K/V, summing to $O(N^2 d)$.
+- Long-context deployments need both position-generalization and memory-management strategies: extending RoPE without cache planning only moves the bottleneck to KV storage and bandwidth.
+- MQA, GQA, MLA, KV quantization, sparse retention, prefix reuse, and retrieval-like cache schemes attack different terms in the same cache-cost problem and should be evaluated together rather than as interchangeable optimizations.
 
 ## Durable Formula Shape
 
@@ -46,6 +48,8 @@ The factor of 2 comes from caching both K and V tensors.
 - [Prefill-Decode Disaggregation](prefill-decode-disaggregation.md)
 - [Autoregressive Generation](autoregressive-generation.md)
 - [Positional Encoding](positional-encoding.md)
+- [Long Context Extrapolation](long-context-extrapolation.md)
+- [LLM Quantization](llm-quantization.md)
 
 ## Sources
 
@@ -61,3 +65,8 @@ The factor of 2 comes from caching both K and V tensors.
 - [3.5 Transformer位置编码深入理解](../sources/transformer-positional-encoding-deep-dive.md)
 - [3.7 Transformer Decoder Block完整解析](../sources/transformer-decoder-block-deep-dive.md)
 - [3.8 从Transformer到LLM自回归生成深入理解](../sources/transformer-to-llm-autoregressive-generation.md)
+- [探秘Transformer系列之（20）--- KV Cache](../sources/cnblogs-transformer-series-20-kv-cache.md)
+- [探秘Transformer系列之（24）--- KV Cache优化](../sources/cnblogs-transformer-series-24-kv-cache-optimization.md)
+- [探秘Transformer系列之（25）--- KV Cache优化之处理长文本序列](../sources/cnblogs-transformer-series-25-kv-cache-long-context.md)
+- [探秘Transformer系列之（27）--- MQA & GQA](../sources/cnblogs-transformer-series-27-mqa-and-gqa.md)
+- [探秘Transformer系列之（28）--- DeepSeek MLA](../sources/cnblogs-transformer-series-28-deepseek-mla.md)

@@ -6,6 +6,7 @@ Transformer architecture models sequences by repeatedly letting each token updat
 
 - Tokenization converts text into a model vocabulary that the network can process as discrete tokens.
 - Embeddings map tokens into vectors that the network can transform layer by layer.
+- Data handling, vocabulary construction, padding, and mask construction are part of the model contract because they determine token IDs, tensor shapes, and valid attention boundaries.
 - Self-attention lets each token weight other tokens differently depending on context.
 - Scaled dot-product attention scores token pairs with `QK^T / sqrt(d_k)`, normalizes the scores with softmax, and uses the result to aggregate V.
 - Multi-head attention runs several attention projections in parallel, giving the model multiple relation subspaces and giving infrastructure a natural tensor-parallel split point.
@@ -25,6 +26,8 @@ Transformer architecture models sequences by repeatedly letting each token updat
 - Sparse attention (NSA, DSA, CSA+HCA) reduces the number of tokens whose KV must be retained by selectively keeping only the most relevant history — from simple sliding windows (SWA) through learned sparse selection to hybrid compression (CSA 4:1, HCA 128:1).
 - Linear attention (Mamba/SSM, Gated DeltaNet) replaces the growing KV cache with a fixed-size hidden state, breaking the O(n) memory-sequences-length link at the cost of expressiveness. Hybrid architectures (Qwen3.5, Jamba) interleave linear attention layers with full-attention layers.
 - Cross-Layer Attention (CLA) reduces KVCache by having adjacent layers share K/V state instead of computing and storing them independently.
+- MoE changes the FFN path by routing each token to a small subset of experts, expanding total capacity while adding routing, load-balancing, and expert-parallel communication constraints.
+- Long-context extrapolation is a position-generalization problem as well as a memory problem: RoPE scaling can extend usable context only if quality survives the new position distribution.
 
 ## Why It Matters For Serving
 
@@ -34,6 +37,7 @@ Transformer architecture models sequences by repeatedly letting each token updat
 - Transformer code structure maps directly to infrastructure work: attention Q/K/V and output projections are GEMM targets, softmax is a fusion/IO target, FFN matrices dominate parameter count, and LayerNorm/RMSNorm plus residual paths are common kernel-fusion boundaries.
 - Decoder Block arithmetic can be planned component by component: embeddings and LM head scale with vocabulary, attention scales with Q/K/V/O projections and KV-head count, FFN scales with intermediate width, and KV Cache scales with layer count, KV heads, head dimension, sequence length, batch, dtype, and tensor parallelism.
 - FlashAttention attacks the attention module's memory traffic and intermediate materialization costs by tiling attention and using online softmax to avoid writing the full attention matrix to high-bandwidth memory.
+- FlashAttention-2 and FlashAttention-3 show that exact attention kernel performance depends on more than asymptotic complexity: sequence-block parallelism, warp work partitioning, asynchronous data movement, GEMM-softmax overlap, and low-precision layout constraints all affect usable long-context throughput.
 - Exact attention does not have to materialize an `n x n` attention matrix: online softmax accumulation and chunking can preserve dense attention semantics while reducing activation memory, although time remains quadratic.
 - GQA and MQA reduce KV-cache footprint by using fewer key/value heads than query heads.
 - Many serving optimizations are really attempts to manage the memory, parallelism, and scheduling consequences of causal attention.
@@ -48,6 +52,9 @@ Transformer architecture models sequences by repeatedly letting each token updat
 - [Autoregressive Generation](../concepts/autoregressive-generation.md)
 - [Token Sampling Strategies](../concepts/token-sampling-strategies.md)
 - [Tokenization and Embeddings](../concepts/tokenization-and-embeddings.md)
+- [Mixture of Experts](../concepts/mixture-of-experts.md)
+- [Long Context Extrapolation](../concepts/long-context-extrapolation.md)
+- [FlashAttention](../concepts/flashattention.md)
 
 ## Sources
 
@@ -65,3 +72,21 @@ Transformer architecture models sequences by repeatedly letting each token updat
 - [从 305 GB 到 7.4 GB：大模型 KVCache 架构演进全景](../sources/kv-cache-architecture-survey.md)
 - [Self-attention Does Not Need O(n^2) Memory](../sources/self-attention-does-not-need-o-n2-memory.md)
 - [Accelerating Large Language Model Decoding with Speculative Sampling](../sources/accelerating-large-language-model-decoding-with-speculative-sampling.md)
+- [探秘Transformer系列之（1）：注意力机制](../sources/cnblogs-transformer-series-01-attention-mechanism.md)
+- [探秘Transformer系列之（2）---总体架构](../sources/cnblogs-transformer-series-02-overall-architecture.md)
+- [探秘Transformer系列之（3）---数据处理](../sources/cnblogs-transformer-series-03-data-processing.md)
+- [探秘Transformer系列之（4）--- 编码器 & 解码器](../sources/cnblogs-transformer-series-04-encoder-decoder.md)
+- [探秘Transformer系列之（6）--- token](../sources/cnblogs-transformer-series-06-token.md)
+- [探秘Transformer系列之（8）--- 位置编码](../sources/cnblogs-transformer-series-08-positional-encoding.md)
+- [探秘Transformer系列之（10）--- 自注意力](../sources/cnblogs-transformer-series-10-self-attention.md)
+- [探秘Transformer系列之（11）--- 掩码](../sources/cnblogs-transformer-series-11-masks.md)
+- [探秘Transformer系列之（13）--- FFN](../sources/cnblogs-transformer-series-13-ffn.md)
+- [探秘Transformer系列之（14）--- 残差网络和归一化](../sources/cnblogs-transformer-series-14-residuals-and-normalization.md)
+- [探秘Transformer系列之（15）--- 采样和输出](../sources/cnblogs-transformer-series-15-sampling-and-output.md)
+- [探秘Transformer系列之（17）--- RoPE](../sources/cnblogs-transformer-series-17-rope.md)
+- [探秘Transformer系列之（18）--- FlashAttention](../sources/cnblogs-transformer-series-18-flashattention.md)
+- [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](../sources/flashattention-fast-and-memory-efficient-exact-attention-with-io-awareness.md)
+- [FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](../sources/flashattention-2-faster-attention-with-better-parallelism-and-work-partitioning.md)
+- [FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-precision](../sources/flashattention-3-fast-and-accurate-attention-with-asynchrony-and-low-precision.md)
+- [探秘Transformer系列之（21）--- MoE](../sources/cnblogs-transformer-series-21-moe.md)
+- [探秘Transformer系列之（23）--- 长度外推](../sources/cnblogs-transformer-series-23-length-extrapolation.md)

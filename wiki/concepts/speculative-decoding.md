@@ -11,13 +11,17 @@ Speculative decoding accelerates autoregressive generation by letting a smaller 
 - A rejection or repair step is required: accepted draft tokens follow the target/draft probability ratio, while rejected positions are resampled from the positive residual between target and draft distributions.
 - Lookahead length has a real trade-off: longer drafts reduce target calls only if enough later tokens are accepted, and they can increase latency variance.
 - The method adds complexity: draft-model topology, acceptance rate, batching interaction, and memory overhead determine whether it improves real workloads.
+- Related variants include Medusa-style multi-head candidates, Lookahead decoding, and multi-token prediction; these preserve the same high-level pattern of generating extra candidates and verifying before committing output tokens.
 
 ## Related Pages
 
 - [Autoregressive Generation](autoregressive-generation.md)
+- [Parallel Decoding Variants](parallel-decoding-variants.md)
 - [LLM Deployment and Capacity Planning](../topics/llm-deployment-and-capacity-planning.md)
 
 ## Sources
 
 - [3.8 从Transformer到LLM自回归生成深入理解](../sources/transformer-to-llm-autoregressive-generation.md)
 - [Accelerating Large Language Model Decoding with Speculative Sampling](../sources/accelerating-large-language-model-decoding-with-speculative-sampling.md)
+- [探秘Transformer系列之（30）--- 投机解码](../sources/cnblogs-transformer-series-30-speculative-decoding.md)
+- [探秘Transformer系列之（31）--- Medusa](../sources/cnblogs-transformer-series-31-medusa.md)

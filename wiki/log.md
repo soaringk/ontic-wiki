@@ -1,5 +1,22 @@
 # Wiki Log
 
+## [2026-07-06] reindex | processed 3 FlashAttention PDFs
+
+- Processed pending PDF sources `raw/2205.14135v2.pdf`, `raw/2307.08691v1.pdf`, and `raw/2407.08608v2.pdf` from their extracted Markdown sidecars under `state/extracted/`.
+- Added source pages for FlashAttention, FlashAttention-2, and FlashAttention-3 with PDF publication dates preserved from the extracted papers.
+- Added concept page `FlashAttention` and updated attention, Transformer, CUDA, GPU memory hierarchy, quantization, and deployment pages with source-backed links.
+- Rebuilt `wiki/index.md`; page counts are 75 sources, 10 topics, 36 concepts, 0 debates, and 1 synthesis.
+- Blocked sources: none. Unsupported sources: none.
+
+## [2026-07-04] reindex | processed 36 cnblogs Transformer series markdown sources
+
+- Processed all 36 pending Markdown sources under `raw/cnblogs-transformer-series/` from `state/reports/latest_reindex_report.md` and added one source page per pending article under `wiki/sources/`.
+- Preserved source language and publication metadata from raw frontmatter (`published` dates from 2025-02-09 through 2025-06-08) with `parser: direct` and `source_type: markdown`.
+- Added concept pages `Mixture of Experts`, `Low-Rank Adaptation (LoRA)`, `Long Context Extrapolation`, `Parallel Decoding Variants`, and `LLM Quantization`.
+- Updated affected Transformer, serving, attention, KV cache, FFN, position, tokenization, quantization, parallelism, autoregressive generation, speculative decoding, and disaggregated-inference pages with source-backed links.
+- Rebuilt `wiki/index.md`; page counts are 72 sources, 10 topics, 35 concepts, 0 debates, and 1 synthesis.
+- Blocked sources: none. Unsupported sources: none.
+
 ## [2026-07-02] reindex | processed 2 LLM serving scheduler PDFs
 
 - Processed pending PDF source `raw/2401.08671v1.pdf` from extracted sidecar `state/extracted/raw-2401-08671v1-pdf-5f26bd882b8a/full.md` and added source page `DeepSpeed-FastGen: High-throughput Text Generation for LLMs via MII and DeepSpeed-Inference`.
@@ -259,4 +276,11 @@ Append-only timeline of ingest, synthesis, and lint activity.
 - Audited the local wiki for broken links, orphan pages, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.
 - Found no broken internal links, no orphan content pages, no obvious duplicate pages, and no debate/synthesis duplication in the current inventory.
 - Added explicit `published: unknown` frontmatter to source pages whose raw material was blank, missing, or ambiguous on publication time, so chronology-sensitive queries do not silently fall back to local maintenance dates.
+- Left `wiki/index.md` unchanged because page inventory and index summaries did not change.
+
+## [2026-07-06] lint | repaired cnblogs reciprocal source links
+
+- Audited the local wiki for orphan pages, broken links, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicate pages.
+- Found no broken internal links, no debate pages to compare against synthesis, and no obvious duplicate topic/concept/synthesis pages in the current inventory.
+- Repaired five source-page orphans by adding missing reciprocal source references from `Transformer Architecture and Attention`, `Transformer Normalization and Residuals`, and `Token Sampling Strategies`.
 - Left `wiki/index.md` unchanged because page inventory and index summaries did not change.

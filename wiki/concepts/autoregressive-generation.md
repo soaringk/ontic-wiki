@@ -12,6 +12,7 @@ Autoregressive generation produces text one token at a time, conditioning each n
 - Continuous batching and iteration-level scheduling are natural responses to autoregressive generation because requests enter and finish at different token steps.
 - Long prefills can interrupt the decode cadence in shared serving; chunked prefill scheduling keeps new prompt work within a per-iteration token budget.
 - Speculative decoding targets the serial decode bottleneck by using draft tokens plus target-model verification; its benefit depends on acceptance rate, lookahead length, draft latency, target scoring latency, and workload shape.
+- Medusa, Lookahead decoding, and multi-token prediction are adjacent attempts to generate or verify multiple future tokens before committing them to the output stream.
 
 ## Related Pages
 
@@ -23,6 +24,7 @@ Autoregressive generation produces text one token at a time, conditioning each n
 - [Chunked Prefill Scheduling](chunked-prefill-scheduling.md)
 - [Prefill-Decode Disaggregation](prefill-decode-disaggregation.md)
 - [Speculative Decoding](speculative-decoding.md)
+- [Parallel Decoding Variants](parallel-decoding-variants.md)
 
 ## Sources
 
@@ -32,3 +34,7 @@ Autoregressive generation produces text one token at a time, conditioning each n
 - [Accelerating Large Language Model Decoding with Speculative Sampling](../sources/accelerating-large-language-model-decoding-with-speculative-sampling.md)
 - [DeepSpeed-FastGen: High-throughput Text Generation for LLMs via MII and DeepSpeed-Inference](../sources/deepspeed-fastgen-high-throughput-text-generation-for-llms.md)
 - [Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve](../sources/taming-throughput-latency-tradeoff-in-llm-inference-with-sarathi-serve.md)
+- [探秘Transformer系列之（5）--- 训练&推理](../sources/cnblogs-transformer-series-05-training-and-inference.md)
+- [探秘Transformer系列之（20）--- KV Cache](../sources/cnblogs-transformer-series-20-kv-cache.md)
+- [探秘Transformer系列之（30）--- 投机解码](../sources/cnblogs-transformer-series-30-speculative-decoding.md)
+- [探秘Transformer系列之（33）--- DeepSeek MTP](../sources/cnblogs-transformer-series-33-deepseek-mtp.md)

@@ -18,3 +18,4 @@ Token sampling strategies choose the next token from a model's logits during aut
 ## Sources
 
 - [3.8 从Transformer到LLM自回归生成深入理解](../sources/transformer-to-llm-autoregressive-generation.md)
+- [探秘Transformer系列之（15）--- 采样和输出](../sources/cnblogs-transformer-series-15-sampling-and-output.md)

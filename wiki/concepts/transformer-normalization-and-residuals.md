@@ -20,3 +20,4 @@ Normalization and residual connections are the stability scaffolding that lets d
 - [3.6 LayerNorm与残差连接深入理解](../sources/layernorm-and-residual-connections-deep-dive.md)
 - [3.7 Transformer Decoder Block完整解析](../sources/transformer-decoder-block-deep-dive.md)
 - [Transformer Architecture Quick Start](../sources/transformer-architecture-quick-start.md)
+- [探秘Transformer系列之（14）--- 残差网络和归一化](../sources/cnblogs-transformer-series-14-residuals-and-normalization.md)

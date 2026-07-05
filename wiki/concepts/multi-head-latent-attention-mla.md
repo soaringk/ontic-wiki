@@ -8,6 +8,7 @@ MLA is an attention variant introduced by DeepSeek V2/V3 that compresses the per
 - Model quality does not degrade; the joint compression acts as a regularizer.
 - MLA is orthogonal to GQA/MQA (which reduce KV head count) and can be combined with cross-layer attention or quantization for further compression.
 - The cached latent is reconstructed to full K/V on-the-fly during attention computation, trading extra projection work for much smaller stored state.
+- RoPE-related Q/K dimensions need separate handling from the compressible latent path, so implementation details matter for both correctness and actual serving benefit.
 
 ## Related Pages
 
@@ -18,3 +19,4 @@ MLA is an attention variant introduced by DeepSeek V2/V3 that compresses the per
 ## Sources
 
 - [从 305 GB 到 7.4 GB：大模型 KVCache 架构演进全景](../sources/kv-cache-architecture-survey.md)
+- [探秘Transformer系列之（28）--- DeepSeek MLA](../sources/cnblogs-transformer-series-28-deepseek-mla.md)

@@ -16,11 +16,15 @@ LLM deployment and capacity planning sits between model architecture and product
 - Prefill and decode often want different batch sizes, parallelism strategies, and sometimes different hardware entirely.
 - Chunked prefill and stall-free batching are deployment levers for colocated serving when full prefill/decode disaggregation is too costly or operationally complex.
 - Speculative decoding can improve decode throughput by verifying draft tokens in parallel, but capacity planning should treat draft-model topology, acceptance rate, lookahead length, tail latency, and batching effects as workload-dependent variables.
+- Medusa, Lookahead decoding, and multi-token prediction are related parallel-decoding variants; they shift work into candidate generation or auxiliary heads and still require verification, cache support, and workload-specific acceptance analysis.
 - Prefix reuse, cache placement, and KV-state transfer are now first-class deployment concerns rather than narrow engine details.
 - MoE deployments require explicit reasoning about what tensor parallelism splits and what expert parallelism splits.
+- LoRA adapters and QLoRA-style low-bit fine-tuning reduce customization cost, but serving must account for adapter loading, merging, batching compatibility, and quantized-base quality.
 - More GPUs and higher tensor parallelism usually improve fit and latency only sub-linearly because communication overhead and utilization losses rise.
 - Quantization can reduce bandwidth and memory pressure, but it must be validated against model-quality regressions.
 - Integer-only and quantization-aware approaches matter because real deployment wins come from arithmetic that hardware can execute efficiently, not only smaller checkpoint files.
+- LLM quantization needs outlier-aware treatment of weights, activations, and KV cache; scheme names such as GPTQ, AWQ, SmoothQuant, and QLoRA are deployment candidates, not substitutes for quality and latency validation.
+- Attention kernels are part of capacity planning: FlashAttention reduces activation memory and attention latency for long prompts, while FlashAttention-3 shows that Hopper/FP8 gains depend on asynchronous kernels and accuracy-aware quantization.
 - Capacity incidents are often handled first through scaling or throttling rather than deep architectural changes.
 
 ## Related Concepts
@@ -37,6 +41,12 @@ LLM deployment and capacity planning sits between model architecture and product
 - [Transformer Feed-Forward Network](../concepts/transformer-feed-forward-network.md)
 - [Context Caching in LLM Serving](../concepts/context-caching-in-llm-serving.md)
 - [Integer-Only Quantization](../concepts/integer-only-quantization.md)
+- [Mixture of Experts](../concepts/mixture-of-experts.md)
+- [Low-Rank Adaptation (LoRA)](../concepts/low-rank-adaptation-lora.md)
+- [LLM Quantization](../concepts/llm-quantization.md)
+- [Parallel Decoding Variants](../concepts/parallel-decoding-variants.md)
+- [Long Context Extrapolation](../concepts/long-context-extrapolation.md)
+- [FlashAttention](../concepts/flashattention.md)
 
 ## Sources
 
@@ -56,3 +66,11 @@ LLM deployment and capacity planning sits between model architecture and product
 - [Accelerating Large Language Model Decoding with Speculative Sampling](../sources/accelerating-large-language-model-decoding-with-speculative-sampling.md)
 - [DeepSpeed-FastGen: High-throughput Text Generation for LLMs via MII and DeepSpeed-Inference](../sources/deepspeed-fastgen-high-throughput-text-generation-for-llms.md)
 - [Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve](../sources/taming-throughput-latency-tradeoff-in-llm-inference-with-sarathi-serve.md)
+- [探秘Transformer系列之（16）--- 资源占用](../sources/cnblogs-transformer-series-16-resource-usage.md)
+- [探秘Transformer系列之（20）--- KV Cache](../sources/cnblogs-transformer-series-20-kv-cache.md)
+- [探秘Transformer系列之（22）--- LoRA](../sources/cnblogs-transformer-series-22-lora.md)
+- [探秘Transformer系列之（26）--- KV Cache优化---分离or合并](../sources/cnblogs-transformer-series-26-kv-cache-split-or-merge.md)
+- [探秘Transformer系列之（30）--- 投机解码](../sources/cnblogs-transformer-series-30-speculative-decoding.md)
+- [探秘Transformer系列之（36）--- 大模型量化方案](../sources/cnblogs-transformer-series-36-llm-quantization-methods.md)
+- [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](../sources/flashattention-fast-and-memory-efficient-exact-attention-with-io-awareness.md)
+- [FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-precision](../sources/flashattention-3-fast-and-accurate-attention-with-asynchrony-and-low-precision.md)
