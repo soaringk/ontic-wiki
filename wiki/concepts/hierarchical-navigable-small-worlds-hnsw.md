@@ -4,7 +4,7 @@ HNSW is a graph-based Approximate Nearest Neighbor (ANN) algorithm that organize
 
 ## Why It Matters
 
-- HNSW typically offers the best recall-vs-speed trade-off among ANN algorithms at full precision, often reaching recall@95 with minimal search time.
+- HNSW is often a strong full-precision recall-speed option, but its ranking against other ANN methods depends on dataset geometry, memory budget, implementation, and index/search parameters.
 - The multi-layer graph is inspired by skip-list data structures: search starts at the top layer (long jumps, coarse positioning) and descends layer by layer to the bottom (fine-grained neighbor traversal).
 - Its main cost is memory — HNSW stores both the vectors and the graph edges, making it memory-intensive compared to Product Quantization or IVF approaches.
 - At billion-scale, HNSW is often combined with PQ (HNSW+PQ) to reduce vector memory while keeping the graph structure.

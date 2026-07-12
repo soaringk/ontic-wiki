@@ -16,8 +16,8 @@ Attention is the operation that lets each token weight and aggregate information
 - FlashAttention evolves across GPU bottlenecks: V1 avoids `n x n` HBM materialization, FlashAttention-2 improves sequence and warp-level work partitioning, and FlashAttention-3 exploits Hopper asynchrony plus FP8 paths with block quantization.
 - FlashAttention V2/Flash-Decoding show that prefill and decode need different kernel organization: dense prompt attention is dominated by tiled matrix work, while decode must create parallelism around one query reading many cached K/V tokens.
 - MLA (Multi-head Latent Attention) compresses K and V jointly into a low-rank latent vector, caching the compressed representation and reconstructing on-the-fly — ~96% KV storage reduction at DeepSeek V3 scale.
-- Sparse attention (NSA, DSA, CSA+HCA) reduces attention computation by selecting only the most relevant KV tokens, using learned or heuristic sparsity to skip computation on unimportant history.
-- Linear attention (Mamba/SSM, Gated DeltaNet) replaces the QKV projection + softmax pattern with a fixed-size recurrent state, eliminating the need for KV cache entirely at the cost of reduced expressiveness.
+- Sparse attention variants reduce attention computation by selecting a subset of history through learned or heuristic sparsity; the exact retention and quality trade-offs are architecture-specific.
+- Linear or recurrent attention variants use fixed-size state instead of a growing KV cache at those layers. Hybrid models can retain conventional full-attention layers, so they do not eliminate KV cache model-wide.
 - The need to reuse prior keys and values is what creates KV cache during inference.
 
 ## Related Pages

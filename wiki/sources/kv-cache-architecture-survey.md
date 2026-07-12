@@ -15,17 +15,17 @@ updated: 2026-05-26
 
 # Summary
 
-A comprehensive Chinese survey article tracing the evolution of KVCache optimization across LLM architectures, from MHA through MQA, GQA, MLA, sparse attention, linear attention, and Cross-Layer Attention (CLA). It quantifies how the per-token KV footprint dropped from 320 KB (Qwen2.5-72B GQA) to 7.7 KB (DeepSeek V4 CSA+HCA) at 1M context — a ~41× reduction — and explains the engineering trade-offs behind each approach.
+An undated Chinese survey article tracing KVCache optimization across LLM architectures, from MHA through MQA, GQA, MLA, sparse attention, linear attention, and Cross-Layer Attention (CLA). It reports a modeled per-token KV-footprint reduction from 320 KB (Qwen2.5-72B GQA) to 7.7 KB for a described DeepSeek V4 CSA+HCA design at 1M context, but the frontier architecture names and figures require verification against primary sources.
 
 # Key Claims
 
 - **Three core KV compression axes.** (1) Reduce KV head count (MHA → MQA → GQA). (2) Compress KV representation (MLA: 96% dimension reduction). (3) Reduce tokens needing KV (sparse attention, sliding windows).
-- **MLA (Multi-head Latent Attention).** DeepSeek V2/V3 compresses K and V jointly into a low-rank latent vector; at DeepSeek V3 scale, single-layer KVCache drops from 14,336 to 576 dimensions (~96% reduction) with quality intact or improved.
-- **CSA+HCA (DeepSeek V4).** Hybrid layer-level compression: 30 layers of CSA (4:1 overlap-compressed + top-k sparse) + 31 layers of HCA (128:1 block-compressed with dense attention). At 1M context, V4 KVCache ≈ 7.4 GB vs V3's 65 GB — about 10% of V3.
-- **Linear attention (Mamba → Gated DeltaNet → hybrid).** Replaces growing KVCache with fixed-size hidden state: Mamba/SSM uses O(1) state vectors; Gated DeltaNet uses d×d associative memory matrix with dual gating (α for global forgetting, β for precise delta updates); hybrid architectures (Qwen3.5, Jamba) interleave linear attention layers with full-attention layers for a ~75% KVCache reduction.
-- **Quantization.** FP8 halves KV memory relative to BF16 with negligible quality loss; NVFP4 halves again. Vector compression (TurboQuant) reaches ~3.5 bits per dimension.
+- **MLA (Multi-head Latent Attention).** The survey reports that DeepSeek V2/V3 compress K and V jointly into a low-rank latent vector; at DeepSeek V3 scale, its dimensional comparison drops from 14,336 to 576 (~96%), with quality effects requiring model-specific evidence.
+- **CSA+HCA (described as DeepSeek V4).** The survey describes 30 layers of CSA (4:1 overlap-compressed + top-k sparse) plus 31 layers of HCA (128:1 block-compressed with dense attention), and estimates about 7.4 GB at 1M context versus 65 GB for V3. Treat the architecture status and figures as survey claims pending primary-source verification.
+- **Linear attention (Mamba → Gated DeltaNet → hybrid).** Replaces growing KVCache with fixed-size hidden state: Mamba/SSM uses O(1) state vectors; Gated DeltaNet uses a d×d associative memory matrix with dual gating; the survey attributes roughly 75% KVCache reduction to particular hybrid layer mixes.
+- **Quantization.** FP8 halves element storage relative to BF16 and 4-bit formats halve it again; realized memory savings and quality effects depend on implementation and model. The survey reports ~3.5 bits per dimension for TurboQuant.
 - **Cross-Layer Attention (CLA).** Adjacent layers share K/V state, halving KVCache — orthogonal to GQA/MLA.
-- **MoE amplifies KVCache importance.** MoE reduces FFN activation memory, making KVCache a larger fraction of total inference memory (60–80%).
+- **MoE can amplify KVCache importance.** The survey reports workloads where KVCache reaches 60–80% of inference memory; the fraction depends on architecture, sequence length, batch shape, and runtime allocation.
 
 # Why It Matters
 

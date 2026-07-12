@@ -23,8 +23,8 @@ Transformer architecture models sequences by repeatedly letting each token updat
 - Sampling policies such as greedy decoding, temperature, Top-K, and Top-P operate after the LM head over logits; they change output behavior without changing the attention architecture.
 - KV cache exists because later decoding steps reuse previously computed attention keys and values instead of recomputing the full prefix each time.
 - Attention variants such as MQA, GQA, and MLA preserve many query pathways while reducing or compressing the key/value state that inference must store and read.
-- Sparse attention (NSA, DSA, CSA+HCA) reduces the number of tokens whose KV must be retained by selectively keeping only the most relevant history — from simple sliding windows (SWA) through learned sparse selection to hybrid compression (CSA 4:1, HCA 128:1).
-- Linear attention (Mamba/SSM, Gated DeltaNet) replaces the growing KV cache with a fixed-size hidden state, breaking the O(n) memory-sequences-length link at the cost of expressiveness. Hybrid architectures (Qwen3.5, Jamba) interleave linear attention layers with full-attention layers.
+- Sparse attention can reduce retained history through sliding windows or learned selection. Compression ratios for frontier variants such as CSA+HCA are architecture-specific and currently represented here only by an undated survey.
+- Linear or recurrent attention variants replace growing per-token KV state with fixed-size state at those layers. Hybrid architectures interleave them with full-attention layers, retaining some sequence-length-dependent cache and model-specific quality trade-offs.
 - Cross-Layer Attention (CLA) reduces KVCache by having adjacent layers share K/V state instead of computing and storing them independently.
 - MoE changes the FFN path by routing each token to a small subset of experts, expanding total capacity while adding routing, load-balancing, and expert-parallel communication constraints.
 - Long-context extrapolation is a position-generalization problem as well as a memory problem: RoPE scaling can extend usable context only if quality survives the new position distribution.

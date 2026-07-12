@@ -39,7 +39,7 @@ LOG_PATH = WIKI_DIR / "log.md"
 WORKFLOW_PATH = ROOT_DIR / "docs" / "workflow" / "study_wiki.md"
 AGENTS_PATH = ROOT_DIR / "AGENTS.md"
 
-DEFAULT_REINDEX_MODEL = os.getenv("WIKI_AGENT_MODEL", "openai/gpt-5.5")
+DEFAULT_REINDEX_MODEL = os.getenv("WIKI_AGENT_MODEL", "openai/gpt-5.6-sol")
 DEFAULT_LINT_MODEL = os.getenv("WIKI_LINT_MODEL", DEFAULT_REINDEX_MODEL)
 
 SUPPORTED_EXTENSIONS = {

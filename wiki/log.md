@@ -1,5 +1,12 @@
 # Wiki Log
 
+## [2026-07-13] lint | qualified source-sensitive architecture and benchmark claims
+
+- Audited 75 source, 10 topic, 36 concept, 0 debate, and 1 synthesis pages for orphans, broken links, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicates.
+- Found no orphan content pages, broken internal links, weak source connections, debate/synthesis duplication, or obvious duplicate pages.
+- Qualified frontier KV-cache architecture figures from an undated survey, scoped embedding-geometry findings to the paper's experiments, and replaced an absolute HNSW performance comparison with workload-dependent guidance.
+- Rebuilt `wiki/index.md` to flag the KV-cache survey's verification boundary; left the existing synthesis unchanged because its adjudication history is not established in the repository.
+
 ## [2026-07-06] reindex | processed 3 FlashAttention PDFs
 
 - Processed pending PDF sources `raw/2205.14135v2.pdf`, `raw/2307.08691v1.pdf`, and `raw/2407.08608v2.pdf` from their extracted Markdown sidecars under `state/extracted/`.
