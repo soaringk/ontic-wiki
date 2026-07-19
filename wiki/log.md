@@ -1,5 +1,13 @@
 # Wiki Log
 
+## [2026-07-20] lint | repaired stale and overgeneralized claims
+
+- Audited 75 source, 10 topic, 36 concept, 0 debate, and 1 synthesis pages for orphans, broken links, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicates.
+- Found no orphan content pages, broken internal links, duplicate titles or slugs, weakly connected source pages, debate/synthesis duplication, or obvious duplicate pages.
+- Repaired two stale source notes after MLA and long-context concept coverage had been added, and added the corresponding concept connections.
+- Scoped survey-derived MLA figures, embedding-geometry results, quantization guidance, vector-search claims, compression benchmarks, and AI-learning recommendations to their local evidence.
+- Rebuilt `wiki/index.md` to match the canonical geometry source title and the qualified AI-learning, embedding-geometry, MLA, effective-dimension, and product-quantization summaries; left the existing synthesis unchanged because user-adjudication provenance remains unavailable.
+
 ## [2026-07-13] lint | qualified source-sensitive architecture and benchmark claims
 
 - Audited 75 source, 10 topic, 36 concept, 0 debate, and 1 synthesis pages for orphans, broken links, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicates.

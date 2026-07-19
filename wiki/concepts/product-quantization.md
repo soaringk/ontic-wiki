@@ -6,7 +6,7 @@ Product Quantization (PQ) compresses high-dimensional vectors by splitting each 
 
 - PQ avoids the curse of dimensionality for quantization: on a 128-dim vector, naively learning a single codebook would require ~2^64 centroids for reasonable quality. PQ splits into 8×16-dim sub-vectors, needing only 8×256 = 2048 centroids.
 - Distance computation becomes efficient: pre-compute sub-vector-to-centroid distance tables and sum M lookups per query.
-- PQ sits at a key point on the accuracy/speed/memory Pareto frontier for billion-scale similarity search. It is the backbone of most production ANN systems (Faiss, Milvus, etc.).
+- PQ sits at a key point on the accuracy/speed/memory Pareto frontier for large-scale similarity search and is a common component of production ANN systems.
 - Optimized PQ (OPQ) adds a learned rotation to decorrelate sub-vectors before chunking, improving quantization quality.
 
 ## Related Pages

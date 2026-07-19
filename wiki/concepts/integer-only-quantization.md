@@ -6,7 +6,7 @@ Integer-only quantization represents weights and activations with low-bit intege
 
 - It can reduce model size, memory traffic, and latency on hardware with efficient integer units.
 - Exact zero representation matters for padding and fused operator correctness.
-- Good deployment accuracy usually requires quantization-aware training rather than naive post-training conversion.
+- Some already-efficient models may require quantization-aware training when naive post-training conversion causes unacceptable accuracy loss.
 - Higher-precision accumulators and biases are often still necessary.
 - LLM-specific quantization must handle activation outliers, per-channel variation, KV-cache precision, and hardware/kernel support; reducing checkpoint size alone does not guarantee lower serving latency.
 - PTQ methods such as GPTQ/AWQ and smoothing methods such as SmoothQuant are practical LLM quantization paths, while QAT remains useful when deployment hardware and quality targets justify retraining cost.

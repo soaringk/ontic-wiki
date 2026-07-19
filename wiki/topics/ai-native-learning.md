@@ -1,8 +1,8 @@
 # AI-Native Learning
 
-AI-native learning is the shift from memorizing stable bodies of knowledge toward using AI as an active cognitive partner while developing self-direction, first-principles reasoning, and open-ended problem solving.
+The current interview frames AI-native learning as a shift from memorizing stable bodies of knowledge toward using AI as an active cognitive partner while developing self-direction, first-principles reasoning, and open-ended problem solving.
 
-## Core Ideas
+## Ideas From the Source
 
 - Knowledge recall loses relative value when large models can provide broad factual and procedural support on demand.
 - Closed-dataset training, such as exam drilling, can still improve performance inside a fixed syllabus but transfers weakly to open-ended work.
@@ -10,7 +10,7 @@ AI-native learning is the shift from memorizing stable bodies of knowledge towar
 - First-principles reasoning matters because AI-era work often begins by choosing the right logical origin, not by applying a memorized template.
 - AI-native practice is deeper than prompt recipes: it means learning how to cooperate with uncertain models, verify outputs, and turn model capability into stable systems or projects.
 
-## Practical Implications
+## Proposed Implications
 
 - Education should spend less effort on facts that are easily retrieved and more effort on question formation, judgment, taste, project selection, and verification.
 - Mentorship remains valuable when it helps learners find a direction and build standards, even if rote instruction loses value.

@@ -7,7 +7,7 @@ Effective dimension is the participation ratio of a cluster's covariance spectru
 - It is **scale-invariant** (multiplying Σ by a constant leaves it unchanged) and **weighted** (two large eigenvalues and one thousand small ones give d_eff ≈ 2, not ~1002) — making it the right spectral summary for cluster shape.
 - It is the exponential of the Rényi-2 entropy of the normalized eigenvalue spectrum.
 - It appears as the critical exponent in the Consolidation–Interference Duality bound: `(θ′/d̄)^(d_eff/2)` determines how much compression a cluster can tolerate before identity retrieval fails.
-- Production sentence encoders concentrate ≥99% of variance in at most d_eff ≈ 16 effective dimensions globally; local per-cluster d_eff is often below 5.
+- Across the paper's six evaluated sentence encoders, at least 99% of global variance is concentrated in at most about 16 effective dimensions, while local per-cluster `d_eff` is often below 5.
 
 ## Related Pages
 

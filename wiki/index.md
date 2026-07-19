@@ -39,7 +39,7 @@ This file is maintained by the agent.
 - [How to Generate Tokens Faster: A vLLM Performance Model](sources/vllm-performance-model.md) - Systems-modeling note that explains vLLM serving behavior through throughput, TTFT, queueing, and interference.
 - [We're at AI's Halftime](sources/were-at-ais-halftime.md) - Essay arguing that AI progress is shifting from benchmark hillclimbing toward evaluation setups that better capture real utility.
 - [Welcome to the Era of Experience](sources/welcome-to-the-era-of-experience.md) - Position paper arguing that future AI progress will come from long-horizon, grounded learning from experience.
-- [The Geometry of Consolidation v6 (Paper)](sources/geometry-of-consolidation-v6.md) - NeurIPS 2026 paper proving the Consolidation-Interference Duality, with companion repository reproduction notes folded into the same source page.
+- [The Geometry of Consolidation (NeurIPS 2026)](sources/geometry-of-consolidation-v6.md) - Paper proving the Consolidation-Interference Duality, with companion repository reproduction notes folded into the same source page.
 - [Language Modeling Is Compression](sources/language-modeling-is-compression.md) - DeepMind paper showing LLMs as general-purpose compressors via the prediction-compression equivalence, with cross-modal compression results.
 - [从 305 GB 到 7.4 GB：大模型 KVCache 架构演进全景](sources/kv-cache-architecture-survey.md) - Undated survey of KVCache optimization from MHA through sparse and linear attention; its frontier architecture figures require primary-source verification.
 - [向量数据库 (Vector Database)](sources/vector-database-overview.md) - Chinese introductory article on vector databases, ANN algorithms, similarity measurement, and database selection.
@@ -83,13 +83,13 @@ This file is maintained by the agent.
 ## Topics
 
 - [CUDA Programming](topics/cuda-programming.md) - Durable overview of CUDA execution, synchronization, and performance-sensitive design.
-- [AI-Native Learning](topics/ai-native-learning.md) - Shift from memorization and exam drilling toward self-directed, first-principles, AI-assisted open-ended learning.
+- [AI-Native Learning](topics/ai-native-learning.md) - Interview-framed shift from memorization and exam drilling toward self-directed, first-principles, AI-assisted open-ended learning.
 - [Disaggregated LLM Inference](topics/disaggregated-llm-inference.md) - Serving view that separates prefill and decode while tracking colocated chunked-prefill schedulers as a partial interference-mitigation alternative.
 - [Experiential AI](topics/experiential-ai.md) - View of advanced agents as long-lived, grounded learners, plus the live dispute over human-derived priors, algorithms, evaluation, and reliability.
 - [LLM Deployment and Capacity Planning](topics/llm-deployment-and-capacity-planning.md) - Operating view of model serving focused on memory planning, latency metrics, batching, KV cache, MoE, LoRA, quantization, and decoding acceleration.
 - [Private Credit](topics/private-credit.md) - Non-bank lending market spanning direct lending, asset-based finance, and increasingly entangled funding channels.
 - [Transformer Architecture and Attention](topics/transformer-architecture-and-attention.md) - Foundational model of tokenization, embeddings, masks, attention, RoPE, FFN, normalization, decoder-only generation, KV cache, MoE, and long-context behavior.
-- [Embedding Memory Geometry](topics/embedding-memory-geometry.md) - Geometric study of semantic memory: effective dimension, consolidation limits, and the tight/spread phase boundary that determines centroid near-optimality on real text.
+- [Embedding Memory Geometry](topics/embedding-memory-geometry.md) - Geometric study of semantic memory: effective dimension, consolidation limits, and centroid behavior on the paper's evaluated text corpora.
 - [Compression and Language Models](topics/compression-and-language-models.md) - Prediction-compression equivalence, LLMs as general-purpose cross-modal compressors, and scaling-law insights from adjusted compression rates.
 - [Vector Database and ANN Search](topics/vector-database-and-ann-search.md) - Vector databases for RAG and semantic search, covering ANN algorithms (K-Means, PQ, HNSW, LSH), similarity measures, and filtering strategies.
 
@@ -117,14 +117,14 @@ This file is maintained by the agent.
 - [Streams of Experience](concepts/streams-of-experience.md) - Long-lived action-observation trajectories that support adaptation and long-horizon optimization.
 - [Unitranche Loans](concepts/unitranche-loans.md) - Single-loan structures that merge senior and junior debt to trade clarity for execution speed.
 - [Utility Problem](concepts/utility-problem.md) - The gap between benchmark capability and durable real-world usefulness when evaluation setups miss how work actually happens.
-- [Effective Dimension](concepts/effective-dimension.md) - Participation ratio measuring how many truly independent directions a cluster's covariance occupies; governs the Consolidation-Interference Duality bound.
+- [Effective Dimension](concepts/effective-dimension.md) - Participation ratio measuring how many independent directions a cluster's covariance occupies and governing the Consolidation-Interference Duality bound.
 - [Prediction-Compression Equivalence](concepts/prediction-compression-equivalence.md) - Information-theoretic bridge between probabilistic prediction, cross-entropy, and lossless compression.
 - [Positional Encoding](concepts/positional-encoding.md) - Order signal for Transformers, covering absolute/relative encodings, RoPE Q/K rotation, ALiBi score bias, and long-context extrapolation.
-- [Multi-head Latent Attention (MLA)](concepts/multi-head-latent-attention-mla.md) - DeepSeek's attention variant that compresses KV state into a low-rank latent vector for ~96% KVCache reduction.
+- [Multi-head Latent Attention (MLA)](concepts/multi-head-latent-attention-mla.md) - DeepSeek attention variant that stores low-rank latent KV state; an undated survey reports approximately 96% dimensional reduction at V3 scale.
 - [Tokenization and Embeddings](concepts/tokenization-and-embeddings.md) - Text-to-token and token-to-vector input layer, including tokenizer stages, subword tokenization, embedding tables, vocabulary memory, and weight tying.
 - [Transformer Feed-Forward Network](concepts/transformer-feed-forward-network.md) - Per-token nonlinear Transformer sublayer covering standard FFN, SwiGLU, dense parameter share, tensor-parallel splits, and MoE expertization.
 - [Transformer Normalization and Residuals](concepts/transformer-normalization-and-residuals.md) - Stability machinery for deep Transformer stacks: residual identity paths, LayerNorm/RMSNorm, Pre-Norm, and fused residual-norm kernels.
-- [Product Quantization](concepts/product-quantization.md) - Vector compression by sub-vector quantization with learned codebooks, the backbone of billion-scale ANN search.
+- [Product Quantization](concepts/product-quantization.md) - Vector compression by sub-vector quantization with learned codebooks, commonly used in large-scale ANN search.
 - [Hierarchical Navigable Small Worlds (HNSW)](concepts/hierarchical-navigable-small-worlds-hnsw.md) - Multi-layer graph-based ANN algorithm with top-down search from long-jump to dense-granularity layers.
 - [Mixture of Experts](concepts/mixture-of-experts.md) - Sparse expert FFN routing that expands total model capacity while introducing router, load-balancing, and expert-parallel serving constraints.
 - [Low-Rank Adaptation (LoRA)](concepts/low-rank-adaptation-lora.md) - Parameter-efficient fine-tuning by training low-rank adapter updates on top of frozen base-model weights.

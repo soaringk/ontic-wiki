@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2026-04-18
 created: 2026-05-24
-updated: 2026-06-11
+updated: 2026-07-20
 ---
 
 # Summary
@@ -36,6 +36,7 @@ This source turns the wiki's attention concept from a high-level operation into 
 - Topic: [Transformer Architecture and Attention](../topics/transformer-architecture-and-attention.md)
 - Concept: [Attention Mechanism](../concepts/attention-mechanism.md)
 - Concept: [KV Cache in LLM Serving](../concepts/kv-cache-in-llm-serving.md)
+- Concept: [Multi-head Latent Attention (MLA)](../concepts/multi-head-latent-attention-mla.md)
 - Concept: [Model Bandwidth Utilization](../concepts/model-bandwidth-utilization.md)
 
 # Source Notes
@@ -45,4 +46,4 @@ This source turns the wiki's attention concept from a high-level operation into 
 # Open Questions
 
 - The article explains FlashAttention and attention variants as concepts, but it should be paired with primary papers or framework documentation before relying on exact performance numbers.
-- MLA is introduced as a KV-compression direction, but the wiki does not yet have a standalone concept page for MLA or latent KV compression.
+- MLA is covered in [Multi-head Latent Attention (MLA)](../concepts/multi-head-latent-attention-mla.md); primary-source evidence is still needed for exact quality and performance claims.

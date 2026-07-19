@@ -4,11 +4,11 @@ MLA is an attention variant introduced by DeepSeek V2/V3 that compresses the per
 
 ## Why It Matters
 
-- At DeepSeek V3 scale, MLA reduces per-layer KV storage from `2 × hidden_size` (MHA baseline) to `kv_lora_rank + qk_rope_head_dim = 512 + 64 = 576` dimensions — a ~96% reduction from a 14,336-dimension baseline.
-- Model quality does not degrade; the joint compression acts as a regularizer.
+- The undated [KV-cache architecture survey](../sources/kv-cache-architecture-survey.md) reports a reduction from 14,336 to 576 cached dimensions at DeepSeek V3 scale, approximately 96%.
+- The local sources do not establish a general no-degradation result; quality and serving benefit remain model- and implementation-dependent.
 - MLA is orthogonal to GQA/MQA (which reduce KV head count) and can be combined with cross-layer attention or quantization for further compression.
 - The cached latent is reconstructed to full K/V on-the-fly during attention computation, trading extra projection work for much smaller stored state.
-- RoPE-related Q/K dimensions need separate handling from the compressible latent path, so implementation details matter for both correctness and actual serving benefit.
+- RoPE-related Q/K dimensions need separate handling from the compressible latent path, so implementation details matter for both correctness and actual serving benefit ([DeepSeek MLA tutorial](../sources/cnblogs-transformer-series-28-deepseek-mla.md)).
 
 ## Related Pages
 

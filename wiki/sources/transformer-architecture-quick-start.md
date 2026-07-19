@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2026-03-30
 created: 2026-05-20
-updated: 2026-06-11
+updated: 2026-07-20
 ---
 
 # Summary
@@ -35,6 +35,7 @@ This source strengthens the wiki's bridge between Transformer mechanics and AI i
 - Topic: [Transformer Architecture and Attention](../topics/transformer-architecture-and-attention.md)
 - Concept: [Attention Mechanism](../concepts/attention-mechanism.md)
 - Concept: [KV Cache in LLM Serving](../concepts/kv-cache-in-llm-serving.md)
+- Concept: [Long Context Extrapolation](../concepts/long-context-extrapolation.md)
 - Concept: [Parallelism in LLM Serving](../concepts/parallelism-in-llm-serving.md)
 - Concept: [Prefill-Decode Disaggregation](../concepts/prefill-decode-disaggregation.md)
 
@@ -45,4 +46,4 @@ This source strengthens the wiki's bridge between Transformer mechanics and AI i
 # Open Questions
 
 - The article is strongest as an infrastructure-oriented mental model; it should be paired with implementation/runtime sources before making concrete performance claims.
-- RoPE long-context variants such as NTK-aware scaling and YaRN are mentioned as relevant but not treated as a full concept here yet.
+- The article mentions NTK-aware scaling and YaRN without treating them in depth; see [Long Context Extrapolation](../concepts/long-context-extrapolation.md).
