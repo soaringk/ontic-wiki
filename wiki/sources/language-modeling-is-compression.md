@@ -10,12 +10,12 @@ source_type: pdf
 parser: mineru
 published: unknown
 created: 2026-05-26
-updated: 2026-05-26
+updated: 2026-07-27
 ---
 
 # Summary
 
-This DeepMind paper advocates for viewing language modeling through the lens of lossless compression. It shows that large foundation models are powerful general-purpose compressors: Chinchilla 70B, trained primarily on text, compresses ImageNet patches to 43.4% and LibriSpeech samples to 16.4% of their raw size, beating domain-specific compressors like PNG (58.5%) or FLAC (30.3%). It revisits scaling laws through adjusted compression rates (accounting for model size) and demonstrates that compressors like gzip can be used as conditional generative models.
+This DeepMind paper advocates for viewing language modeling through the lens of lossless compression. Excluding model parameter bytes, Chinchilla 70B, trained primarily on text, compresses ImageNet patches to 43.4% and LibriSpeech samples to 16.4% of their raw size, beating compared domain-specific compressors like PNG (58.5%) or FLAC (30.3%) on raw compression rate. The paper separately revisits scaling laws through adjusted compression rates that account for model size and demonstrates that compressors like gzip can be used as conditional generative models.
 
 # Key Claims
 

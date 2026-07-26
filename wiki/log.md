@@ -1,5 +1,13 @@
 # Wiki Log
 
+## [2026-07-27] lint | tightened evidence boundaries and concept scope
+
+- Audited 75 source, 10 topic, 36 concept, 0 debate, and 1 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, and obvious duplicates.
+- Found no orphan content pages, broken internal links, duplicate titles or source identifiers, weakly connected source pages, debate/synthesis duplication, or obvious duplicate pages.
+- Qualified survey-derived MLA and cross-layer-attention figures, distinguished raw from adjusted compression results, and scoped ANN and private-credit claims to the available local evidence.
+- Compacted `Prefill-Decode Disaggregation` so it defines the technique and links to the broader systems topic instead of duplicating it; rebuilt the corresponding `wiki/index.md` summary.
+- Left the existing synthesis unchanged because its user-adjudication provenance remains unavailable and lint must not promote or reverse contested conclusions.
+
 ## [2026-07-20] lint | repaired stale and overgeneralized claims
 
 - Audited 75 source, 10 topic, 36 concept, 0 debate, and 1 synthesis pages for orphans, broken links, stale claims, weak source connections, debate/synthesis duplication, and obvious duplicates.

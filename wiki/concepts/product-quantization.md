@@ -1,13 +1,12 @@
 # Product Quantization
 
-Product Quantization (PQ) compresses high-dimensional vectors by splitting each vector into M sub-vectors of dimension d/M, quantizing each sub-vector independently using a learned codebook (typically K=256 centroids via k-means). The compressed representation is M log₂(K) bits per vector — e.g., 64 bits for M=8, K=256.
+Product Quantization (PQ) compresses high-dimensional vectors by splitting each vector into sub-vectors and quantizing each part independently with a learned codebook.
 
 ## Why It Matters
 
-- PQ avoids the curse of dimensionality for quantization: on a 128-dim vector, naively learning a single codebook would require ~2^64 centroids for reasonable quality. PQ splits into 8×16-dim sub-vectors, needing only 8×256 = 2048 centroids.
-- Distance computation becomes efficient: pre-compute sub-vector-to-centroid distance tables and sum M lookups per query.
-- PQ sits at a key point on the accuracy/speed/memory Pareto frontier for large-scale similarity search and is a common component of production ANN systems.
-- Optimized PQ (OPQ) adds a learned rotation to decorrelate sub-vectors before chunking, improving quantization quality.
+- Factorizing vector quantization into smaller codebooks mitigates codebook growth as vector dimension increases.
+- The compact codes reduce memory use at the cost of approximate distances and some retrieval accuracy.
+- PQ occupies one point on the workload-dependent accuracy, speed, and memory trade-off for ANN search.
 
 ## Related Pages
 

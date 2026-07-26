@@ -5,13 +5,12 @@ A unitranche loan combines what would traditionally be separate senior and junio
 ## Why It Matters
 
 - It simplifies execution for borrowers by replacing multi-layer debt negotiations with one instrument.
-- It usually offers lenders a higher blended yield than plain senior debt.
-- It concentrates risk and makes workout outcomes less transparent because the senior-junior distinction is less clean than in a layered capital structure.
+- The current podcast source describes it as faster but less transparent than a layered capital structure.
 
 ## Operational Consequence
 
-- Unitranche became a signature product in private credit because it trades transparency and clarity for speed, flexibility, and faster deal certainty.
-- In a stressed scenario, recovery outcomes can be harder to predict because the capital structure is flatter and more negotiated.
+- The source presents unitranche as a signature private-credit product that trades structural clarity for execution speed.
+- More general claims about yield and stressed recovery behavior need additional primary or legal sources.
 
 ## Related Pages
 

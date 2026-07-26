@@ -4,14 +4,13 @@ Rated note feeders are structured investment vehicles that wrap private-credit e
 
 ## Why It Matters
 
-- They turn illiquid, bespoke credit assets into forms that better fit insurance and pension portfolio rules.
-- They can reduce apparent capital charges for regulated investors by inserting a rated wrapper between the investor and the underlying loans.
-- They increase system complexity and can hide how much risk remains in the underlying private-credit pool.
+- The current podcast source describes them as a way to make private-credit exposure easier for regulated institutions to hold.
+- The wrapper adds structural complexity between the investor and the underlying private-credit pool.
 
 ## Structural Tension
 
-- The wrapper can make the position look more standardized and safer than the underlying assets really are.
-- The current material treats this as a form of regulatory arbitrage rather than a pure risk reduction.
+- The source warns that the rated wrapper can make exposure appear more standardized without necessarily removing underlying credit risk.
+- Its regulatory-arbitrage characterization is an argument from one secondary source, not a demonstrated general outcome.
 
 ## Related Pages
 

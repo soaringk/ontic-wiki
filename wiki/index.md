@@ -112,7 +112,7 @@ This file is maintained by the agent.
 - [Model Bandwidth Utilization](concepts/model-bandwidth-utilization.md) - A normalized measure of inference memory-bandwidth efficiency and decode-side compute slack exploitable by bounded prefill work.
 - [PagedAttention](concepts/pagedattention.md) - Block-based KV-cache layout that trades contiguous allocation for much better utilization and sharing.
 - [Parallelism in LLM Serving](concepts/parallelism-in-llm-serving.md) - Tensor/expert parallelism distinctions, including attention-head splits, FFN partitioning, MoE token dispatch, and phase-aware serving.
-- [Prefill-Decode Disaggregation](concepts/prefill-decode-disaggregation.md) - Separation of parallel prompt processing and sequential KV-cache-heavy token generation into different serving pools, contrasted with colocated chunked-prefill schedulers.
+- [Prefill-Decode Disaggregation](concepts/prefill-decode-disaggregation.md) - Separation of parallel prompt processing and sequential KV-cache-heavy token generation into specialized serving pools, conditional on efficient KV-state transfer.
 - [Rated Note Feeders](concepts/rated-note-feeders.md) - Structured wrappers that make private-credit exposure easier for regulated investors to hold.
 - [Streams of Experience](concepts/streams-of-experience.md) - Long-lived action-observation trajectories that support adaptation and long-horizon optimization.
 - [Unitranche Loans](concepts/unitranche-loans.md) - Single-loan structures that merge senior and junior debt to trade clarity for execution speed.

@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: unknown
 created: 2026-05-26
-updated: 2026-05-26
+updated: 2026-07-27
 ---
 
 # Summary
@@ -19,12 +19,12 @@ An undated Chinese survey article tracing KVCache optimization across LLM archit
 
 # Key Claims
 
-- **Three core KV compression axes.** (1) Reduce KV head count (MHA → MQA → GQA). (2) Compress KV representation (MLA: 96% dimension reduction). (3) Reduce tokens needing KV (sparse attention, sliding windows).
+- **Three core KV compression axes.** (1) Reduce KV head count (MHA → MQA → GQA). (2) Compress KV representation (the survey reports 96% dimensional reduction for MLA at DeepSeek V3 scale). (3) Reduce tokens needing KV (sparse attention, sliding windows).
 - **MLA (Multi-head Latent Attention).** The survey reports that DeepSeek V2/V3 compress K and V jointly into a low-rank latent vector; at DeepSeek V3 scale, its dimensional comparison drops from 14,336 to 576 (~96%), with quality effects requiring model-specific evidence.
 - **CSA+HCA (described as DeepSeek V4).** The survey describes 30 layers of CSA (4:1 overlap-compressed + top-k sparse) plus 31 layers of HCA (128:1 block-compressed with dense attention), and estimates about 7.4 GB at 1M context versus 65 GB for V3. Treat the architecture status and figures as survey claims pending primary-source verification.
 - **Linear attention (Mamba → Gated DeltaNet → hybrid).** Replaces growing KVCache with fixed-size hidden state: Mamba/SSM uses O(1) state vectors; Gated DeltaNet uses a d×d associative memory matrix with dual gating; the survey attributes roughly 75% KVCache reduction to particular hybrid layer mixes.
 - **Quantization.** FP8 halves element storage relative to BF16 and 4-bit formats halve it again; realized memory savings and quality effects depend on implementation and model. The survey reports ~3.5 bits per dimension for TurboQuant.
-- **Cross-Layer Attention (CLA).** Adjacent layers share K/V state, halving KVCache — orthogonal to GQA/MLA.
+- **Cross-Layer Attention (CLA).** The survey describes pairs of adjacent layers sharing one K/V state, which halves storage for those paired layers; model-level savings depend on how broadly sharing is applied. CLA is orthogonal to GQA/MLA.
 - **MoE can amplify KVCache importance.** The survey reports workloads where KVCache reaches 60–80% of inference memory; the fraction depends on architecture, sequence length, batch shape, and runtime allocation.
 
 # Why It Matters
