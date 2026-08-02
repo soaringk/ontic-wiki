@@ -8,9 +8,9 @@ status: active
 raw_path: raw/prefill-decode-separation/2401.11181v1.pdf
 source_type: pdf
 parser: mineru
-published: unknown
+published: 2024-01-20
 created: 2026-04-25
-updated: 2026-05-11
+updated: 2026-08-03
 ---
 
 # Summary
@@ -35,6 +35,7 @@ This source sharpens the notion of interference. It shows that disaggregation al
 - Topic: [LLM Deployment and Capacity Planning](../topics/llm-deployment-and-capacity-planning.md)
 - Concept: [Prefill-Decode Disaggregation](../concepts/prefill-decode-disaggregation.md)
 - Concept: [Iteration-Level Scheduling](../concepts/iteration-level-scheduling.md)
+- Concept: [Chunked Prefill Scheduling](../concepts/chunked-prefill-scheduling.md)
 
 # Open Questions
 

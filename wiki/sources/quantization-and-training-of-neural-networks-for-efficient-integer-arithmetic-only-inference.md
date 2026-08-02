@@ -8,9 +8,9 @@ status: active
 raw_path: raw/Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference.pdf
 source_type: pdf
 parser: mineru
-published: unknown
+published: 2017-12-15
 created: 2026-04-25
-updated: 2026-05-11
+updated: 2026-08-03
 ---
 
 # Summary
@@ -33,6 +33,7 @@ This source grounds quantization in systems reality. It explains why low-bit dep
 
 - Topic: [LLM Deployment and Capacity Planning](../topics/llm-deployment-and-capacity-planning.md)
 - Concept: [Integer-Only Quantization](../concepts/integer-only-quantization.md)
+- Concept: [LLM Quantization](../concepts/llm-quantization.md)
 
 # Open Questions
 

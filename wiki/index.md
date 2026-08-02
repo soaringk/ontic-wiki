@@ -106,7 +106,7 @@ This file is maintained by the agent.
 - [CUDA Thread Hierarchy](concepts/cuda-thread-hierarchy.md) - The `Grid -> Block -> Thread` structure that defines CUDA work partitioning.
 - [Grounded Rewards](concepts/grounded-rewards.md) - Environmental feedback signals used to optimize agent behavior beyond human prejudgement.
 - [GPU Memory Hierarchy](concepts/gpu-memory-hierarchy.md) - The trade-offs among registers, shared memory, local memory, and global memory.
-- [Integer-Only Quantization](concepts/integer-only-quantization.md) - Low-bit deployment approach using scale/zero-point mappings, outlier-aware LLM treatment, PTQ/QAT, and hardware-efficient integer paths.
+- [Integer-Only Quantization](concepts/integer-only-quantization.md) - Integer inference boundary built from affine scale/zero-point mappings, fixed-point multipliers, higher-precision accumulation, QAT, and matching hardware kernels.
 - [Iteration-Level Scheduling](concepts/iteration-level-scheduling.md) - Serving policy that re-forms batches after each generation step and needs token-budget rules to prevent full-prefill stalls.
 - [KV Cache in LLM Serving](concepts/kv-cache-in-llm-serving.md) - Why attention cache dominates variable inference memory and how MQA/GQA/MLA, quantization, sparse retention, reuse, and long-context planning change it.
 - [Model Bandwidth Utilization](concepts/model-bandwidth-utilization.md) - A normalized measure of inference memory-bandwidth efficiency and decode-side compute slack exploitable by bounded prefill work.

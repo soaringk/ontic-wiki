@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2023-07-15
 created: 2026-05-26
-updated: 2026-05-26
+updated: 2026-08-03
 ---
 
 # Summary
@@ -24,7 +24,7 @@ A Chinese introductory article on vector databases, covering their motivation (G
 - **ANN algorithms trade accuracy for speed.** Clustering (K-Means with Faiss), Product Quantization (sub-vector compression), HNSW (multi-layer graph), and LSH (locality-sensitive hashing) each occupy different points on the accuracy/speed/memory Pareto frontier.
 - **Product Quantization.** Sub-divides vectors into sub-vectors, quantizes each independently, and uses a codebook; dramatically reduces memory at the cost of some accuracy.
 - **HNSW.** Hierarchical navigable small-world graphs combine fast approximate search (top-level long jumps) with accurate results (bottom-level dense connections) — a classic space-for-speed trade-off.
-- **Filtering adds complexity.** Pre-filtering (search before filter) may miss results; post-filtering (filter after search) may waste computation. Both are active research areas.
+- **Filtering adds complexity.** Pre-filtering (filter before vector search) may miss results; post-filtering (filter after search) may waste computation. Both are active research areas.
 
 # Why It Matters
 

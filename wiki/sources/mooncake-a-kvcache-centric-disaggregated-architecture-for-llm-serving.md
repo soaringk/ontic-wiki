@@ -8,9 +8,9 @@ status: active
 raw_path: raw/prefill-decode-separation/2407.00079v4.pdf
 source_type: pdf
 parser: mineru
-published: unknown
+published: 2025-09-03
 created: 2026-04-25
-updated: 2026-05-11
+updated: 2026-08-03
 ---
 
 # Summary

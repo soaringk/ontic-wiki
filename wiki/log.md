@@ -1,5 +1,13 @@
 # Wiki Log
 
+## [2026-08-03] lint | corrected claims and tightened concept boundaries
+
+- Audited 75 source, 10 topic, 36 concept, 0 debate, and 1 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, and obvious duplicates.
+- Found no orphan content pages, broken internal links, inventory drift, debate/synthesis duplication, or obvious whole-page duplicates.
+- Corrected vector pre-filter ordering and the adjusted-compression scaling axis; restored clear boundaries between integer-only and broader LLM quantization and between speculative and other parallel decoding methods.
+- Filled eight publication dates from embedded arXiv version stamps and added direct reciprocal links for FlashAttention, chunked prefill, quantization, tokenization, and autoregressive generation.
+- Rebuilt the affected `wiki/index.md` summary; left the existing synthesis unchanged because its user-adjudication provenance remains unavailable.
+
 ## [2026-07-27] lint | tightened evidence boundaries and concept scope
 
 - Audited 75 source, 10 topic, 36 concept, 0 debate, and 1 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, and obvious duplicates.

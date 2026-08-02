@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2025-03-25
 created: 2026-07-04
-updated: 2026-07-04
+updated: 2026-08-03
 ---
 
 # Summary
@@ -31,6 +31,7 @@ updated: 2026-07-04
 # Connections
 
 - Concept: [Attention Mechanism](../concepts/attention-mechanism.md)
+- Concept: [FlashAttention](../concepts/flashattention.md)
 - Concept: [GPU Memory Hierarchy](../concepts/gpu-memory-hierarchy.md)
 - Topic: [Transformer Architecture and Attention](../topics/transformer-architecture-and-attention.md)
 

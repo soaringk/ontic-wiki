@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2026-03-31
 created: 2026-05-20
-updated: 2026-06-11
+updated: 2026-08-03
 ---
 
 # Summary
@@ -35,6 +35,8 @@ This source adds implementation-level grounding to the wiki's Transformer topic.
 - Topic: [Transformer Architecture and Attention](../topics/transformer-architecture-and-attention.md)
 - Concept: [Attention Mechanism](../concepts/attention-mechanism.md)
 - Concept: [KV Cache in LLM Serving](../concepts/kv-cache-in-llm-serving.md)
+- Concept: [Tokenization and Embeddings](../concepts/tokenization-and-embeddings.md)
+- Concept: [Autoregressive Generation](../concepts/autoregressive-generation.md)
 
 # Source Notes
 

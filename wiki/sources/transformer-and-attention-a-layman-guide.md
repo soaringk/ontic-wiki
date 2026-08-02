@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: unknown
 created: 2026-04-25
-updated: 2026-05-11
+updated: 2026-08-03
 ---
 
 # Summary
@@ -34,6 +34,8 @@ This source is foundational rather than novel. It gives the conceptual scaffoldi
 - Topic: [Transformer Architecture and Attention](../topics/transformer-architecture-and-attention.md)
 - Concept: [Attention Mechanism](../concepts/attention-mechanism.md)
 - Concept: [KV Cache in LLM Serving](../concepts/kv-cache-in-llm-serving.md)
+- Concept: [Tokenization and Embeddings](../concepts/tokenization-and-embeddings.md)
+- Concept: [Autoregressive Generation](../concepts/autoregressive-generation.md)
 
 # Open Questions
 

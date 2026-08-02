@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2025-03-28
 created: 2026-07-04
-updated: 2026-07-04
+updated: 2026-08-03
 ---
 
 # Summary
@@ -31,6 +31,7 @@ updated: 2026-07-04
 # Connections
 
 - Concept: [Attention Mechanism](../concepts/attention-mechanism.md)
+- Concept: [FlashAttention](../concepts/flashattention.md)
 - Concept: [Model Bandwidth Utilization](../concepts/model-bandwidth-utilization.md)
 - Topic: [LLM Deployment and Capacity Planning](../topics/llm-deployment-and-capacity-planning.md)
 

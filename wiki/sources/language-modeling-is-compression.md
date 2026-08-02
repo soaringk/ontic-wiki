@@ -8,9 +8,9 @@ status: active
 raw_path: raw/Language Modeling Is Compression.pdf
 source_type: pdf
 parser: mineru
-published: unknown
+published: 2024-03-18
 created: 2026-05-26
-updated: 2026-07-27
+updated: 2026-08-03
 ---
 
 # Summary
@@ -21,7 +21,7 @@ This DeepMind paper advocates for viewing language modeling through the lens of 
 
 - **Prediction equals compression.** Arithmetic coding transforms any predictive model into a lossless compressor; conversely, any compressor defines a conditional distribution via coding lengths, enabling generation.
 - **LLMs are general-purpose (raw) compressors.** Chinchilla 70B and Llama 2 7B, despite text-only training, achieve competitive raw compression rates on image and audio data — outperforming modality-specific codecs.
-- **Adjusted compression rate reveals optimal model size.** When model parameters are counted in the compressed output, the adjusted compression rate creates a U-shaped curve with dataset size: scaling beyond a critical point worsens compression because parameter overhead dominates. Each dataset has an optimal model size.
+- **Adjusted compression rate reveals optimal model size.** When model parameters are counted in the compressed output, the adjusted compression rate creates a U-shaped curve over model size for a fixed dataset: scaling beyond a critical point worsens compression because parameter overhead dominates. Larger datasets support a larger optimal model size.
 - **Tokenization is pre-compression.** Tokenizers compress the raw byte stream before the model sees it. Larger vocabularies pack more information per token but make the prediction task harder; for large models, simpler tokenizers (e.g., ASCII) often achieve better raw compression.
 - **In-context compression.** Foundation models rely on in-context learning to adapt their compression within a short context window, unlike classical compressors which rely on long context windows and small programs.
 
