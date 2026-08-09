@@ -1,6 +1,6 @@
 # Speculative Decoding
 
-Speculative decoding accelerates autoregressive generation by letting a smaller draft model propose several future tokens and having the target model verify them in parallel.
+Speculative decoding accelerates autoregressive generation by using a cheaper draft model or candidate-generation path to propose future tokens, then having the target model verify them in parallel. A smaller independent draft model is the canonical speculative-sampling design.
 
 ## Why It Matters
 

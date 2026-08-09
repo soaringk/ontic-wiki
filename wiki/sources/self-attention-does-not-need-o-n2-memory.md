@@ -10,7 +10,7 @@ source_type: pdf
 parser: mineru
 published: 2021-12-10
 created: 2026-06-30
-updated: 2026-06-30
+updated: 2026-08-10
 ---
 
 # Summary
@@ -34,7 +34,7 @@ The paper separates attention's quadratic time cost from its commonly assumed qu
 
 - Topic: [Transformer Architecture and Attention](../topics/transformer-architecture-and-attention.md)
 - Concept: [Attention Mechanism](../concepts/attention-mechanism.md)
-- Concept: [Autoregressive Generation](../concepts/autoregressive-generation.md)
+- Concept: [FlashAttention](../concepts/flashattention.md)
 
 # Open Questions
 

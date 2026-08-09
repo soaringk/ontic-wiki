@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2023-07-15
 created: 2026-05-26
-updated: 2026-08-03
+updated: 2026-08-10
 ---
 
 # Summary
@@ -19,12 +19,12 @@ A Chinese introductory article on vector databases, covering their motivation (G
 
 # Key Claims
 
-- **Vector databases solve GPT's context-window problem.** By pre-embedding documents and retrieving only relevant chunks at query time, vector databases drastically reduce token costs and bypass context-length limits.
+- **Vector databases mitigate GPT's context-window problem.** By pre-embedding documents and retrieving a bounded set of relevant chunks at query time, vector databases reduce prompt-token costs while remaining subject to the model's context limit.
 - **Vector Embeddings encode semantic features.** AI models (text-embedding-ada-002, CLIP, wav2vec2) produce high-dimensional vectors that capture latent semantics — similar inputs map to nearby points in embedding space.
 - **ANN algorithms trade accuracy for speed.** Clustering (K-Means with Faiss), Product Quantization (sub-vector compression), HNSW (multi-layer graph), and LSH (locality-sensitive hashing) each occupy different points on the accuracy/speed/memory Pareto frontier.
 - **Product Quantization.** Sub-divides vectors into sub-vectors, quantizes each independently, and uses a codebook; dramatically reduces memory at the cost of some accuracy.
 - **HNSW.** Hierarchical navigable small-world graphs combine fast approximate search (top-level long jumps) with accurate results (bottom-level dense connections) — a classic space-for-speed trade-off.
-- **Filtering adds complexity.** Pre-filtering (filter before vector search) may miss results; post-filtering (filter after search) may waste computation. Both are active research areas.
+- **Filtering adds complexity.** Pre-filtering restricts the eligible set before ANN search; post-filtering can return too few eligible results unless the candidate pool is enlarged. Both strategies create performance/recall trade-offs.
 
 # Why It Matters
 

@@ -1,13 +1,13 @@
 # Embedding Memory Geometry
 
-The geometric study of semantic memory systems: how embeddings are organized on the unit sphere, how their shape determines retrieval behavior under noise and compression, and how cluster geometry dictates the fundamental limits of consolidation and quantization.
+The geometric study of semantic memory systems: how embeddings are organized on the unit sphere, how their shape affects retrieval behavior under noise and compression, and how one local manuscript characterizes limits of consolidation and quantization for unit-normalized text embeddings under cosine-threshold retrieval.
 
 ## Core Ideas
 
 - Embedding clusters live on the unit sphere `S^(d-1)` with two key geometric properties: mean within-cluster cosine distance `d̄` (spread) and effective dimension `d_eff` (participation ratio of the covariance spectrum).
-- The Consolidation–Interference Duality proves that the same spectral quantity `(θ′/d̄)^(d_eff/2)` governs both forgetting under retrieval noise and identity loss under compression: compressing a cluster to fewer representatives does not escape the geometric trap ([paper](../sources/geometry-of-consolidation-v6.md)).
+- The Consolidation–Interference Duality manuscript argues that the same spectral quantity `(θ′/d̄)^(d_eff/2)` governs both forgetting under retrieval noise and identity loss under compression in its formal setup ([submission](../sources/geometry-of-consolidation-v6.md)).
 - A tight/spread boundary is evaluated at `d̄ = θ′`. In the paper's tight-regime cases, the tested strategies achieve near-perfect identity preservation; in the spread regime, observed error rises with `d_eff`.
-- In the paper's six evaluated sentence encoders, at least 99% of variance is concentrated in at most about 16 effective dimensions globally, and local per-cluster `d_eff` is often below 5.
+- The manuscript reports that a predecessor paper found at least 99% of global variance within about 16 effective dimensions across six encoder families; in the present manuscript's experiments, local per-cluster `d_eff` is often below 5.
 - Across the paper's five evaluated text corpora and identity-retrieval setup, clusters mostly sit in the tight regime and centroid averaging matches or beats its tested adaptive router. This does not establish that adaptive routing is ineffective for all text workloads.
 
 ## Sub-areas

@@ -1,5 +1,13 @@
 # Wiki Log
 
+## [2026-08-10] lint | repaired evidence scope and provenance boundaries
+
+- Audited 75 source, 10 topic, 36 concept, 0 debate, and 1 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, and obvious duplicates.
+- Found no orphan content pages, broken internal links, duplicate titles or slugs, weakly connected source pages, debate/synthesis duplication, or obvious whole-page duplicates.
+- Corrected FlashAttention FP8 exactness, optimized MLA reconstruction, KV-sharding, MBU accounting, autoregressive-context, and speculative-drafter claims; compacted duplicated kernel detail on the parent attention concept.
+- Scoped geometry, compression, vector retrieval, utility, and experiential-AI claims to their local evidence; marked the geometry work as a submission and recorded the companion README conflict.
+- Clarified that the existing synthesis has no recorded user adjudication without changing its conclusion or creating a parallel debate; rebuilt affected `wiki/index.md` summaries.
+
 ## [2026-08-03] lint | corrected claims and tightened concept boundaries
 
 - Audited 75 source, 10 topic, 36 concept, 0 debate, and 1 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, and obvious duplicates.

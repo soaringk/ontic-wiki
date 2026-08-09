@@ -39,7 +39,7 @@ This file is maintained by the agent.
 - [How to Generate Tokens Faster: A vLLM Performance Model](sources/vllm-performance-model.md) - Systems-modeling note that explains vLLM serving behavior through throughput, TTFT, queueing, and interference.
 - [We're at AI's Halftime](sources/were-at-ais-halftime.md) - Essay arguing that AI progress is shifting from benchmark hillclimbing toward evaluation setups that better capture real utility.
 - [Welcome to the Era of Experience](sources/welcome-to-the-era-of-experience.md) - Position paper arguing that future AI progress will come from long-horizon, grounded learning from experience.
-- [The Geometry of Consolidation (NeurIPS 2026)](sources/geometry-of-consolidation-v6.md) - Paper proving the Consolidation-Interference Duality, with companion repository reproduction notes folded into the same source page.
+- [The Geometry of Consolidation (NeurIPS 2026 submission)](sources/geometry-of-consolidation-v6.md) - Manuscript presenting the Consolidation-Interference Duality, with conflicting companion README claims explicitly subordinated to the v6 PDF.
 - [Language Modeling Is Compression](sources/language-modeling-is-compression.md) - DeepMind paper showing LLMs as general-purpose compressors via the prediction-compression equivalence, with cross-modal compression results.
 - [从 305 GB 到 7.4 GB：大模型 KVCache 架构演进全景](sources/kv-cache-architecture-survey.md) - Undated survey of KVCache optimization from MHA through sparse and linear attention; its frontier architecture figures require primary-source verification.
 - [向量数据库 (Vector Database)](sources/vector-database-overview.md) - Chinese introductory article on vector databases, ANN algorithms, similarity measurement, and database selection.
@@ -89,14 +89,14 @@ This file is maintained by the agent.
 - [LLM Deployment and Capacity Planning](topics/llm-deployment-and-capacity-planning.md) - Operating view of model serving focused on memory planning, latency metrics, batching, KV cache, MoE, LoRA, quantization, and decoding acceleration.
 - [Private Credit](topics/private-credit.md) - Non-bank lending market spanning direct lending, asset-based finance, and increasingly entangled funding channels.
 - [Transformer Architecture and Attention](topics/transformer-architecture-and-attention.md) - Foundational model of tokenization, embeddings, masks, attention, RoPE, FFN, normalization, decoder-only generation, KV cache, MoE, and long-context behavior.
-- [Embedding Memory Geometry](topics/embedding-memory-geometry.md) - Geometric study of semantic memory: effective dimension, consolidation limits, and centroid behavior on the paper's evaluated text corpora.
+- [Embedding Memory Geometry](topics/embedding-memory-geometry.md) - Geometric study of semantic memory scoped to the local manuscript's unit-normalized text embeddings, retrieval assumptions, and evaluated corpora.
 - [Compression and Language Models](topics/compression-and-language-models.md) - Prediction-compression equivalence, LLMs as general-purpose cross-modal compressors, and scaling-law insights from adjusted compression rates.
 - [Vector Database and ANN Search](topics/vector-database-and-ann-search.md) - Vector databases for RAG and semantic search, covering ANN algorithms (K-Means, PQ, HNSW, LSH), similarity measures, and filtering strategies.
 
 ## Concepts
 
 - [Attention Mechanism](concepts/attention-mechanism.md) - Q/K/V weighting operation behind self-attention, multi-head attention implementation, masking variants, online-softmax memory reductions, FlashAttention, and KV cache.
-- [FlashAttention](concepts/flashattention.md) - Exact attention kernel family progressing from IO-aware SRAM tiling to better warp/sequence partitioning and Hopper FP8/asynchronous execution.
+- [FlashAttention](concepts/flashattention.md) - Attention kernel family progressing from exact standard-precision IO-aware tiling to better work partitioning and Hopper FP8/asynchronous execution.
 - [Autoregressive Generation](concepts/autoregressive-generation.md) - Next-token generation loop that creates prefill/decode phases, KV-cache reuse, TTFT/TPOT trade-offs, and chunked iteration-level scheduling needs.
 - [Chunked Prefill Scheduling](concepts/chunked-prefill-scheduling.md) - Token-budgeted prompt processing technique that splits long prefills and mixes chunks with decode work to reduce generation stalls.
 - [Token Sampling Strategies](concepts/token-sampling-strategies.md) - Greedy, temperature, Top-K, and Top-P policies for choosing the next token from logits during autoregressive generation.
@@ -109,7 +109,7 @@ This file is maintained by the agent.
 - [Integer-Only Quantization](concepts/integer-only-quantization.md) - Integer inference boundary built from affine scale/zero-point mappings, fixed-point multipliers, higher-precision accumulation, QAT, and matching hardware kernels.
 - [Iteration-Level Scheduling](concepts/iteration-level-scheduling.md) - Serving policy that re-forms batches after each generation step and needs token-budget rules to prevent full-prefill stalls.
 - [KV Cache in LLM Serving](concepts/kv-cache-in-llm-serving.md) - Why attention cache dominates variable inference memory and how MQA/GQA/MLA, quantization, sparse retention, reuse, and long-context planning change it.
-- [Model Bandwidth Utilization](concepts/model-bandwidth-utilization.md) - A normalized measure of inference memory-bandwidth efficiency and decode-side compute slack exploitable by bounded prefill work.
+- [Model Bandwidth Utilization](concepts/model-bandwidth-utilization.md) - A normalized memory-traffic proxy whose comparisons depend on consistent accounting, plus decode-side compute slack exploitable by bounded prefill work.
 - [PagedAttention](concepts/pagedattention.md) - Block-based KV-cache layout that trades contiguous allocation for much better utilization and sharing.
 - [Parallelism in LLM Serving](concepts/parallelism-in-llm-serving.md) - Tensor/expert parallelism distinctions, including attention-head splits, FFN partitioning, MoE token dispatch, and phase-aware serving.
 - [Prefill-Decode Disaggregation](concepts/prefill-decode-disaggregation.md) - Separation of parallel prompt processing and sequential KV-cache-heavy token generation into specialized serving pools, conditional on efficient KV-state transfer.
@@ -134,4 +134,4 @@ This file is maintained by the agent.
 
 ## Synthesis
 
-- [AI Halftime vs Bitter Lesson and Era of Experience](synthesis/ai-halftime-vs-bitter-lesson-and-era-of-experience.md) - Comparative analysis of the substantive but staged conflict over language priors, grounded experience, algorithms, and reliability.
+- [AI Halftime vs Bitter Lesson and Era of Experience](synthesis/ai-halftime-vs-bitter-lesson-and-era-of-experience.md) - Provisional comparison of the conflict over language priors, grounded experience, algorithms, and reliability; user adjudication is not recorded.

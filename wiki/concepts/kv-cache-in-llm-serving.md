@@ -6,7 +6,7 @@ KV cache stores attention keys and values for prior tokens so later decoding ste
 
 - KV cache is often the largest variable part of inference-time GPU memory.
 - Maximum supported context length depends on how much cache memory is available and how much memory each token consumes.
-- Cache size depends on layer count, KV head count, head dimension, cache precision, and tensor parallelism.
+- Cache size depends on layer count, KV head count, head dimension, cache precision, and the runtime's actual KV-sharding strategy.
 - Large batches and long generations can make cache growth the limiting factor for otherwise efficient shared serving.
 - Autoregressive generation creates KV cache because each decode step needs historical K/V while only the newest token's K/V must be appended.
 - Prefill builds the initial cache for the prompt; decode repeatedly reads and extends it, so KV memory affects both TTFT/TPOT trade-offs and batch capacity.
@@ -27,9 +27,9 @@ KV cache stores attention keys and values for prior tokens so later decoding ste
 
 The source frames per-token cache roughly as proportional to:
 
-`2 * num_hidden_layers * num_key_value_heads * head_dim * kvcache_dtype_byte / TP`
+`2 * num_hidden_layers * num_key_value_heads * head_dim * kvcache_dtype_byte / KV_sharding_factor`
 
-The factor of 2 comes from caching both K and V tensors.
+The factor of 2 comes from caching both K and V tensors. The KV-sharding factor may equal tensor parallelism for head-sharded MHA/GQA, but runtimes can replicate, unevenly shard, or otherwise lay out KV state.
 
 ## Operational Use
 

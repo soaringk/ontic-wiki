@@ -1,15 +1,15 @@
 # FlashAttention
 
-FlashAttention is a family of exact attention kernels that make dense Transformer attention practical at longer sequence lengths by matching the algorithm to GPU memory hierarchy, thread scheduling, and accelerator-specific execution features.
+FlashAttention is a family of attention kernels that make dense Transformer attention practical at longer sequence lengths by matching the algorithm to GPU memory hierarchy, thread scheduling, and accelerator-specific execution features. Its standard-precision paths preserve exact dense-attention semantics; FlashAttention-3 also adds an approximate FP8 path with accuracy controls.
 
 ## Core Ideas
 
-- Standard attention materializes `QK^T` and the softmax probability matrix in HBM; FlashAttention avoids those `n x n` intermediate writes while preserving exact dense attention semantics.
+- Naive unfused attention materializes `QK^T` and the softmax probability matrix in HBM; FlashAttention avoids those `n x n` intermediate writes while preserving exact dense attention semantics in its standard-precision paths.
 - The original FlashAttention uses tiling, online softmax, and backward recomputation to reduce HBM traffic and activation memory from quadratic to linear in sequence length, while time remains quadratic for dense attention.
 - Online softmax carries row-wise max and normalization statistics across blocks so blockwise softmax produces the same result as full-row softmax.
 - FlashAttention-2 improves utilization after the IO bottleneck is reduced: it cuts non-matmul work, parallelizes over sequence blocks, and repartitions work between warps to reduce shared-memory communication.
 - FlashAttention-3 targets Hopper GPUs by using asynchronous TMA/WGMMA execution, producer-consumer warp specialization, GEMM-softmax pipelining, and FP8 paths with block quantization plus incoherent processing.
-- FlashAttention benefits MHA, MQA, GQA, MLA, sparse attention, and distributed attention because those variants still depend on efficient `softmax(QK^T)V` or closely related primitives.
+- The cited implementations cover dense causal attention, MHA, MQA/GQA, and a block-sparse extension. Other attention variants require implementation-specific kernels and evidence.
 
 ## Version Progression
 

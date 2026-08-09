@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2025-06-02
 created: 2026-07-04
-updated: 2026-07-04
+updated: 2026-08-10
 ---
 
 # Summary
@@ -31,7 +31,6 @@ updated: 2026-07-04
 # Connections
 
 - Concept: [LLM Quantization](../concepts/llm-quantization.md)
-- Concept: [Integer-Only Quantization](../concepts/integer-only-quantization.md)
 - Concept: [KV Cache in LLM Serving](../concepts/kv-cache-in-llm-serving.md)
 
 # Open Questions

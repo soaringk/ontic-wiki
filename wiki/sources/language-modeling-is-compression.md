@@ -10,7 +10,7 @@ source_type: pdf
 parser: mineru
 published: 2024-03-18
 created: 2026-05-26
-updated: 2026-08-03
+updated: 2026-08-10
 ---
 
 # Summary
@@ -21,13 +21,13 @@ This DeepMind paper advocates for viewing language modeling through the lens of 
 
 - **Prediction equals compression.** Arithmetic coding transforms any predictive model into a lossless compressor; conversely, any compressor defines a conditional distribution via coding lengths, enabling generation.
 - **LLMs are general-purpose (raw) compressors.** Chinchilla 70B and Llama 2 7B, despite text-only training, achieve competitive raw compression rates on image and audio data — outperforming modality-specific codecs.
-- **Adjusted compression rate reveals optimal model size.** When model parameters are counted in the compressed output, the adjusted compression rate creates a U-shaped curve over model size for a fixed dataset: scaling beyond a critical point worsens compression because parameter overhead dominates. Larger datasets support a larger optimal model size.
+- **Adjusted compression rate reveals an optimal tested model size.** In the paper's offline two-part-code experiments on enwik Transformers, counting parameters creates a U-shaped curve over model size: beyond a critical point, parameter overhead dominates. Larger tested datasets support a larger optimum; prequential coding gives a different picture.
 - **Tokenization is pre-compression.** Tokenizers compress the raw byte stream before the model sees it. Larger vocabularies pack more information per token but make the prediction task harder; for large models, simpler tokenizers (e.g., ASCII) often achieve better raw compression.
 - **In-context compression.** Foundation models rely on in-context learning to adapt their compression within a short context window, unlike classical compressors which rely on long context windows and small programs.
 
 # Why It Matters
 
-This paper connects two fields — information theory and large language models — through the rigorous equivalence of prediction and compression. It provides practical insights for model scaling (optimal model size depends on dataset size), tokenization (simpler is better for raw compression), and the cross-modal generalization capabilities of LLMs.
+This paper connects two fields — information theory and large language models — through the rigorous equivalence of prediction and compression. In its enwik experiments, optimal model size depends on dataset and coding convention; simpler tokenization performs better for the larger tested models, while the smallest model sometimes benefits from larger vocabularies. It also studies cross-modal compression by LLMs.
 
 # Connections
 

@@ -6,7 +6,7 @@ The utility problem is the gap between high performance on common AI evaluations
 
 - Strong benchmark results can overstate how ready a system is for deployment.
 - Teams may optimize for easily measured scores instead of for user outcomes, workflow fit, or persistence across time.
-- The problem explains why rapid gains in model capability do not automatically show up as equally large changes in GDP, business processes, or end-user leverage.
+- Yao proposes evaluation mismatch as one possible explanation for why rapid gains in model capability do not automatically show up as equally large changes in GDP, business processes, or end-user leverage.
 - Utility claims can also be overstated when they are extrapolated from eye-catching demos instead of from capabilities that work with near-100% reliability.
 - A task can be impressive inside a closed dataset while still failing to transfer to open-ended situations, which is why exam performance, robotic demonstrations, and benchmark scores need separate utility validation.
 

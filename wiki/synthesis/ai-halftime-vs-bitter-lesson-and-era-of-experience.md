@@ -3,13 +3,15 @@ kind: synthesis
 title: AI Halftime vs Bitter Lesson and Era of Experience
 slug: ai-halftime-vs-bitter-lesson-and-era-of-experience
 created: 2026-04-20
-updated: 2026-04-20
+updated: 2026-08-10
 ---
 
 # AI Halftime vs Bitter Lesson and Era of Experience
 
+> **Provenance note:** The repository does not record user adjudication for this synthesis. It is retained as a provisional comparison, not as a user-decided resolution of the contested research positions.
+
 ## Short Answer
-The conflict between [We're at AI's Halftime](../sources/were-at-ais-halftime.md) and the views in [The Bitter Lesson](../sources/the-bitter-lesson.md), [Welcome to the Era of Experience](../sources/welcome-to-the-era-of-experience.md), and [Two Lessons from ICLR 2025](../sources/two-lessons-from-iclr-2025.md) is substantive and partly axiomatic, but not a total logical incompatibility. The sources share a broad commitment to scalable learning, yet disagree about the long-run role of human-derived priors, the centrality of algorithmic innovation, and the evidentiary standard for progress claims.
+The conflict between [We're at AI's Halftime](../sources/were-at-ais-halftime.md) and the views in [The Bitter Lesson](../sources/the-bitter-lesson.md), [Welcome to the Era of Experience](../sources/welcome-to-the-era-of-experience.md), and [Two Lessons from ICLR 2025](../sources/two-lessons-from-iclr-2025.md) is substantive and partly axiomatic, but not a total logical incompatibility. Together, the sources raise questions about whether benchmark narratives adequately characterize progress and disagree about the long-run role of human-derived priors, the centrality of algorithmic innovation, and the evidentiary standard for progress claims.
 
 A staged reconciliation is possible: learned language priors bootstrap current agents, better evaluations reveal utility gaps, and grounded experience plus renewed RL methods may be required to move beyond human-data limits. Bottou's reliability standard then constrains how confidently any "new era" narrative should be stated.
 

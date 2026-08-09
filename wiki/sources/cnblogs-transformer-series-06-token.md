@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2025-02-24
 created: 2026-07-04
-updated: 2026-07-04
+updated: 2026-08-10
 ---
 
 # Summary
@@ -32,7 +32,6 @@ updated: 2026-07-04
 
 - Topic: [Transformer Architecture and Attention](../topics/transformer-architecture-and-attention.md)
 - Concept: [Tokenization and Embeddings](../concepts/tokenization-and-embeddings.md)
-- Concept: [Attention Mechanism](../concepts/attention-mechanism.md)
 
 # Open Questions
 

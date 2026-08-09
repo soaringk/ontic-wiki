@@ -1,6 +1,6 @@
 # Autoregressive Generation
 
-Autoregressive generation produces text one token at a time, conditioning each new token on all prior tokens.
+Autoregressive generation produces text one token at a time, conditioning each new token on the model's available causal context or recurrent state.
 
 ## Why It Matters
 
