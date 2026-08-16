@@ -35,7 +35,7 @@ The essay reframes current AI work from a contest over model architectures towar
 - Topic: [Experiential AI](../topics/experiential-ai.md)
 - Concept: [Streams of Experience](../concepts/streams-of-experience.md)
 - Concept: [Utility Problem](../concepts/utility-problem.md)
-- Synthesis: [AI Halftime vs Bitter Lesson and Era of Experience](../synthesis/ai-halftime-vs-bitter-lesson-and-era-of-experience.md)
+- Debate: [AI Halftime vs Bitter Lesson and Era of Experience](../debates/ai-halftime-vs-bitter-lesson-and-era-of-experience.md)
 
 # Open Questions
 

@@ -1,11 +1,11 @@
 # Latest Lint Report
 
-- scan_time: `2026-08-09T21:00:02Z`
+- scan_time: `2026-08-16T21:05:21Z`
 - source_pages: `75`
 - topic_pages: `10`
 - concept_pages: `36`
-- debate_pages: `0`
-- synthesis_pages: `1`
+- debate_pages: `1`
+- synthesis_pages: `0`
 
 ## Existing Pages
 
@@ -130,4 +130,4 @@
 - `wiki/concepts/transformer-normalization-and-residuals.md`
 - `wiki/concepts/unitranche-loans.md`
 - `wiki/concepts/utility-problem.md`
-- `wiki/synthesis/ai-halftime-vs-bitter-lesson-and-era-of-experience.md`
+- `wiki/debates/ai-halftime-vs-bitter-lesson-and-era-of-experience.md`

@@ -34,7 +34,7 @@ The paper provides a durable frame for thinking about autonomous agents as more 
 - Topic: [Experiential AI](../topics/experiential-ai.md)
 - Concept: [Streams of Experience](../concepts/streams-of-experience.md)
 - Concept: [Grounded Rewards](../concepts/grounded-rewards.md)
-- Synthesis: [AI Halftime vs Bitter Lesson and Era of Experience](../synthesis/ai-halftime-vs-bitter-lesson-and-era-of-experience.md)
+- Debate: [AI Halftime vs Bitter Lesson and Era of Experience](../debates/ai-halftime-vs-bitter-lesson-and-era-of-experience.md)
 
 # Open Questions
 

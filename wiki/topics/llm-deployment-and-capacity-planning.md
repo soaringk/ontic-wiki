@@ -10,21 +10,21 @@ LLM deployment and capacity planning sits between model architecture and product
 - User experience depends on separating TTFT, TPOT, overall latency, and throughput instead of collapsing them into one metric.
 - Decode speed is often constrained by memory bandwidth, so hardware bandwidth and serving-stack efficiency matter as much as raw compute.
 - Autoregressive serving separates prefill, which builds the initial KV Cache and often controls TTFT, from decode, which repeatedly reads weights and KV state and often controls TPOT.
-- Continuous batching is usually the right default for shared online serving, while static batching can still win for offline workloads.
+- [Continuous batching](../sources/orca-a-distributed-serving-system-for-transformer-based-generative-models.md) is usually the right default for shared online serving, while static batching can still win for offline workloads.
 - Request-level scheduling is a poor fit for autoregressive generation; iteration-level control is the more durable systems model.
-- Token-budgeted scheduling matters because forward-pass latency follows total tokens more than request count, and long prefills can create visible generation stalls if admitted without bounds.
+- [Token-budgeted scheduling](../sources/deepspeed-fastgen-high-throughput-text-generation-for-llms.md) matters because forward-pass latency follows total tokens more than request count, and long prefills can create visible generation stalls if admitted without bounds.
 - Prefill and decode often want different batch sizes, parallelism strategies, and sometimes different hardware entirely.
 - Chunked prefill and stall-free batching are deployment levers for colocated serving when full prefill/decode disaggregation is too costly or operationally complex.
-- Speculative decoding can improve decode throughput by verifying draft tokens in parallel, but capacity planning should treat draft-model topology, acceptance rate, lookahead length, tail latency, and batching effects as workload-dependent variables.
-- Medusa, Lookahead decoding, and multi-token prediction are related parallel-decoding variants; they shift work into candidate generation or auxiliary heads and still require verification, cache support, and workload-specific acceptance analysis.
-- Prefix reuse, cache placement, and KV-state transfer are now first-class deployment concerns rather than narrow engine details.
+- [Speculative decoding](../sources/accelerating-large-language-model-decoding-with-speculative-sampling.md) can improve decode throughput by verifying draft tokens in parallel, but capacity planning should treat draft-model topology, acceptance rate, lookahead length, tail latency, and batching effects as workload-dependent variables.
+- [Medusa, Lookahead decoding, and multi-token prediction](../concepts/parallel-decoding-variants.md) are related parallel-decoding variants; they shift work into candidate generation or auxiliary heads and still require verification, cache support, and workload-specific acceptance analysis.
+- [Prefix reuse, cache placement, and KV-state transfer](../sources/memserve-flexible-mem-pool-for-building-disaggregated-llm-serving-with-caching.md) are first-class deployment concerns rather than narrow engine details.
 - MoE deployments require explicit reasoning about what tensor parallelism splits and what expert parallelism splits.
 - LoRA adapters and QLoRA-style low-bit fine-tuning reduce customization cost, but serving must account for adapter loading, merging, batching compatibility, and quantized-base quality.
 - More GPUs and higher tensor parallelism usually improve fit and latency only sub-linearly because communication overhead and utilization losses rise.
 - Quantization can reduce bandwidth and memory pressure, but it must be validated against model-quality regressions.
 - Integer-only and quantization-aware approaches matter because real deployment wins come from arithmetic that hardware can execute efficiently, not only smaller checkpoint files.
 - LLM quantization needs outlier-aware treatment of weights, activations, and KV cache; scheme names such as GPTQ, AWQ, SmoothQuant, and QLoRA are deployment candidates, not substitutes for quality and latency validation.
-- Attention kernels are part of capacity planning: FlashAttention reduces activation memory and attention latency for long prompts, while FlashAttention-3 shows that Hopper/FP8 gains depend on asynchronous kernels and accuracy-aware quantization.
+- Attention kernels are part of capacity planning: [FlashAttention](../sources/flashattention-fast-and-memory-efficient-exact-attention-with-io-awareness.md) reduces activation memory and attention latency for long prompts, while [FlashAttention-3](../sources/flashattention-3-fast-and-accurate-attention-with-asynchrony-and-low-precision.md) shows that Hopper/FP8 gains depend on asynchronous kernels and accuracy-aware quantization.
 - Capacity incidents are often handled first through scaling or throttling rather than deep architectural changes.
 
 ## Related Concepts

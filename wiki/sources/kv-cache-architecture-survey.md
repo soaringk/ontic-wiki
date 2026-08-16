@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: unknown
 created: 2026-05-26
-updated: 2026-07-27
+updated: 2026-08-17
 ---
 
 # Summary
@@ -29,7 +29,7 @@ An undated Chinese survey article tracing KVCache optimization across LLM archit
 
 # Why It Matters
 
-This survey provides a structured roadmap of the KVCache optimization landscape, from production-ready techniques (GQA, FP8 quantization) through frontier architectures (MLA, CSA+HCA, Gated DeltaNet hybrids). It gives concrete, comparable memory numbers across architectures and connects each optimization to its engineering cost.
+This survey presents a structured roadmap of the KVCache optimization landscape, from established techniques such as GQA through the frontier architectures it describes, including MLA, CSA+HCA, and Gated DeltaNet hybrids. Its concrete memory comparisons are useful as survey-reported estimates, but architecture status and engineering cost require dated primary-source validation.
 
 # Connections
 
@@ -40,5 +40,5 @@ This survey provides a structured roadmap of the KVCache optimization landscape,
 
 # Open Questions
 
-- Linear attention hybrids (Qwen3.5 pattern) vs. sparse attention (DeepSeek V4 pattern) represent two competing future directions; no consensus on which wins at scale.
-- Cross-Layer Attention (CLA) remains mostly academic; its interaction with MLA and sparse attention at production scale is underexplored.
+- The survey presents linear-attention hybrids and sparse attention as competing directions; dated primary sources are needed to compare their maturity and results at scale.
+- The survey leaves the production maturity of Cross-Layer Attention (CLA), including its interaction with MLA and sparse attention, unresolved.

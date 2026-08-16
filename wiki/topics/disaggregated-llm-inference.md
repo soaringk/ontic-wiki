@@ -9,7 +9,7 @@ Disaggregated LLM inference separates the prompt-processing and token-generation
 - Disaggregation lets each phase choose different hardware, batch sizes, and parallelism strategies.
 - KV cache becomes the central systems object because phase separation only works if the cache can be moved, reused, or reconstructed efficiently.
 - Once KV cache persists across requests, context caching and disaggregation stop being separate features and start becoming one state-management problem.
-- Colocated schedulers such as Dynamic SplitFuse and Sarathi-Serve show a partial alternative: bound prompt work per iteration and mix it with decode tokens so prefill does not monopolize the running batch.
+- Colocated schedulers such as [Dynamic SplitFuse](../sources/deepspeed-fastgen-high-throughput-text-generation-for-llms.md) and [Sarathi-Serve](../sources/taming-throughput-latency-tradeoff-in-llm-inference-with-sarathi-serve.md) show a partial alternative: bound prompt work per iteration and mix it with decode tokens so prefill does not monopolize the running batch.
 - Good deployment decisions depend on workload shape, interconnect bandwidth, cache-hit structure, and overload behavior, not only raw tokens-per-second.
 
 ## Main Tensions

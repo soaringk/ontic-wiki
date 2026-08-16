@@ -31,7 +31,7 @@ The essay is a standing warning against confusing short-run performance gains wi
 # Connections
 
 - Topic: [Experiential AI](../topics/experiential-ai.md)
-- Synthesis: [AI Halftime vs Bitter Lesson and Era of Experience](../synthesis/ai-halftime-vs-bitter-lesson-and-era-of-experience.md)
+- Debate: [AI Halftime vs Bitter Lesson and Era of Experience](../debates/ai-halftime-vs-bitter-lesson-and-era-of-experience.md)
 
 # Open Questions
 

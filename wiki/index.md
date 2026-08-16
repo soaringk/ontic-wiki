@@ -132,6 +132,6 @@ This file is maintained by the agent.
 - [Parallel Decoding Variants](concepts/parallel-decoding-variants.md) - Medusa, Lookahead, MTP, and related methods that propose or verify multiple future tokens to reduce serial decode steps.
 - [LLM Quantization](concepts/llm-quantization.md) - LLM-specific low-precision deployment covering outlier-aware weights, activations, KV cache, GPTQ/AWQ/SmoothQuant, and QLoRA.
 
-## Synthesis
+## Debates
 
-- [AI Halftime vs Bitter Lesson and Era of Experience](synthesis/ai-halftime-vs-bitter-lesson-and-era-of-experience.md) - Provisional comparison of the conflict over language priors, grounded experience, algorithms, and reliability; user adjudication is not recorded.
+- [AI Halftime vs Bitter Lesson and Era of Experience](debates/ai-halftime-vs-bitter-lesson-and-era-of-experience.md) - Unresolved comparison awaiting user adjudication on language priors, grounded experience, algorithms, evaluation, and reliability.

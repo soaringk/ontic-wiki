@@ -33,7 +33,7 @@ The essay is a methodological check on hype. It raises the evidentiary bar for b
 
 - Concept: [Utility Problem](../concepts/utility-problem.md)
 - Topic: [Experiential AI](../topics/experiential-ai.md)
-- Synthesis: [AI Halftime vs Bitter Lesson and Era of Experience](../synthesis/ai-halftime-vs-bitter-lesson-and-era-of-experience.md)
+- Debate: [AI Halftime vs Bitter Lesson and Era of Experience](../debates/ai-halftime-vs-bitter-lesson-and-era-of-experience.md)
 
 # Open Questions
 

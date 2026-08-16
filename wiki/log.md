@@ -1,5 +1,13 @@
 # Wiki Log
 
+## [2026-08-17] lint | repaired debate boundary and source traceability
+
+- Audited 75 source, 10 topic, 36 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, and obvious duplicates.
+- Found no orphan content pages, broken internal links, duplicate titles or slugs, weakly connected source pages, or obvious whole-page duplicates.
+- Reclassified the unadjudicated AI comparison from synthesis to an `awaiting_user` debate without deciding or promoting its candidate reconciliation; updated all inbound links.
+- Qualified volatile maturity claims from the undated KV-cache survey and added direct source links for named scheduling, decoding, cache, and attention-system claims.
+- Rebuilt `wiki/index.md` for the debate/synthesis inventory change and refreshed `state/reports/latest_lint_report.md`.
+
 ## [2026-08-10] lint | repaired evidence scope and provenance boundaries
 
 - Audited 75 source, 10 topic, 36 concept, 0 debate, and 1 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, and obvious duplicates.
