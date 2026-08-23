@@ -1,5 +1,13 @@
 # Wiki Log
 
+## [2026-08-24] lint | tightened chronology and debate evidence scope
+
+- Audited 75 source, 10 topic, 36 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, and obvious duplicates.
+- Found no orphan content pages, broken internal links, weakly connected source pages, debate/synthesis duplication, duplicate titles or slugs, or obvious whole-page duplicates.
+- Added the Bitter Lesson's general-method position and typed claims to the unresolved AI debate without deciding or promoting its candidate reconciliation.
+- Scoped private-credit trend language to its undated source and narrowed the effective-dimension claim to the manuscript's bound and evaluated setup.
+- Rebuilt the affected `wiki/index.md` summaries and refreshed `state/reports/latest_lint_report.md`; page inventory remains unchanged.
+
 ## [2026-08-17] lint | repaired debate boundary and source traceability
 
 - Audited 75 source, 10 topic, 36 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, and obvious duplicates.

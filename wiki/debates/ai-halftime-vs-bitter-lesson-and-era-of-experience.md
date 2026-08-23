@@ -6,7 +6,7 @@ status: awaiting_user
 adjudicator: user
 decision: undecided
 created: 2026-04-20
-updated: 2026-08-17
+updated: 2026-08-24
 sources:
   - sources/were-at-ais-halftime.md
   - sources/the-bitter-lesson.md
@@ -37,6 +37,7 @@ A staged reconciliation may be possible: learned language priors bootstrap curre
 ### The Role of "Priors": Bootstrap vs. Ceiling
 
 - **Yao's view (bootstrap):** [We're at AI's Halftime](../sources/were-at-ais-halftime.md) argues that the missing ingredient for RL generalization was language pre-training. It gives high causal weight to learned language priors, treating them as the crucial enabling substrate that bootstrapped modern agents.
+- **Sutton's view (general methods):** [The Bitter Lesson](../sources/the-bitter-lesson.md) argues that search and learning methods which scale with computation have historically outlasted systems built around human domain knowledge. It leaves open whether learned language priors are scalable learned structure or a temporary dependence on human-derived knowledge.
 - **Sutton and Silver's view (ceiling):** [Welcome to the Era of Experience](../sources/welcome-to-the-era-of-experience.md) acknowledges that human data can facilitate learning, but warns that progress driven solely by human data is approaching a limit. They view human prejudgement as a ceiling and argue that future capability must increasingly come from grounded experience that can eventually dwarf human data.
 
 ### Algorithmic Innovation: Marginal vs. Central
@@ -51,15 +52,16 @@ A staged reconciliation may be possible: learned language priors bootstrap curre
 
 ## Reconciliation Map
 
-The candidate reconciliation treats the disagreement as sequential: human-derived language priors may bootstrap today's agents, while grounded experience and stronger RL methods may be needed to surpass human-data ceilings. Bottou's standard cautions against confusing aspirational utility with reliable, understood capability.
+The candidate reconciliation treats the disagreement as sequential: human-derived language priors may bootstrap today's agents, while grounded experience and stronger RL methods may be needed to surpass human-data ceilings. This remains compatible with the Bitter Lesson only if language priors function as learned, scalable structure rather than a fixed endpoint. Bottou's standard cautions against confusing aspirational utility with reliable, understood capability.
 
 The unresolved issue is whether this sequence genuinely reconciles the sources or merely places incompatible research assumptions at different stages.
 
 ## Claim Classification
 
-- The descriptions of each source's stated emphasis are source-backed interpretations.
-- The staged research program is a synthesis hypothesis, not a conclusion stated by any one source.
-- Whether the staged interpretation should become durable synthesis requires user adjudication.
+- **Fact:** The source pages directly support the attributed emphases on language priors, scalable search and learning, grounded experience, algorithm development, and reliability.
+- **Interpretation:** Treating learned language priors as compatible with the Bitter Lesson depends on viewing them as scalable learned structure rather than hand-built domain knowledge.
+- **Hypothesis:** The staged research program is a possible reconciliation, not a conclusion stated by any one source.
+- **Recommendation:** Whether the staged interpretation should become durable synthesis requires user adjudication.
 
 ## Agent Recommendation
 
