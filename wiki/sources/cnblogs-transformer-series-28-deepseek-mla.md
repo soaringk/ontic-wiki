@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2025-04-17
 created: 2026-07-04
-updated: 2026-07-04
+updated: 2026-08-31
 ---
 
 # Summary
@@ -33,6 +33,7 @@ updated: 2026-07-04
 - Concept: [Multi-head Latent Attention (MLA)](../concepts/multi-head-latent-attention-mla.md)
 - Concept: [KV Cache in LLM Serving](../concepts/kv-cache-in-llm-serving.md)
 - Concept: [Attention Mechanism](../concepts/attention-mechanism.md)
+- Concept: [Positional Encoding](../concepts/positional-encoding.md)
 
 # Open Questions
 

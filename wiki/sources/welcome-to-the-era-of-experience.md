@@ -10,7 +10,7 @@ source_type: pdf
 parser: mineru
 published: unknown
 created: 2026-04-13
-updated: 2026-05-11
+updated: 2026-08-31
 ---
 
 # Summary
@@ -27,7 +27,7 @@ This paper argues that AI progress is shifting from scaling on human-generated d
 
 # Why It Matters
 
-The paper provides a durable frame for thinking about autonomous agents as more than chat systems with tools. It links current agent work to reinforcement learning, grounding, and long-horizon adaptation, and argues that the main bottleneck is no longer only model size or human data volume, but the ability to learn from real interaction.
+The paper provides a durable frame for thinking about autonomous agents as more than chat systems with tools. It links the agent work it discusses to reinforcement learning, grounding, and long-horizon adaptation, and argues that the main bottleneck is no longer only model size or human data volume, but the ability to learn from real interaction.
 
 # Connections
 
@@ -40,5 +40,5 @@ The paper provides a durable frame for thinking about autonomous agents as more 
 
 - The paper is programmatic rather than empirical, so it leaves open which concrete training setups best combine user steerability with grounded reward optimization.
 - It argues that experiential learning can improve safety through adaptation, but does not resolve how to reliably detect and correct misaligned long-horizon behavior.
-- It treats experience as the next frontier, but leaves unresolved how much recent agent progress depends on broad language priors acquired before the agent begins learning from ongoing interaction.
+- It treats experience as the next frontier, but leaves unresolved how much of the agent progress it cites depends on broad language priors acquired before the agent begins learning from ongoing interaction.
 - It restores algorithms to the center of the agenda through value estimation, exploration, temporal abstraction, and world models, which pushes against claims that the RL algorithm has become merely trivial.

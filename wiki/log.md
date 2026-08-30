@@ -1,5 +1,12 @@
 # Wiki Log
 
+## [2026-08-31] lint | repaired evidence scope and source connections
+
+- Audited 75 source, 10 topic, 36 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, and obvious duplicates.
+- Found no orphan content pages, broken internal links, duplicate titles or slugs, obvious whole-page duplicates, or debate/synthesis duplication; the unresolved debate remains `awaiting_user` and `undecided`.
+- Scoped undated and chronology-sensitive claims to their source frames, limited distribution preservation to exact speculative sampling, and removed unsupported MLA chronology and composability claims.
+- Added direct connections for tokenization, product quantization, KV quantization, MoE, RoPE, and central prefill/decode systems; rebuilt the affected `wiki/index.md` summary without changing page inventory.
+
 ## [2026-08-24] lint | tightened chronology and debate evidence scope
 
 - Audited 75 source, 10 topic, 36 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, and obvious duplicates.

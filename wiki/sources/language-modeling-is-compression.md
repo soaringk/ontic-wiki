@@ -10,7 +10,7 @@ source_type: pdf
 parser: mineru
 published: 2024-03-18
 created: 2026-05-26
-updated: 2026-08-10
+updated: 2026-08-31
 ---
 
 # Summary
@@ -20,7 +20,7 @@ This DeepMind paper advocates for viewing language modeling through the lens of 
 # Key Claims
 
 - **Prediction equals compression.** Arithmetic coding transforms any predictive model into a lossless compressor; conversely, any compressor defines a conditional distribution via coding lengths, enabling generation.
-- **LLMs are general-purpose (raw) compressors.** Chinchilla 70B and Llama 2 7B, despite text-only training, achieve competitive raw compression rates on image and audio data — outperforming modality-specific codecs.
+- **LLMs are general-purpose (raw) compressors.** Chinchilla 70B and Llama 2 7B, despite no reported direct image/audio training, achieve competitive raw compression rates on image and audio data — outperforming the compared modality-specific codecs.
 - **Adjusted compression rate reveals an optimal tested model size.** In the paper's offline two-part-code experiments on enwik Transformers, counting parameters creates a U-shaped curve over model size: beyond a critical point, parameter overhead dominates. Larger tested datasets support a larger optimum; prequential coding gives a different picture.
 - **Tokenization is pre-compression.** Tokenizers compress the raw byte stream before the model sees it. Larger vocabularies pack more information per token but make the prediction task harder; for large models, simpler tokenizers (e.g., ASCII) often achieve better raw compression.
 - **In-context compression.** Foundation models rely on in-context learning to adapt their compression within a short context window, unlike classical compressors which rely on long context windows and small programs.
@@ -33,6 +33,7 @@ This paper connects two fields — information theory and large language models 
 
 - Topic: [Compression and Language Models](../topics/compression-and-language-models.md)
 - Concept: [Prediction-Compression Equivalence](../concepts/prediction-compression-equivalence.md)
+- Concept: [Tokenization and Embeddings](../concepts/tokenization-and-embeddings.md)
 
 # Open Questions
 

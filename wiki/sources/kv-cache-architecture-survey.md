@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: unknown
 created: 2026-05-26
-updated: 2026-08-17
+updated: 2026-08-31
 ---
 
 # Summary
@@ -37,6 +37,8 @@ This survey presents a structured roadmap of the KVCache optimization landscape,
 - Concept: [KV Cache in LLM Serving](../concepts/kv-cache-in-llm-serving.md)
 - Concept: [Attention Mechanism](../concepts/attention-mechanism.md)
 - Concept: [Multi-head Latent Attention (MLA)](../concepts/multi-head-latent-attention-mla.md)
+- Concept: [LLM Quantization](../concepts/llm-quantization.md)
+- Concept: [Mixture of Experts](../concepts/mixture-of-experts.md)
 
 # Open Questions
 

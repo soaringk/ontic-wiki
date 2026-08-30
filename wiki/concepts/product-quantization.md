@@ -17,3 +17,4 @@ Product Quantization (PQ) compresses high-dimensional vectors by splitting each 
 ## Sources
 
 - [向量数据库 (Vector Database)](../sources/vector-database-overview.md)
+- [The Geometry of Consolidation (NeurIPS 2026 submission)](../sources/geometry-of-consolidation-v6.md)

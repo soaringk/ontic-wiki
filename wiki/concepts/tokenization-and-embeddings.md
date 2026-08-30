@@ -24,3 +24,4 @@ Tokenization and embeddings turn raw text into the discrete IDs and dense vector
 - [Transformer Architecture Quick Start](../sources/transformer-architecture-quick-start.md)
 - [探秘Transformer系列之（6）--- token](../sources/cnblogs-transformer-series-06-token.md)
 - [探秘Transformer系列之（7）--- embedding](../sources/cnblogs-transformer-series-07-embedding.md)
+- [Language Modeling Is Compression](../sources/language-modeling-is-compression.md)

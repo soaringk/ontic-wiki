@@ -11,7 +11,7 @@ source_type: pdf
 parser: mineru
 published: 2026-04-19
 created: 2026-05-26
-updated: 2026-08-10
+updated: 2026-08-31
 ---
 
 # Summary
@@ -38,6 +38,7 @@ The GitHub README captured at `raw/geometry-of-consolidation.md` points to the s
 
 - Topic: [Embedding Memory Geometry](../topics/embedding-memory-geometry.md)
 - Concept: [Effective Dimension](../concepts/effective-dimension.md)
+- Concept: [Product Quantization](../concepts/product-quantization.md)
 
 # Open Questions
 

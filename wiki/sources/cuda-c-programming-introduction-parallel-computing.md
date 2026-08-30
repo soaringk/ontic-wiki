@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: unknown
 created: 2026-04-11
-updated: 2026-05-11
+updated: 2026-08-31
 ---
 
 # Summary
@@ -38,4 +38,4 @@ The page is useful as a durable orientation document for CUDA. It connects the s
 # Open Questions
 
 - The source is introductory and does not quantify when a specific block size or occupancy target is best.
-- It mentions dynamic parallelism, zero-copy memory, and unified memory, but not the trade-offs for production use on modern GPU generations.
+- It mentions dynamic parallelism, zero-copy memory, and unified memory, but does not establish their production trade-offs beyond the hardware scope covered by the source.

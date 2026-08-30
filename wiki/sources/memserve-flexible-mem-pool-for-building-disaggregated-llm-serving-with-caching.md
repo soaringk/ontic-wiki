@@ -10,7 +10,7 @@ source_type: pdf
 parser: mineru
 published: unknown
 created: 2026-04-25
-updated: 2026-05-11
+updated: 2026-08-31
 ---
 
 # Summary
@@ -19,7 +19,7 @@ MemServe argues that once LLM serving becomes stateful, the real architectural p
 
 # Key Claims
 
-- Existing systems typically support either inter-request cache reuse or intra-request disaggregation well, but not both together.
+- The paper reports that the systems it compares typically support either inter-request cache reuse or intra-request disaggregation well, but not both together.
 - A distributed memory layer needs APIs for allocation, indexing, transfer, swap, and insert operations over KV cache.
 - Prompt-token indexing is the most general way to support prefix reuse across sessions and instances.
 - Disaggregated inference plus context caching requires decode-to-prefill cache return paths, not only prefill-to-decode transfer.

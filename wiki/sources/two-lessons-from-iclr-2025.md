@@ -10,18 +10,18 @@ source_type: markdown
 parser: direct
 published: unknown
 created: 2026-04-20
-updated: 2026-05-11
+updated: 2026-08-31
 ---
 
 # Summary
 
-This essay argues that AI research should anchor itself in capabilities current models achieve with near-100% reliability rather than in aspirational narratives about what they may soon do. It also criticizes commercial hype and closed-model secrecy for distorting both scientific judgment and the broader cultural meaning of AI progress.
+In its ICLR 2025 frame, this essay argues that AI research should anchor itself in capabilities models achieve with near-100% reliability rather than in aspirational narratives about what they may soon do. It also criticizes commercial hype and closed-model secrecy for distorting both scientific judgment and the broader cultural meaning of AI progress.
 
 # Key Claims
 
-- Research direction should start from a clear understanding of what models currently do reliably, not from business narratives or speculative roadmaps.
-- Current language models achieve some complex language tasks very well, but truthfulness, reasoning, and other aspirational capabilities remain inconsistent.
-- We still do not adequately understand why current models reliably achieve the tasks they do succeed at.
+- Research direction should start from a clear understanding of what models in the essay's ICLR 2025 frame do reliably, not from business narratives or speculative roadmaps.
+- The essay argues that language models in that frame achieve some complex language tasks very well, but truthfulness, reasoning, and other aspirational capabilities remain inconsistent.
+- The essay argues that researchers do not adequately understand why those models reliably achieve the tasks where they succeed.
 - Closed models are poor scientific reference points because they are insufficiently transparent and unstable as public comparison targets.
 - The deeper impact of AI may be cultural and scientific rather than reducible to immediate commercial wins.
 

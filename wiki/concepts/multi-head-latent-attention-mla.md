@@ -1,12 +1,12 @@
 # Multi-head Latent Attention (MLA)
 
-MLA is an attention variant introduced by DeepSeek V2/V3 that compresses the per-token KV representation by projecting key and value into a shared low-dimensional latent space. Instead of caching full K and V tensors, it stores compressed latent state plus the required RoPE key component.
+MLA is an attention variant used in DeepSeek V2/V3 that compresses the per-token KV representation by projecting key and value into a shared low-dimensional latent space. Instead of caching full K and V tensors, it stores compressed latent state plus the required RoPE key component.
 
 ## Why It Matters
 
 - The undated [KV-cache architecture survey](../sources/kv-cache-architecture-survey.md) reports a reduction from 14,336 to 576 cached dimensions at DeepSeek V3 scale, approximately 96%.
 - The local sources do not establish a general no-degradation result; quality and serving benefit remain model- and implementation-dependent.
-- MLA is orthogonal to GQA/MQA (which reduce KV head count) and can be combined with cross-layer attention or quantization for further compression.
+- MLA and GQA/MQA reduce KV cost through different mechanisms: MLA compresses the stored representation, while GQA/MQA reduce KV head count. The local sources do not establish their general composability.
 - A naive implementation can reconstruct full per-head K/V on the fly, while optimized inference can absorb projection weights and avoid materializing those full tensors. Both paths trade additional projection structure for much smaller stored state.
 - RoPE-related Q/K dimensions need separate handling from the compressible latent path, so implementation details matter for both correctness and actual serving benefit ([DeepSeek MLA tutorial](../sources/cnblogs-transformer-series-28-deepseek-mla.md)).
 

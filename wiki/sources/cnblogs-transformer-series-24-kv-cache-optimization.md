@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2025-04-08
 created: 2026-07-04
-updated: 2026-07-04
+updated: 2026-08-31
 ---
 
 # Summary
@@ -33,6 +33,7 @@ updated: 2026-07-04
 - Concept: [KV Cache in LLM Serving](../concepts/kv-cache-in-llm-serving.md)
 - Concept: [Context Caching in LLM Serving](../concepts/context-caching-in-llm-serving.md)
 - Concept: [PagedAttention](../concepts/pagedattention.md)
+- Concept: [LLM Quantization](../concepts/llm-quantization.md)
 - Topic: [LLM Deployment and Capacity Planning](../topics/llm-deployment-and-capacity-planning.md)
 
 # Open Questions

@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2025-03-14
 created: 2026-07-04
-updated: 2026-07-04
+updated: 2026-08-31
 ---
 
 # Summary
@@ -31,6 +31,7 @@ updated: 2026-07-04
 # Connections
 
 - Concept: [Transformer Feed-Forward Network](../concepts/transformer-feed-forward-network.md)
+- Concept: [Mixture of Experts](../concepts/mixture-of-experts.md)
 - Topic: [Transformer Architecture and Attention](../topics/transformer-architecture-and-attention.md)
 - Concept: [Parallelism in LLM Serving](../concepts/parallelism-in-llm-serving.md)
 
