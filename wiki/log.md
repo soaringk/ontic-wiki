@@ -1,5 +1,12 @@
 # Wiki Log
 
+## [2026-09-07] lint | verified wiki integrity and evidence boundaries
+
+- Audited 75 source, 10 topic, 36 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, repeated concepts, and obvious duplicates.
+- Found no orphan content pages, broken internal links, missing raw targets, duplicate titles, slugs, or source IDs, weak source connections, obvious duplicate pages, or debate/synthesis duplication.
+- Retained existing caveats on the undated KV-cache survey, the July 2023 vector-database comparison, and the geometry manuscript's companion-material conflict; no stronger claim was justified by the local evidence.
+- Left `wiki/index.md` unchanged because page inventory and summaries remain current; the unresolved debate remains `awaiting_user` and `undecided`.
+
 ## [2026-08-31] lint | repaired evidence scope and source connections
 
 - Audited 75 source, 10 topic, 36 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, and obvious duplicates.
