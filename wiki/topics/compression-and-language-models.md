@@ -9,7 +9,7 @@ The equivalence of prediction and lossless compression — Shannon's source codi
 - **Adjusted compression rate** = (model size + compressed data size) / raw data size. In the paper's offline two-part-code experiments on enwik Transformers, counting parameter bytes creates an optimal tested model size beyond which parameter overhead worsens compression. Prequential coding can yield a different result.
 - **LLMs as general-purpose compressors.** Excluding model parameter bytes, Chinchilla 70B compresses ImageNet patches to 43.4% and LibriSpeech to 16.4%, beating the compared domain-specific codecs on raw compression rate. The authors attribute this to in-context adaptation and report no direct image/audio training, while acknowledging possible encoded-data contamination ([paper](../sources/language-modeling-is-compression.md)).
 - **In-context compression.** Foundation models adapt within a short context window via in-context learning; classical compressors (gzip, LZMA2) rely on long context windows and small programs. These represent two fundamentally different compression strategies.
-- **Tokenization as pre-compression.** Tokenizers are lossless pre-compressors; larger vocabularies increase information density per token but make prediction harder. For raw compression, simpler tokenizers (ASCII, BPE-1K) often outperform larger ones.
+- **Tokenization as pre-compression.** In the paper's reversible coding setup, tokenization acts as lossless pre-compression; larger vocabularies increase information density per token but make prediction harder. In its raw-compression experiments, simpler tokenizers (ASCII, BPE-1K) often outperform larger ones.
 
 ## Related Concepts
 

@@ -17,7 +17,7 @@ Transformer architecture models sequences by repeatedly letting each token updat
 - RoPE, LayerNorm/RMSNorm placement, residual connections, FFN shape, and tokenization/embedding choices are part of the serving-relevant architecture because they affect kernel fusion, stability, parameter count, vocabulary memory, and long-context behavior.
 - FFN is the per-token nonlinear path after attention; in dense decoder blocks it commonly owns about two thirds of parameters, while SwiGLU changes the gate/up/down shape without necessarily increasing total FFN parameters.
 - Pre-Norm plus residual connections keep the gradient path stable in deep decoder stacks; RMSNorm is now common because it preserves scale control with less reduction work than full LayerNorm.
-- Position encoding is the answer to self-attention's order blindness; RoPE is dominant because it injects relative position through Q/K rotation and works well with fused attention kernels.
+- Position encoding is the answer to self-attention's order blindness; the current tutorials present RoPE as a common choice that injects relative position through Q/K rotation and works with fused attention kernels.
 - Tokenization and embeddings define the model's actual discrete input space; vocabulary size changes both multilingual efficiency and embedding/LM-head memory.
 - Autoregressive generation turns architecture into a serving loop: prompt prefill builds KV state, decode appends one token at a time, and sampling policy chooses from the next-token distribution.
 - Sampling policies such as greedy decoding, temperature, Top-K, and Top-P operate after the LM head over logits; they change output behavior without changing the attention architecture.

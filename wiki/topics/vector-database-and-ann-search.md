@@ -13,7 +13,7 @@ Vector databases store high-dimensional embedding vectors and support efficient 
   - **Hashing-based (LSH).** Use locality-sensitive hash functions that map similar vectors to the same bucket with high probability. Fast but often lower accuracy than graph-based methods.
 - **Similarity measures.** Euclidean distance (absolute magnitude matters), cosine similarity (direction only, length-invariant), and dot product (magnitude-and-direction) are the three standard options, each suited to different data and model characteristics.
 - **Filtering.** Real applications combine vector search with metadata filters. Pre-filtering vs. post-filtering presents a fundamental trade-off between search scope and result completeness.
-- **Production considerations.** Distributed deployment, sharding by vector similarity, replication for availability, access control, monitoring, backup, and API/SDK design can all matter beyond the core ANN algorithm.
+- **Production considerations.** The current introductory source identifies distributed support, access control, and API/SDK design as selection criteria beyond the core ANN algorithm; concrete sharding, availability, and operations guidance requires workload-specific evidence.
 
 ## Sub-areas
 

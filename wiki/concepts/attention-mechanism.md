@@ -11,7 +11,7 @@ Attention is the operation that lets each token weight and aggregate information
 - Multi-head attention has a concrete implementation shape: project to Q/K/V, split heads, run scaled dot-product attention independently per head, concatenate, then apply the output projection.
 - Decoder-only generation depends on causal attention that only sees past tokens.
 - Self-attention is order-blind without an added position signal; RoPE injects relative position by rotating Q and K before dot-product scoring.
-- Encoder self-attention, masked decoder self-attention, and cross-attention share the same scoring formula but differ in Q/K/V source and masking behavior.
+- Encoder self-attention, masked decoder self-attention, and cross-attention share the same scoring formula but differ in Q/K/V source and masking behavior. Padding masks exclude invalid tokens, causal masks block future positions, and cross-attention masks constrain which encoder positions a decoder query may use.
 - Infrastructure optimizations often target this computation: memory-efficient attention reduces memory traffic through chunking, tiling, online softmax, and recomputation; tensor parallelism can split heads; and GQA/MQA reduce key/value head count. See [FlashAttention](flashattention.md) for kernel-version and precision details.
 - Prefill and decode need different kernel organization: dense prompt attention is dominated by tiled matrix work, while decode must create parallelism around one query reading many cached K/V tokens.
 - [Multi-head Latent Attention](multi-head-latent-attention-mla.md) compresses K and V into cached latent state; optimized inference may absorb projection weights rather than materializing full per-head K/V.
@@ -39,6 +39,7 @@ Attention is the operation that lets each token weight and aggregate information
 - [从 305 GB 到 7.4 GB：大模型 KVCache 架构演进全景](../sources/kv-cache-architecture-survey.md)
 - [Self-attention Does Not Need O(n^2) Memory](../sources/self-attention-does-not-need-o-n2-memory.md)
 - [探秘Transformer系列之（10）--- 自注意力](../sources/cnblogs-transformer-series-10-self-attention.md)
+- [探秘Transformer系列之（11）--- 掩码](../sources/cnblogs-transformer-series-11-masks.md)
 - [探秘Transformer系列之（12）--- 多头自注意力](../sources/cnblogs-transformer-series-12-multi-head-self-attention.md)
 - [探秘Transformer系列之（18）--- FlashAttention](../sources/cnblogs-transformer-series-18-flashattention.md)
 - [探秘Transformer系列之（19）----FlashAttention V2 及升级版本](../sources/cnblogs-transformer-series-19-flashattention-v2-and-beyond.md)

@@ -7,7 +7,7 @@ Positional encoding injects order information into Transformer computation so at
 - Plain self-attention is permutation-equivariant: without position signals it cannot tell `猫追狗` from `狗追猫` using token order alone.
 - Absolute position encodings add or learn a vector per position at the input layer, but tend to extrapolate poorly beyond training length.
 - RoPE rotates Q and K by position-dependent angles so their dot product depends on relative position; V is left unrotated because it carries content rather than matching position.
-- ALiBi adds a distance-dependent linear bias directly to attention scores, making extrapolation simple but less expressive than RoPE.
+- ALiBi adds a distance-dependent linear bias directly to attention scores; the current tutorial source characterizes this as simpler for extrapolation but less expressive than RoPE.
 - Long-context RoPE extensions such as position interpolation, NTK-aware scaling, YaRN, and dynamic NTK adjust how frequencies scale beyond the training window.
 - Position encoding choices affect kernel fusion, trigonometric cache layout, long-context quality, and KV Cache memory pressure.
 - Long-context extrapolation must be evaluated separately from maximum configured context length because position scaling can preserve syntax while still losing retrieval or reasoning quality on long documents.

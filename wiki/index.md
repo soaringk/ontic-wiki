@@ -100,7 +100,7 @@ This file is maintained by the agent.
 - [Autoregressive Generation](concepts/autoregressive-generation.md) - Next-token generation loop that creates prefill/decode phases, KV-cache reuse, TTFT/TPOT trade-offs, and chunked iteration-level scheduling needs.
 - [Chunked Prefill Scheduling](concepts/chunked-prefill-scheduling.md) - Token-budgeted prompt processing technique that splits long prefills and mixes chunks with decode work to reduce generation stalls.
 - [Token Sampling Strategies](concepts/token-sampling-strategies.md) - Greedy, temperature, Top-K, and Top-P policies for choosing the next token from logits during autoregressive generation.
-- [Speculative Decoding](concepts/speculative-decoding.md) - Decode acceleration technique where candidate tokens are proposed and target-model verification plus rejection sampling preserves the output distribution.
+- [Speculative Decoding](concepts/speculative-decoding.md) - Decode acceleration family where candidate tokens are proposed for target-model verification; exact speculative sampling can preserve the target distribution through rejection sampling.
 - [Brain-Inspired AI](concepts/brain-inspired-ai.md) - Neuroscience-informed view that future AI may need richer neural complexity, long-range feedback, parallel perception, and embodied action loops.
 - [Context Caching in LLM Serving](concepts/context-caching-in-llm-serving.md) - Reuse of prefix KV state across requests to reduce repeated prefill work.
 - [CUDA Thread Hierarchy](concepts/cuda-thread-hierarchy.md) - The `Grid -> Block -> Thread` structure that defines CUDA work partitioning.
@@ -117,7 +117,7 @@ This file is maintained by the agent.
 - [Streams of Experience](concepts/streams-of-experience.md) - Long-lived action-observation trajectories that support adaptation and long-horizon optimization.
 - [Unitranche Loans](concepts/unitranche-loans.md) - Single-loan structures that merge senior and junior debt to trade clarity for execution speed.
 - [Utility Problem](concepts/utility-problem.md) - The gap between benchmark capability and durable real-world usefulness when evaluation setups miss how work actually happens.
-- [Effective Dimension](concepts/effective-dimension.md) - Participation ratio measuring how many independent directions a cluster's covariance occupies and governing the Consolidation-Interference Duality bound.
+- [Effective Dimension](concepts/effective-dimension.md) - Participation ratio measuring the effective number of variance-bearing directions and appearing in the manuscript's conditional Consolidation-Interference Duality bound.
 - [Prediction-Compression Equivalence](concepts/prediction-compression-equivalence.md) - Information-theoretic bridge between probabilistic prediction, cross-entropy, and lossless compression.
 - [Positional Encoding](concepts/positional-encoding.md) - Order signal for Transformers, covering absolute/relative encodings, RoPE Q/K rotation, ALiBi score bias, and long-context extrapolation.
 - [Multi-head Latent Attention (MLA)](concepts/multi-head-latent-attention-mla.md) - DeepSeek attention variant that stores low-rank latent KV state; an undated survey reports approximately 96% dimensional reduction at V3 scale.

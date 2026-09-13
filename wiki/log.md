@@ -1,5 +1,12 @@
 # Wiki Log
 
+## [2026-09-14] lint | tightened evidence scope and debate boundaries
+
+- Audited 75 source, 10 topic, 36 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, repeated concepts, and obvious duplicates.
+- Found no broken internal links, link-orphan content pages, missing raw targets, duplicate titles, slugs, source IDs, or exact page bodies, and no debate/synthesis duplication.
+- Scoped claims about speculative sampling, tokenization-as-compression, effective dimension, LoRA tuning, positional encoding, private credit, vector-database operations, and PagedAttention-backed context sharing to their local evidence.
+- Consolidated masking guidance on the attention concept, reduced duplicated contested analysis on `Experiential AI` to a neutral debate pointer, and rebuilt the affected `wiki/index.md` summaries; the debate remains `awaiting_user` and `undecided`.
+
 ## [2026-09-07] lint | verified wiki integrity and evidence boundaries
 
 - Audited 75 source, 10 topic, 36 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, repeated concepts, and obvious duplicates.
