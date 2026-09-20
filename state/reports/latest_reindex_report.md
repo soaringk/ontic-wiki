@@ -1,6 +1,6 @@
 # Latest Reindex Report
 
-- scan_time: `2026-09-13T20:00:02Z`
+- scan_time: `2026-09-20T20:00:02Z`
 - source_roots: `raw`
 - pending_supported: `0`
 - blocked_supported: `0`

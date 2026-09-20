@@ -10,7 +10,7 @@ source_type: pdf
 parser: mineru
 published: 2024-06-06
 created: 2026-04-25
-updated: 2026-08-03
+updated: 2026-09-21
 ---
 
 # Summary
@@ -23,7 +23,7 @@ DistServe treats LLM serving as a goodput optimization problem under both TTFT a
 - Colocation couples resource allocation and parallelism settings for phases that want different execution strategies.
 - Prefill behaves more like a compute-bound queueing problem, while decode wants larger memory-backed batches.
 - Goodput should be defined as the maximum request rate that still satisfies latency SLO attainment.
-- Placement and bandwidth still matter, but modern GPU clusters often make transfer overhead manageable.
+- Placement and bandwidth still matter. On its four-node A100 testbed, DistServe reports insubstantial KV-transfer overhead under bandwidth-aware placement while treating interconnect bandwidth as an explicit constraint.
 
 # Why It Matters
 

@@ -4,13 +4,13 @@ Private credit is a non-bank lending market that provides debt financing outside
 
 ## Core Ideas
 
-- Private credit expanded after the financial crisis as tighter bank regulation, bank consolidation, and the rise of private companies left more financing demand outside traditional channels.
+- The source attributes private credit's post-financial-crisis expansion to tighter bank regulation, bank consolidation, and the rise of private companies leaving more financing demand outside traditional channels.
 - Direct lending and asset-based finance are the two main durable modes in the current material.
-- Borrowers value speed, tailoring, confidentiality, and committed capital more than the standardization of bank or public-market debt.
+- The source describes borrowers as valuing speed, tailoring, confidentiality, and committed capital over the standardization of bank or public-market debt.
 - The source presents high floating-rate income and low reported mark-to-market volatility as investor attractions.
 - The current source describes asset-based finance extending to infrastructure-like collateral, including AI-related data-center financing, beyond traditional middle-market corporate loans.
-- It connects market growth to private equity sponsors, insurance capital, banks, and structured funding channels.
-- The main structural risks are weak price discovery, limited secondary liquidity, refinancing pressure, and hidden contagion through structured exposures.
+- The source connects market growth to private equity sponsors, insurance capital, banks, and structured funding channels.
+- The source identifies weak price discovery, limited secondary liquidity, refinancing pressure, and hidden contagion through structured exposures as structural risks rather than demonstrated stress outcomes.
 
 ## Related Concepts
 

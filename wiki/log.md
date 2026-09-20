@@ -1,5 +1,12 @@
 # Wiki Log
 
+## [2026-09-21] lint | narrowed evidence scope and chronology
+
+- Audited 75 source, 10 topic, 36 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, repeated concepts, and obvious duplicates.
+- Found no broken internal links, link-orphan content pages, missing raw targets or index entries, duplicate titles, slugs, source IDs, or pages, weak source connections, or debate/synthesis duplication.
+- Documented the geometry manuscript's internal regime-label reversal and narrowed QAT, DistServe transfer, private-credit, neuroscience, RMSNorm, and Hopper claims to their cited evidence and dated hardware scope.
+- Rebuilt the affected `wiki/index.md` summaries; page inventory is unchanged, and the debate remains `awaiting_user` and `undecided`.
+
 ## [2026-09-14] lint | tightened evidence scope and debate boundaries
 
 - Audited 75 source, 10 topic, 36 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, repeated concepts, and obvious duplicates.

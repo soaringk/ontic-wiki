@@ -17,7 +17,7 @@ CUDA performance depends strongly on choosing the right memory level for the job
 - Structure-of-arrays layouts are often friendlier to GPU access patterns than array-of-structures layouts.
 - More shared memory or registers can improve local efficiency but also reduce occupancy.
 - FlashAttention is a concrete deep-learning example: moving tiled Q/K/V blocks through SRAM/shared memory avoids repeated HBM reads and writes of the full attention matrix.
-- On newer GPUs, memory hierarchy interacts with asynchronous engines: Hopper's TMA and WGMMA let FlashAttention-3 overlap data movement, Tensor Core GEMMs, and softmax work.
+- On NVIDIA Hopper GPUs, TMA and WGMMA let FlashAttention-3 overlap data movement, Tensor Core GEMMs, and softmax work.
 
 ## Related Pages
 
