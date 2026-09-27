@@ -14,6 +14,7 @@ MLA is an attention variant used in DeepSeek V2/V3 that compresses the per-token
 
 - [Attention Mechanism](attention-mechanism.md)
 - [KV Cache in LLM Serving](kv-cache-in-llm-serving.md)
+- [Multi-Query and Grouped-Query Attention](multi-query-and-grouped-query-attention.md)
 - [Transformer Architecture and Attention](../topics/transformer-architecture-and-attention.md)
 
 ## Sources

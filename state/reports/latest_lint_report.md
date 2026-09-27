@@ -1,6 +1,6 @@
 # Latest Lint Report
 
-- scan_time: `2026-09-20T21:07:24Z`
+- scan_time: `2026-09-27T21:00:01Z`
 - source_pages: `75`
 - topic_pages: `10`
 - concept_pages: `36`

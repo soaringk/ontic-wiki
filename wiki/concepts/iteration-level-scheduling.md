@@ -6,7 +6,7 @@ Iteration-level scheduling means the serving system reconsiders the active batch
 
 - Finished requests can leave immediately instead of waiting for the slowest peer in the batch.
 - New arrivals can start after one iteration rather than after an entire batch drains.
-- It enables continuous batching and other fine-grained policies that fit autoregressive generation.
+- It enables continuous batching: the scheduler removes completed sequences and admits new or waiting work at iteration boundaries instead of holding a fixed batch until every request finishes.
 - It is a direct response to decode-time autoregression: each active request advances one token step, while completed requests leave and new requests join between steps.
 - It makes queueing behavior depend on token steps, not just request count.
 - Token-budgeted variants use each iteration as a scheduling boundary for both ongoing decodes and bounded prefill chunks, reducing long-prompt generation stalls.
@@ -23,6 +23,7 @@ Iteration-level scheduling means the serving system reconsiders the active batch
 - [PagedAttention](pagedattention.md)
 - [Autoregressive Generation](autoregressive-generation.md)
 - [Chunked Prefill Scheduling](chunked-prefill-scheduling.md)
+- [LLM Serving Metrics and SLOs](llm-serving-metrics-and-slos.md)
 
 ## Sources
 

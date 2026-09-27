@@ -10,7 +10,7 @@ source_type: pdf
 parser: mineru
 published: 2024-06-06
 created: 2026-04-25
-updated: 2026-09-21
+updated: 2026-09-28
 ---
 
 # Summary
@@ -35,6 +35,7 @@ DistServe supplies a stronger optimization vocabulary than pure throughput. It l
 - Topic: [LLM Deployment and Capacity Planning](../topics/llm-deployment-and-capacity-planning.md)
 - Concept: [Prefill-Decode Disaggregation](../concepts/prefill-decode-disaggregation.md)
 - Concept: [Parallelism in LLM Serving](../concepts/parallelism-in-llm-serving.md)
+- Concept: [LLM Serving Metrics and SLOs](../concepts/llm-serving-metrics-and-slos.md)
 
 # Open Questions
 

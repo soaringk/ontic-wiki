@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2025-04-23
 created: 2026-07-04
-updated: 2026-07-04
+updated: 2026-09-28
 ---
 
 # Summary
@@ -33,6 +33,7 @@ updated: 2026-07-04
 - Concept: [Speculative Decoding](../concepts/speculative-decoding.md)
 - Concept: [Autoregressive Generation](../concepts/autoregressive-generation.md)
 - Topic: [LLM Deployment and Capacity Planning](../topics/llm-deployment-and-capacity-planning.md)
+- Concept: [Parallel Decoding Variants](../concepts/parallel-decoding-variants.md)
 
 # Open Questions
 

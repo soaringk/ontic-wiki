@@ -131,6 +131,8 @@ This file is maintained by the agent.
 - [Long Context Extrapolation](concepts/long-context-extrapolation.md) - Making Transformers remain useful beyond trained context length through position scaling plus KV/memory strategies.
 - [Parallel Decoding Variants](concepts/parallel-decoding-variants.md) - Medusa, Lookahead, MTP, and related methods that propose or verify multiple future tokens to reduce serial decode steps.
 - [LLM Quantization](concepts/llm-quantization.md) - LLM-specific low-precision deployment covering outlier-aware weights, activations, KV cache, GPTQ/AWQ/SmoothQuant, and QLoRA.
+- [Multi-Query and Grouped-Query Attention](concepts/multi-query-and-grouped-query-attention.md) - Attention variants that reduce KV-cache memory and decode bandwidth by sharing key/value heads across query heads or query-head groups.
+- [LLM Serving Metrics and SLOs](concepts/llm-serving-metrics-and-slos.md) - Serving measurement vocabulary covering TTFT, TPOT/TBT, end-to-end latency, throughput, goodput, queueing, and SLO attainment.
 
 ## Debates
 

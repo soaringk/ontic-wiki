@@ -22,7 +22,7 @@ Transformer architecture models sequences by repeatedly letting each token updat
 - Autoregressive generation turns architecture into a serving loop: prompt prefill builds KV state, decode appends one token at a time, and sampling policy chooses from the next-token distribution.
 - Sampling policies such as greedy decoding, temperature, Top-K, and Top-P operate after the LM head over logits; they change output behavior without changing the attention architecture.
 - KV cache exists because later decoding steps reuse previously computed attention keys and values instead of recomputing the full prefix each time.
-- Attention variants such as MQA, GQA, and MLA preserve many query pathways while reducing or compressing the key/value state that inference must store and read.
+- Attention variants such as [MQA and GQA](../concepts/multi-query-and-grouped-query-attention.md) and MLA preserve many query pathways while reducing or compressing the key/value state that inference must store and read.
 - Sparse attention can reduce retained history through sliding windows or learned selection. Compression ratios for frontier variants such as CSA+HCA are architecture-specific and currently represented here only by an undated survey.
 - Linear or recurrent attention variants replace growing per-token KV state with fixed-size state at those layers. Hybrid architectures interleave them with full-attention layers, retaining some sequence-length-dependent cache and model-specific quality trade-offs.
 - Cross-Layer Attention (CLA) reduces KVCache by having adjacent layers share K/V state instead of computing and storing them independently.
@@ -55,6 +55,7 @@ Transformer architecture models sequences by repeatedly letting each token updat
 - [Mixture of Experts](../concepts/mixture-of-experts.md)
 - [Long Context Extrapolation](../concepts/long-context-extrapolation.md)
 - [FlashAttention](../concepts/flashattention.md)
+- [Multi-Query and Grouped-Query Attention](../concepts/multi-query-and-grouped-query-attention.md)
 
 ## Sources
 

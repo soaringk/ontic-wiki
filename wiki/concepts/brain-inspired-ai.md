@@ -5,7 +5,7 @@ Brain-inspired AI uses neuroscience as a source of architectural hypotheses for 
 ## Why It Matters
 
 - The interview argues that, after early neural networks borrowed from simplified biological neurons, much of modern deep learning developed with limited direct dependence on neuroscience.
-- The interview argues that current models are strong at System 2 reasoning while leaving much System 1 sensorimotor intelligence untouched.
+- The March 2026 interview characterizes then-current models as strong at System 2 reasoning while leaving much System 1 sensorimotor intelligence untouched.
 - Embodied robots and brain-computer interfaces are framed as premature if they lack robust perception, decision, and action loops rather than only impressive mechanical control.
 - Neuroscience may contribute not only biological metaphors but also analysis methods for interpretability, ablation, neural manifolds, criticality, and feedback-driven hypothesis generation.
 

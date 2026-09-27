@@ -1,5 +1,12 @@
 # Wiki Log
 
+## [2026-09-28] lint | repaired evidence scope and canonical concept coverage
+
+- Audited 75 source, 10 topic, 36 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, repeated concepts, and obvious duplicates.
+- Found no broken internal links, non-index orphan content pages, weak source connections, obvious duplicate pages, or debate/synthesis duplication; the debate remains `awaiting_user` and `undecided`.
+- Corrected inference-memory, Top-P, geometry-range and regime-label claims; date-anchored the interview's model-capability claims and qualified survey-only CLA compatibility.
+- Added canonical concepts for MQA/GQA and LLM serving metrics/SLOs, clarified continuous batching, repaired reciprocal RoPE and parallel-decoding links, and rebuilt `wiki/index.md`; inventory is now 75 sources, 10 topics, 38 concepts, 1 debate, and 0 synthesis pages.
+
 ## [2026-09-21] lint | narrowed evidence scope and chronology
 
 - Audited 75 source, 10 topic, 36 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, repeated concepts, and obvious duplicates.

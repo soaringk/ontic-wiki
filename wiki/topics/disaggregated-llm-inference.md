@@ -28,6 +28,7 @@ Disaggregated LLM inference separates the prompt-processing and token-generation
 - [Chunked Prefill Scheduling](../concepts/chunked-prefill-scheduling.md)
 - [Parallelism in LLM Serving](../concepts/parallelism-in-llm-serving.md)
 - [PagedAttention](../concepts/pagedattention.md)
+- [LLM Serving Metrics and SLOs](../concepts/llm-serving-metrics-and-slos.md)
 
 ## Sources
 

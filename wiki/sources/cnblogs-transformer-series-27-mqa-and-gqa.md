@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2025-04-14
 created: 2026-07-04
-updated: 2026-07-04
+updated: 2026-09-28
 ---
 
 # Summary
@@ -32,6 +32,7 @@ updated: 2026-07-04
 
 - Concept: [KV Cache in LLM Serving](../concepts/kv-cache-in-llm-serving.md)
 - Concept: [Attention Mechanism](../concepts/attention-mechanism.md)
+- Concept: [Multi-Query and Grouped-Query Attention](../concepts/multi-query-and-grouped-query-attention.md)
 - Topic: [LLM Deployment and Capacity Planning](../topics/llm-deployment-and-capacity-planning.md)
 
 # Open Questions

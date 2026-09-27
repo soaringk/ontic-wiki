@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: unknown
 created: 2026-04-25
-updated: 2026-05-11
+updated: 2026-09-28
 ---
 
 # Summary
@@ -35,6 +35,7 @@ This source connects the papers to a more general systems vocabulary. It is usef
 - Topic: [Disaggregated LLM Inference](../topics/disaggregated-llm-inference.md)
 - Concept: [Iteration-Level Scheduling](../concepts/iteration-level-scheduling.md)
 - Concept: [PagedAttention](../concepts/pagedattention.md)
+- Concept: [LLM Serving Metrics and SLOs](../concepts/llm-serving-metrics-and-slos.md)
 
 # Open Questions
 

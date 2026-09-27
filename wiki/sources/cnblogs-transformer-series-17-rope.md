@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2025-03-23
 created: 2026-07-04
-updated: 2026-07-04
+updated: 2026-09-28
 ---
 
 # Summary
@@ -33,6 +33,7 @@ updated: 2026-07-04
 - Concept: [Positional Encoding](../concepts/positional-encoding.md)
 - Concept: [Attention Mechanism](../concepts/attention-mechanism.md)
 - Concept: [KV Cache in LLM Serving](../concepts/kv-cache-in-llm-serving.md)
+- Concept: [Long Context Extrapolation](../concepts/long-context-extrapolation.md)
 
 # Open Questions
 

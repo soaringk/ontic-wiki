@@ -22,3 +22,4 @@ Long context extrapolation is the problem of making a Transformer remain useful 
 - [探秘Transformer系列之（23）--- 长度外推](../sources/cnblogs-transformer-series-23-length-extrapolation.md)
 - [探秘Transformer系列之（25）--- KV Cache优化之处理长文本序列](../sources/cnblogs-transformer-series-25-kv-cache-long-context.md)
 - [3.5 Transformer位置编码深入理解](../sources/transformer-positional-encoding-deep-dive.md)
+- [探秘Transformer系列之（17）--- RoPE](../sources/cnblogs-transformer-series-17-rope.md)

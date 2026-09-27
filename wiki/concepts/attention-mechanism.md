@@ -12,7 +12,7 @@ Attention is the operation that lets each token weight and aggregate information
 - Decoder-only generation depends on causal attention that only sees past tokens.
 - Self-attention is order-blind without an added position signal; RoPE injects relative position by rotating Q and K before dot-product scoring.
 - Encoder self-attention, masked decoder self-attention, and cross-attention share the same scoring formula but differ in Q/K/V source and masking behavior. Padding masks exclude invalid tokens, causal masks block future positions, and cross-attention masks constrain which encoder positions a decoder query may use.
-- Infrastructure optimizations often target this computation: memory-efficient attention reduces memory traffic through chunking, tiling, online softmax, and recomputation; tensor parallelism can split heads; and GQA/MQA reduce key/value head count. See [FlashAttention](flashattention.md) for kernel-version and precision details.
+- Infrastructure optimizations often target this computation: memory-efficient attention reduces memory traffic through chunking, tiling, online softmax, and recomputation; tensor parallelism can split heads; and [GQA/MQA](multi-query-and-grouped-query-attention.md) reduce key/value head count. See [FlashAttention](flashattention.md) for kernel-version and precision details.
 - Prefill and decode need different kernel organization: dense prompt attention is dominated by tiled matrix work, while decode must create parallelism around one query reading many cached K/V tokens.
 - [Multi-head Latent Attention](multi-head-latent-attention-mla.md) compresses K and V into cached latent state; optimized inference may absorb projection weights rather than materializing full per-head K/V.
 - Sparse attention variants reduce attention computation by selecting a subset of history through learned or heuristic sparsity; the exact retention and quality trade-offs are architecture-specific.
@@ -27,6 +27,7 @@ Attention is the operation that lets each token weight and aggregate information
 - [Autoregressive Generation](autoregressive-generation.md)
 - [Long Context Extrapolation](long-context-extrapolation.md)
 - [FlashAttention](flashattention.md)
+- [Multi-Query and Grouped-Query Attention](multi-query-and-grouped-query-attention.md)
 
 ## Sources
 

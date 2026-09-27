@@ -6,8 +6,8 @@ LLM deployment and capacity planning sits between model architecture and product
 
 - Deployment variants should separate public production models from test-only configurations.
 - Memory planning is not just parameter count; it includes runtime reservation, hardware reservation, and KV cache.
-- Decoder Block memory planning should be component-wise: embeddings and LM head scale with vocabulary, FFN dominates dense block parameters, attention KV state scales with KV head count, and optimizer/activation memory only applies to training.
-- User experience depends on separating TTFT, TPOT, overall latency, and throughput instead of collapsing them into one metric.
+- Decoder Block memory planning should be component-wise: embeddings and LM head scale with vocabulary, FFN dominates dense block parameters, and attention KV state scales with KV head count. Gradients and optimizer state are training-only; retained activations dominate training memory, while inference still needs transient activations and workspace.
+- User experience depends on separating [TTFT, TPOT, overall latency, throughput, and SLO-attaining goodput](../concepts/llm-serving-metrics-and-slos.md) instead of collapsing them into one metric.
 - Decode speed is often constrained by memory bandwidth, so hardware bandwidth and serving-stack efficiency matter as much as raw compute.
 - Autoregressive serving separates prefill, which builds the initial KV Cache and often controls TTFT, from decode, which repeatedly reads weights and KV state and often controls TPOT.
 - [Continuous batching](../sources/orca-a-distributed-serving-system-for-transformer-based-generative-models.md) is usually the right default for shared online serving, while static batching can still win for offline workloads.
@@ -47,6 +47,7 @@ LLM deployment and capacity planning sits between model architecture and product
 - [Parallel Decoding Variants](../concepts/parallel-decoding-variants.md)
 - [Long Context Extrapolation](../concepts/long-context-extrapolation.md)
 - [FlashAttention](../concepts/flashattention.md)
+- [LLM Serving Metrics and SLOs](../concepts/llm-serving-metrics-and-slos.md)
 
 ## Sources
 

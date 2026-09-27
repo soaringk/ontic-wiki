@@ -17,7 +17,7 @@ Experiential AI treats improvement from real or simulated interaction as the cen
 
 The sources disagree about whether language priors are scalable learned structure or a temporary bridge, how much algorithmic novelty remains necessary, and what reliability standard should govern progress claims. This unresolved comparison belongs in the debate workbench: [AI Halftime vs Bitter Lesson and Era of Experience](../debates/ai-halftime-vs-bitter-lesson-and-era-of-experience.md).
 
-[How Should We Learn Again When AI Defeats Exam-Oriented Education?](../sources/how-should-we-learn-again-when-ai-defeats-exam-oriented-education.md) adds a brain-science tension: current models may be strong at rational, text-mediated work while still lacking the fast perception, embodied action, and long-range feedback that make biological intelligence robust in open environments.
+The March 2026 interview [How Should We Learn Again When AI Defeats Exam-Oriented Education?](../sources/how-should-we-learn-again-when-ai-defeats-exam-oriented-education.md) adds a brain-science tension: it characterizes then-current models as strong at rational, text-mediated work while still lacking the fast perception, embodied action, and long-range feedback that make biological intelligence robust in open environments.
 
 ## Related Concepts
 
