@@ -1,9 +1,9 @@
 # Latest Lint Report
 
-- scan_time: `2026-09-27T21:00:01Z`
+- scan_time: `2026-10-04T21:00:01Z`
 - source_pages: `75`
 - topic_pages: `10`
-- concept_pages: `36`
+- concept_pages: `38`
 - debate_pages: `1`
 - synthesis_pages: `0`
 
@@ -109,11 +109,13 @@
 - `wiki/concepts/iteration-level-scheduling.md`
 - `wiki/concepts/kv-cache-in-llm-serving.md`
 - `wiki/concepts/llm-quantization.md`
+- `wiki/concepts/llm-serving-metrics-and-slos.md`
 - `wiki/concepts/long-context-extrapolation.md`
 - `wiki/concepts/low-rank-adaptation-lora.md`
 - `wiki/concepts/mixture-of-experts.md`
 - `wiki/concepts/model-bandwidth-utilization.md`
 - `wiki/concepts/multi-head-latent-attention-mla.md`
+- `wiki/concepts/multi-query-and-grouped-query-attention.md`
 - `wiki/concepts/pagedattention.md`
 - `wiki/concepts/parallel-decoding-variants.md`
 - `wiki/concepts/parallelism-in-llm-serving.md`
