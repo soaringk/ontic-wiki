@@ -10,7 +10,7 @@ source_type: pdf
 parser: mineru
 published: 2023-10
 created: 2026-04-25
-updated: 2026-05-11
+updated: 2026-10-19
 ---
 
 # Summary
@@ -21,7 +21,7 @@ This paper argues that LLM serving throughput is often capped less by math kerne
 
 - Existing serving systems waste substantial KV-cache memory through reserved space plus internal and external fragmentation.
 - KV cache should be managed as fixed-size logical blocks mapped to physical blocks instead of one contiguous tensor per request.
-- Paged KV storage makes prompt sharing, copy-on-write branching, and beam-search reuse much cheaper.
+- Paged KV storage makes sharing across sampling or beam-search branches, including copy-on-write branching, much cheaper.
 - Fine-grained iteration-level batching only reaches its potential when memory management also becomes fine-grained.
 - The resulting system can improve throughput materially without changing model outputs.
 
@@ -34,7 +34,7 @@ This paper is one of the core building blocks behind modern LLM serving. It conn
 - Topic: [LLM Deployment and Capacity Planning](../topics/llm-deployment-and-capacity-planning.md)
 - Topic: [Disaggregated LLM Inference](../topics/disaggregated-llm-inference.md)
 - Topic: [Transformer Architecture and Attention](../topics/transformer-architecture-and-attention.md)
-- Concept: [Context Caching in LLM Serving](../concepts/context-caching-in-llm-serving.md)
+- Concept: [Context Caching in LLM Serving](../concepts/context-caching-in-llm-serving.md) (supporting block-sharing primitive; the paper does not demonstrate cross-request reuse)
 - Concept: [KV Cache in LLM Serving](../concepts/kv-cache-in-llm-serving.md)
 - Concept: [PagedAttention](../concepts/pagedattention.md)
 - Concept: [Iteration-Level Scheduling](../concepts/iteration-level-scheduling.md)

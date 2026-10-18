@@ -14,7 +14,7 @@ Disaggregated LLM inference separates the prompt-processing and token-generation
 
 ## Main Tensions
 
-- Disaggregation removes interference but adds transfer overhead and operational complexity.
+- Disaggregation reduces cross-phase interference but adds transfer overhead and operational complexity; interference within each phase can remain.
 - Chunked prefill can partially mitigate interference inside a colocated system, but it does not fully remove the trade-off or the need to reason about KV-cache placement.
 - Some systems optimize for goodput under SLOs, while others emphasize throughput per dollar, throughput per watt, or job completion time.
 - Cache reuse can lower compute cost, but remote cache fetches can still hurt TTFT if they are too slow or too contended.

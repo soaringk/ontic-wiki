@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2025-04-10
 created: 2026-04-20
-updated: 2026-05-11
+updated: 2026-10-19
 ---
 
 # Summary
@@ -19,7 +19,7 @@ This essay argues that AI has entered a "second half" where the main bottleneck 
 
 # Key Claims
 
-- Recent systems suggest that reinforcement learning now generalizes across a wider range of language-mediated tasks than many researchers expected.
+- Systems cited by the April 2025 essay suggest that reinforcement learning generalizes across a wider range of language-mediated tasks than many researchers expected.
 - In practical RL systems, priors and environment design can matter more than algorithmic novelty; language pretraining supplies the transferable prior that earlier agents lacked.
 - Reasoning can act as an internal action space that improves generalization and flexible test-time computation even when it does not immediately change the external environment.
 - Classic benchmark hillclimbing is becoming less informative because a standardized recipe can saturate many existing evaluations faster than bespoke task-specific methods.
@@ -28,7 +28,7 @@ This essay argues that AI has entered a "second half" where the main bottleneck 
 
 # Why It Matters
 
-The essay reframes current AI work from a contest over model architectures toward a contest over product-relevant evaluation and deployment environments. That matters for both research and operations: if benchmark design lags reality, teams may optimize for impressive scores while missing the harder problem of sustained usefulness in real workflows.
+The essay reframes 2025-era AI work from a contest over model architectures toward a contest over product-relevant evaluation and deployment environments. That matters for both research and operations: if benchmark design lags reality, teams may optimize for impressive scores while missing the harder problem of sustained usefulness in real workflows.
 
 # Connections
 
@@ -44,4 +44,3 @@ The essay reframes current AI work from a contest over model architectures towar
 - How should researchers compare progress across interactive, sequential, and environment-specific evaluations that do not reduce cleanly to a single benchmark number?
 - Does the essay overstate its case when it treats RL algorithms as nearly trivial relative to priors and evaluation, rather than as one part of the same scalable recipe?
 - Are the cited cross-domain successes reliable enough to justify the claim that "RL finally generalizes," or are they still better understood as heterogeneous demonstrations with uneven robustness?
-- Are language priors best understood as scalable learned structure, as human-data dependence that future agents must surpass, or as both at different stages of development?

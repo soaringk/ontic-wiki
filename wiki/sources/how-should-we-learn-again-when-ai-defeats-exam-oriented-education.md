@@ -10,7 +10,7 @@ source_type: video
 parser: asr
 published: 2026-03-28
 created: 2026-05-06
-updated: 2026-05-06
+updated: 2026-10-19
 ---
 
 # Summary
@@ -20,7 +20,7 @@ This video interview with Liu Jia, presented under the original Chinese title `æ
 # Key Claims
 
 - Intelligence has two core components: learning that generalizes beyond memorization, and emergence from sufficient scale plus structural complexity.
-- Current large models are strong at System 2 rational work such as mathematics, programming, legal reasoning, and structured knowledge tasks, but they still lack important System 1 capacities tied to fast perception, embodied action, and survival-oriented sensorimotor intelligence.
+- The interview characterizes March 2026 large models as capable on many System 2-style tasks such as mathematics, programming, legal reasoning, and structured knowledge work, without establishing near-perfect reliability; it argues that they still lack important System 1 capacities tied to fast perception, embodied action, and survival-oriented sensorimotor intelligence.
 - The next major AI frontier may require a renewed brain-science influence, especially richer neural complexity, long-range feedback, parallel processing, and embodied perception-action loops.
 - The interview distinguishes low-level subjective experience from high-level self-consciousness, and proposes death awareness and meaning-seeking as a human-specific driver that AI may not share.
 - Exam-oriented education is framed as training for closed datasets; AI-era learning should instead prepare people for open-ended problems where interests, goals, and logical starting points matter more than stored facts.

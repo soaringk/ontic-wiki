@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: unknown
 created: 2026-04-20
-updated: 2026-08-31
+updated: 2026-10-19
 ---
 
 # Summary
@@ -39,4 +39,4 @@ The essay is a methodological check on hype. It raises the evidentiary bar for b
 
 - Which existing AI capabilities truly meet a near-100% reliability bar, and how task-specific are they?
 - How should product teams and researchers reason about progress when highly visible demos outrun mechanistic understanding and factual reliability?
-- How much should broad claims about generalized RL, experiential agents, or AI's "second half" be discounted when they are not yet tied to reliable, well-understood capabilities?
+- What evidence would justify expanding the essay's near-perfect-reliability baseline into broader claims about model reasoning or utility?

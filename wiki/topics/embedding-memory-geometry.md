@@ -8,7 +8,7 @@ The geometric study of semantic memory systems: how embeddings are organized on 
 - The Consolidation–Interference Duality manuscript argues that the same spectral quantity `(θ′/d̄)^(d_eff/2)` governs both forgetting under retrieval noise and identity loss under compression in its formal setup ([submission](../sources/geometry-of-consolidation-v6.md)).
 - The manuscript evaluates a boundary at `d̄ = θ′`: when `d̄ < θ′`, the tested strategies achieve near-perfect identity preservation; when `d̄ ≥ θ′`, observed error rises with `d_eff`. These inequalities avoid the manuscript's internally reversed "tight" and "spread" labels.
 - The manuscript reports that a predecessor paper found at least 99% of global variance within about 16 effective dimensions across six encoder families; in the present manuscript's experiments, local per-cluster `d_eff` is often below 5.
-- Across the paper's five evaluated text corpora and identity-retrieval setup, clusters mostly sit in the tight regime and centroid averaging matches or beats its tested adaptive router. This does not establish that adaptive routing is ineffective for all text workloads.
+- Across the paper's five evaluated text corpora and identity-retrieval setup, clusters mostly satisfy `d̄ < θ′`, and centroid averaging matches or beats its tested adaptive router. This does not establish that adaptive routing is ineffective for all text workloads.
 
 ## Sub-areas
 

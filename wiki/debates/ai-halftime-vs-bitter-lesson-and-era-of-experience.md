@@ -6,7 +6,7 @@ status: awaiting_user
 adjudicator: user
 decision: undecided
 created: 2026-04-20
-updated: 2026-08-24
+updated: 2026-10-19
 sources:
   - sources/were-at-ais-halftime.md
   - sources/the-bitter-lesson.md
@@ -26,6 +26,15 @@ promoted_to: []
 
 Can the views in [We're at AI's Halftime](../sources/were-at-ais-halftime.md), [The Bitter Lesson](../sources/the-bitter-lesson.md), [Welcome to the Era of Experience](../sources/welcome-to-the-era-of-experience.md), and [Two Lessons from ICLR 2025](../sources/two-lessons-from-iclr-2025.md) form a coherent staged research program, or do their assumptions about priors, algorithms, evaluation, and reliability conflict too deeply?
 
+## Source Set
+
+| Source | Relevant evidence | Published | Confidence |
+| --- | --- | --- | --- |
+| [We're at AI's Halftime](../sources/were-at-ais-halftime.md) | Direct statements and source-page paraphrase | 2025-04-10 | High |
+| [The Bitter Lesson](../sources/the-bitter-lesson.md) | Direct statements and source-page paraphrase | 2019-03-13 | High |
+| [Welcome to the Era of Experience](../sources/welcome-to-the-era-of-experience.md) | Direct statements and source-page paraphrase | Unknown | High |
+| [Two Lessons from ICLR 2025](../sources/two-lessons-from-iclr-2025.md) | Direct statements and source-page paraphrase | Unknown | High |
+
 ## Candidate Interpretation
 
 The conflict is substantive and partly axiomatic, but not a total logical incompatibility. Together, the sources raise questions about whether benchmark narratives adequately characterize progress and disagree about the long-run role of human-derived priors, the centrality of algorithmic innovation, and the evidentiary standard for progress claims.
@@ -42,12 +51,12 @@ A staged reconciliation may be possible: learned language priors bootstrap curre
 
 ### Algorithmic Innovation: Marginal vs. Central
 
-- **Yao's view (marginal):** Yao suggests that once the right priors and reasoning-as-action environment are present, the RL algorithm "might be the most trivial part." He suggests that the current recipe is robust enough that evaluation and problem definition are now the key bottlenecks.
+- **Yao's view (marginal):** [We're at AI's Halftime](../sources/were-at-ais-halftime.md) suggests that once the right priors and reasoning-as-action environment are present, the RL algorithm "might be the most trivial part." It presents the current recipe as robust enough that evaluation and problem definition are now the key bottlenecks.
 - **Sutton and Silver's view (central):** [Welcome to the Era of Experience](../sources/welcome-to-the-era-of-experience.md) explicitly states that the next era requires appropriately chosen algorithms and calls for renewed work on value estimation, exploration, temporal abstraction, and world models. For them, core RL machinery still needs significant development for long-horizon grounded agents.
 
 ### Epistemic Standards: Utility Benchmarks vs. Foundational Understanding
 
-- **Yao's view (utility focus):** Yao uses frontier successes to motivate a new phase of AI work, shifting priorities toward evaluation design and pushing models toward real-world utility benchmarks.
+- **Yao's view (utility focus):** [We're at AI's Halftime](../sources/were-at-ais-halftime.md) uses frontier successes to motivate a new phase of AI work, shifting priorities toward evaluation design and pushing models toward real-world utility benchmarks.
 - **Bottou's view (reliability focus):** [Two Lessons from ICLR 2025](../sources/two-lessons-from-iclr-2025.md) argues that research direction should be anchored in capabilities that achieve near-perfect reliability and are understood well enough to guide next steps, rather than in hype, commercial aspiration, or new benchmarks that imply future capability. This is an epistemic check on confident "second half" narratives.
 
 ## Reconciliation Map
@@ -56,10 +65,17 @@ The candidate reconciliation treats the disagreement as sequential: human-derive
 
 The unresolved issue is whether this sequence genuinely reconciles the sources or merely places incompatible research assumptions at different stages.
 
+## Skeptical Case
+
+- Temporal staging may relocate rather than resolve the conflict: calling language priors a bootstrap does not establish that their human-data dependence is compatible with the Bitter Lesson or sufficient for open-ended experiential learning.
+- The reconciliation weakens if reliable utility gains do not survive Bottou's evidentiary standard, or if the proposed long-horizon agents require algorithmic advances too substantial to describe algorithms as marginal.
+
 ## Claim Classification
 
 - **Fact:** The source pages directly support the attributed emphases on language priors, scalable search and learning, grounded experience, algorithm development, and reliability.
-- **Interpretation:** Treating learned language priors as compatible with the Bitter Lesson depends on viewing them as scalable learned structure rather than hand-built domain knowledge.
+- **Interpretation; terminology and assumption disagreement:** Treating learned language priors as compatible with the Bitter Lesson depends on whether they count as scalable learned structure or fixed human-derived knowledge.
+- **Interpretation; scope disagreement:** The sources may describe different stages of progress, but none directly establishes that bootstrap, evaluation, and experiential learning form one sequence.
+- **Open hypothesis; evidentiary disagreement:** Utility-oriented demonstrations may or may not satisfy the near-perfect-reliability standard used by Bottou.
 - **Hypothesis:** The staged research program is a possible reconciliation, not a conclusion stated by any one source.
 - **Recommendation:** Whether the staged interpretation should become durable synthesis requires user adjudication.
 

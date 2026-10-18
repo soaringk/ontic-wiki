@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2019-03-13
 created: 2026-04-20
-updated: 2026-05-11
+updated: 2026-10-19
 ---
 
 # Summary
@@ -35,5 +35,5 @@ The essay is a standing warning against confusing short-run performance gains wi
 
 # Open Questions
 
-- Are large language-model priors best understood as the kind of human-knowledge shortcut this essay warns against, or as a scalable learned prior that remains compatible with the lesson?
-- If search and learning are the core scalable meta-methods, how much of today's progress should be credited to algorithmic advances versus data, compute, and productized evaluation loops?
+- What criteria distinguish structure learned by a scalable general method from human knowledge embedded as a fixed shortcut?
+- What evidence would show that a short-run gain will continue to improve with computation rather than become a long-run constraint?

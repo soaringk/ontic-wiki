@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2025-04-28
 created: 2026-07-04
-updated: 2026-07-04
+updated: 2026-10-19
 ---
 
 # Summary
@@ -30,7 +30,7 @@ updated: 2026-07-04
 
 # Connections
 
-- Concept: [Speculative Decoding](../concepts/speculative-decoding.md)
+- Related canonical method: [Speculative Decoding](../concepts/speculative-decoding.md)
 - Concept: [Parallel Decoding Variants](../concepts/parallel-decoding-variants.md)
 - Concept: [Autoregressive Generation](../concepts/autoregressive-generation.md)
 

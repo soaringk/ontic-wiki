@@ -1,5 +1,13 @@
 # Wiki Log
 
+## [2026-10-19] lint | tightened evidence scope and debate traceability
+
+- Audited 75 source, 10 topic, 38 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, and obvious duplicates.
+- Found no broken internal links, non-index orphan content pages, inventory drift, weakly connected source pages, debate/synthesis duplication, or obvious duplicate pages.
+- Replaced ambiguous geometry terminology, qualified effective-dimension and disaggregation claims, date-anchored AI capability claims, and distinguished PagedAttention branch sharing from cross-request context caching.
+- Clarified the speculative-versus-parallel decoding boundary and strengthened the unresolved debate's source traceability, skeptical case, and claim classification without changing its `awaiting_user` and `undecided` status.
+- Left `wiki/index.md` unchanged because page inventory and indexed summaries remain current.
+
 ## [2026-09-28] lint | repaired evidence scope and canonical concept coverage
 
 - Audited 75 source, 10 topic, 36 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, repeated concepts, and obvious duplicates.
