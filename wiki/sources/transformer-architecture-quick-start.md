@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: 2026-03-30
 created: 2026-05-20
-updated: 2026-07-20
+updated: 2026-10-26
 ---
 
 # Summary
@@ -20,7 +20,7 @@ This Chinese AI Infra Guide article, published on 2026-03-30 as `🔥 Transforme
 # Key Claims
 
 - Modern LLM infrastructure work should understand the specific Transformer modules it optimizes: attention matrix multiplications, softmax, LayerNorm, FFN matrices, KV cache, and position encoding.
-- Decoder-only Transformers dominate current large language models because they unify training around next-token prediction and simplify inference/runtime structure.
+- The 2026-03-30 article describes decoder-only Transformers as dominant among large language models because they unify training around next-token prediction and simplify inference/runtime structure.
 - Self-attention is the densest optimization target: `QK^T`, softmax, and `PV` drive FlashAttention-style kernel work and long-context memory pressure.
 - Multi-head attention creates a natural tensor-parallel split point, while GQA/MQA reduce KV-cache footprint by sharing fewer key/value heads across query heads.
 - RoPE, Pre-Norm, residual connections, and FFN variants are not cosmetic details; they shape kernel fusion, training stability, long-context behavior, and parameter distribution.

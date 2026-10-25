@@ -10,7 +10,7 @@ source_type: markdown
 parser: direct
 published: unknown
 created: 2026-04-11
-updated: 2026-05-11
+updated: 2026-10-26
 ---
 
 # Summary
@@ -19,11 +19,11 @@ This source is an operational cheat sheet for large-model deployment. It combine
 
 # Key Claims
 
-- Deployment policy should distinguish public models from test variants and keep production redundancy across clusters and replicas.
+- The cheat sheet recommends distinguishing public models from test variants and keeping production redundancy across clusters and replicas.
 - GPU memory planning can be broken into model weights, runtime reserve, hardware reserve, and KV cache.
 - For MoE models, tensor parallelism and expert parallelism split different parts of the parameter set, so memory formulas must treat dense layers, shared experts, and routed experts separately.
 - KV cache sizing can be derived per token from layer count, KV heads, head dimension, precision, and tensor parallelism.
-- Operational recovery for online serving is mostly a capacity problem: scale out or throttle when resource pressure, latency, or rate-limit errors rise.
+- The cheat sheet recommends scaling out or throttling as initial responses when resource pressure, latency, or rate-limit errors rise; it does not establish that all serving incidents are primarily capacity problems.
 
 # Why It Matters
 

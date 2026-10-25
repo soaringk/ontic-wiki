@@ -10,7 +10,7 @@ source_type: pdf
 parser: mineru
 published: 2024-06-17
 created: 2026-07-02
-updated: 2026-08-03
+updated: 2026-10-26
 ---
 
 # Summary
@@ -24,7 +24,7 @@ Sarathi-Serve is an LLM inference scheduler that targets the throughput-latency 
 - Decode iterations are often memory-bound, leaving arithmetic slack that can be used for bounded amounts of prefill work.
 - Chunked prefills split prompt processing into token-budgeted pieces so long prompts do not dominate a single iteration.
 - Stall-free batching first includes ongoing decodes, then fills remaining token budget with prefill chunks; the token budget is tuned against the TBT SLO, hardware, and parallelism setup.
-- The reported evaluation shows up to 2.6x higher serving capacity for Mistral-7B on one A100 and up to 5.6x for Falcon-180B across 8 A100 GPUs.
+- Against the paper's evaluated vLLM configurations and under workload-specific P99 TBT constraints, the reported evaluation shows up to 2.6x higher serving capacity for Mistral-7B on one A100 and up to 5.6x end-to-end capacity for pipeline-parallel Falcon-180B across 8 A100 GPUs.
 
 # Why It Matters
 

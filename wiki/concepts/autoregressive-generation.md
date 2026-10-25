@@ -8,7 +8,7 @@ Autoregressive generation produces text one token at a time, conditioning each n
 - The generation loop creates two serving phases: prefill processes the prompt in parallel and builds KV Cache, while decode reads the cache and emits one new token at a time.
 - Prefill usually determines TTFT and is compute-bound for long prompts; decode usually determines TPOT and is memory-bandwidth-bound.
 - Greedy decoding, temperature, Top-K, and Top-P are output-selection policies over logits, not architecture changes.
-- KV Cache is the key optimization that prevents full-prefix recomputation: without cache, autoregressive attention sums full-prefix matrix attention to $O(N^3 d)$; with cache, single-query decode attention sums to $O(N^2 d)$.
+- [KV Cache](kv-cache-in-llm-serving.md) prevents full-prefix recomputation and reduces the cumulative attention work of the naive generation loop; its concept page records the full complexity derivation.
 - Continuous batching and iteration-level scheduling are natural responses to autoregressive generation because requests enter and finish at different token steps.
 - Long prefills can interrupt the decode cadence in shared serving; chunked prefill scheduling keeps new prompt work within a per-iteration token budget.
 - Speculative decoding targets the serial decode bottleneck by using draft tokens plus target-model verification; its benefit depends on acceptance rate, lookahead length, draft latency, target scoring latency, and workload shape.

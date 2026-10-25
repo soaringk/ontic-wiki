@@ -5,7 +5,7 @@ A unitranche loan combines what would traditionally be separate senior and junio
 ## Why It Matters
 
 - It simplifies execution for borrowers by replacing multi-layer debt negotiations with one instrument.
-- The current podcast source describes it as faster but less transparent than a layered capital structure.
+- The undated podcast source describes it as faster but less transparent than a layered capital structure.
 
 ## Operational Consequence
 

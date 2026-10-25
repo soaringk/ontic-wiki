@@ -4,7 +4,7 @@ Rated note feeders are structured investment vehicles that wrap private-credit e
 
 ## Why It Matters
 
-- The current podcast source describes them as a way to make private-credit exposure easier for regulated institutions to hold.
+- The undated podcast source describes them as a way to make private-credit exposure easier for regulated institutions to hold.
 - The wrapper adds structural complexity between the investor and the underlying private-credit pool.
 
 ## Structural Tension

@@ -6,7 +6,7 @@ Prediction-compression equivalence is the information-theoretic link between pro
 
 - Arithmetic coding converts predictive likelihoods into near-optimal code lengths, so minimizing cross-entropy is equivalent to improving compression rate.
 - The equivalence explains why language-modeling loss is not just a text benchmark: it measures how well a model captures regularities in the data stream.
-- It also lets classical compressors act as conditional generative models by comparing code lengths, although their samples are usually weaker than modern neural generators.
+- It also lets classical compressors act as conditional generative models by comparing code lengths. In the paper's image example, gzip continuations are qualitatively noisier than Chinchilla's, while both remain incoherent.
 - In the language-modeling-as-compression view, model size matters because the compressed representation can be treated as a two-part code: model parameters plus encoded data.
 
 ## Related Pages

@@ -1,5 +1,12 @@
 # Wiki Log
 
+## [2026-10-26] lint | repaired theorem consistency and benchmark scope
+
+- Audited 75 source, 10 topic, 38 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, repeated concepts, and obvious duplicates.
+- Found no broken internal links, non-index orphan content pages, missing raw targets, weakly connected source pages, duplicate identifiers or page bodies, or debate/synthesis duplication; the debate remains `awaiting_user` and `undecided`.
+- Documented the geometry manuscript's theorem-versus-empirical regime contradiction, scoped compression and serving benchmark figures to their tested inputs and configurations, and narrowed decode, tensor-parallel, operational-policy, and chronology-sensitive claims.
+- Removed repeated MLA and no-cache complexity detail in favor of canonical concept links and rebuilt the affected `wiki/index.md` summaries without changing page inventory.
+
 ## [2026-10-19] lint | tightened evidence scope and debate traceability
 
 - Audited 75 source, 10 topic, 38 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, and obvious duplicates.

@@ -32,7 +32,7 @@ Transformer architecture models sequences by repeatedly letting each token updat
 ## Why It Matters For Serving
 
 - Prefill is the phase that processes the prompt and builds the initial KV cache.
-- Decode is slower and more sequential because each new token depends on the model's available causal context or recurrent state.
+- Decode is sequential because each new token depends on the model's available causal context or recurrent state. A decode iteration may be shorter than a large prefill, but repeated decode steps can dominate total generation time and determine TPOT.
 - Prefill attention usually looks like large matrix multiplication, while decode attention often becomes memory-bound because it reads weights and KV cache for one new token at a time.
 - Transformer code structure maps directly to infrastructure work: attention Q/K/V and output projections are GEMM targets, softmax is a fusion/IO target, FFN matrices dominate parameter count, and LayerNorm/RMSNorm plus residual paths are common kernel-fusion boundaries.
 - Decoder Block arithmetic can be planned component by component: embeddings and LM head scale with vocabulary, attention scales with Q/K/V/O projections and KV-head count, FFN scales with intermediate width, and KV Cache scales with layer count, KV heads, head dimension, sequence length, batch, dtype, and tensor parallelism.

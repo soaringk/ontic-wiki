@@ -10,7 +10,7 @@ source_type: pdf
 parser: mineru
 published: 2023-02-02
 created: 2026-06-30
-updated: 2026-06-30
+updated: 2026-10-26
 ---
 
 # Summary
@@ -24,7 +24,7 @@ This DeepMind paper presents speculative sampling for reducing large-language-mo
 - Modified rejection sampling accepts draft tokens with probability based on the target/draft probability ratio and samples from the positive residual distribution after a rejection.
 - Correct speculative sampling can preserve the target model's sampling distribution rather than merely approximate or distill it.
 - Draft model design is a systems problem: the best draft is not necessarily a conventionally optimal smaller model, because device topology, layer count, communication, and latency dominate.
-- On Chinchilla 70B with a 4B draft model, the paper reports roughly 2x to 2.5x decode speedups on XSum and HumanEval without benchmark-quality degradation.
+- In batch-size-one experiments on 16 TPU v4s, Chinchilla 70B with a latency-optimized 4B draft reports 1.92–2.46x mean-token-time speedups across XSum and HumanEval settings without degradation in the reported benchmark metrics; the result is task- and decoding-policy-dependent.
 
 # Why It Matters
 

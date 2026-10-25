@@ -10,17 +10,17 @@ source_type: pdf
 parser: mineru
 published: 2024-03-18
 created: 2026-05-26
-updated: 2026-08-31
+updated: 2026-10-26
 ---
 
 # Summary
 
-This DeepMind paper advocates for viewing language modeling through the lens of lossless compression. Excluding model parameter bytes, Chinchilla 70B, trained primarily on text, compresses ImageNet patches to 43.4% and LibriSpeech samples to 16.4% of their raw size, beating compared domain-specific compressors like PNG (58.5%) or FLAC (30.3%) on raw compression rate. The paper separately revisits scaling laws through adjusted compression rates that account for model size and demonstrates that compressors like gzip can be used as conditional generative models.
+This DeepMind paper advocates for viewing language modeling through the lens of lossless compression. Excluding model parameter bytes, Chinchilla 70B, trained primarily on text, compresses the paper's 2,048-byte grayscale ImageNet patches to 43.4% and its 2,048-byte LibriSpeech chunks, reduced from 16-bit to 8-bit samples, to 16.4% of their transformed raw size. These rates beat the compared PNG (58.5%) and FLAC (30.3%) configurations on the same inputs. The paper separately revisits scaling laws through adjusted compression rates that account for model size and demonstrates that compressors like gzip can be used as conditional generative models.
 
 # Key Claims
 
 - **Prediction equals compression.** Arithmetic coding transforms any predictive model into a lossless compressor; conversely, any compressor defines a conditional distribution via coding lengths, enabling generation.
-- **LLMs are general-purpose (raw) compressors.** Chinchilla 70B and Llama 2 7B, despite no reported direct image/audio training, achieve competitive raw compression rates on image and audio data — outperforming the compared modality-specific codecs.
+- **LLMs are general-purpose (raw) compressors in the tested representation.** Chinchilla 70B and Llama 2 7B, despite no reported direct image/audio training, outperform the compared modality-specific codecs on flattened grayscale image patches and transformed 8-bit audio chunks. These are not rates for ordinary image files or original 16-bit audio.
 - **Adjusted compression rate reveals an optimal tested model size.** In the paper's offline two-part-code experiments on enwik Transformers, counting parameters creates a U-shaped curve over model size: beyond a critical point, parameter overhead dominates. Larger tested datasets support a larger optimum; prequential coding gives a different picture.
 - **Tokenization is pre-compression.** Tokenizers compress the raw byte stream before the model sees it. Larger vocabularies pack more information per token but make the prediction task harder; for large models, simpler tokenizers (e.g., ASCII) often achieve better raw compression.
 - **In-context compression.** Foundation models rely on in-context learning to adapt their compression within a short context window, unlike classical compressors which rely on long context windows and small programs.

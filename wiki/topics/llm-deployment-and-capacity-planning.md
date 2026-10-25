@@ -4,7 +4,7 @@ LLM deployment and capacity planning sits between model architecture and product
 
 ## Core Ideas
 
-- Deployment variants should separate public production models from test-only configurations.
+- The cited operational cheat sheet recommends separating public production models from test-only configurations.
 - Memory planning is not just parameter count; it includes runtime reservation, hardware reservation, and KV cache.
 - Decoder Block memory planning should be component-wise: embeddings and LM head scale with vocabulary, FFN dominates dense block parameters, and attention KV state scales with KV head count. Gradients and optimizer state are training-only; retained activations dominate training memory, while inference still needs transient activations and workspace.
 - User experience depends on separating [TTFT, TPOT, overall latency, throughput, and SLO-attaining goodput](../concepts/llm-serving-metrics-and-slos.md) instead of collapsing them into one metric.
@@ -20,12 +20,12 @@ LLM deployment and capacity planning sits between model architecture and product
 - [Prefix reuse, cache placement, and KV-state transfer](../sources/memserve-flexible-mem-pool-for-building-disaggregated-llm-serving-with-caching.md) are first-class deployment concerns rather than narrow engine details.
 - MoE deployments require explicit reasoning about what tensor parallelism splits and what expert parallelism splits.
 - LoRA adapters and QLoRA-style low-bit fine-tuning reduce customization cost, but serving must account for adapter loading, merging, batching compatibility, and quantized-base quality.
-- More GPUs and higher tensor parallelism usually improve fit and latency only sub-linearly because communication overhead and utilization losses rise.
+- Additional GPUs can make a model fit and may improve latency, but tensor-parallel gains are workload- and topology-dependent and can reverse when communication overhead or utilization losses dominate.
 - Quantization can reduce bandwidth and memory pressure, but it must be validated against model-quality regressions.
 - Integer-only and quantization-aware approaches matter because real deployment wins come from arithmetic that hardware can execute efficiently, not only smaller checkpoint files.
 - LLM quantization needs outlier-aware treatment of weights, activations, and KV cache; scheme names such as GPTQ, AWQ, SmoothQuant, and QLoRA are deployment candidates, not substitutes for quality and latency validation.
 - Attention kernels are part of capacity planning: [FlashAttention](../sources/flashattention-fast-and-memory-efficient-exact-attention-with-io-awareness.md) reduces activation memory and attention latency for long prompts, while [FlashAttention-3](../sources/flashattention-3-fast-and-accurate-attention-with-asynchrony-and-low-precision.md) shows that Hopper/FP8 gains depend on asynchronous kernels and accuracy-aware quantization.
-- Capacity incidents are often handled first through scaling or throttling rather than deep architectural changes.
+- The cited operational cheat sheet recommends scaling or throttling as initial responses when capacity pressure, latency, or rate-limit errors rise.
 
 ## Related Concepts
 

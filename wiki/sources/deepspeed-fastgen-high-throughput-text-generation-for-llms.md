@@ -10,7 +10,7 @@ source_type: pdf
 parser: mineru
 published: 2024-01-09
 created: 2026-07-02
-updated: 2026-08-03
+updated: 2026-10-26
 ---
 
 # Summary
@@ -23,7 +23,7 @@ DeepSpeed-FastGen is a Microsoft DeepSpeed serving system built from DeepSpeed-M
 - LLM inference has a throughput-saturation region: small token counts are memory-transfer limited, while larger token counts better saturate compute.
 - Long prompts should be decomposed across multiple iterations instead of monopolizing one large prefill pass.
 - Short prompts can be fused to fill a target token budget, keeping forward-pass sizes more uniform.
-- Compared with vLLM in the reported benchmarks, DeepSpeed-FastGen claims up to 2.3x higher effective throughput, 2x lower average latency, and up to 3.7x lower token-level tail latency.
+- In the paper's Llama-2 tests on A100, H100, and A6000 hardware against its evaluated vLLM configurations, DeepSpeed-FastGen reports up to 2.3x higher SLA-attaining effective throughput, 2x lower average latency, and a 3.7x reduction in P95 token-generation latency.
 
 # Why It Matters
 
