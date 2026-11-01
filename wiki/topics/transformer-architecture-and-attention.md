@@ -25,7 +25,7 @@ Transformer architecture models sequences by repeatedly letting each token updat
 - Attention variants such as [MQA and GQA](../concepts/multi-query-and-grouped-query-attention.md) and MLA preserve many query pathways while reducing or compressing the key/value state that inference must store and read.
 - Sparse attention can reduce retained history through sliding windows or learned selection. Compression ratios for frontier variants such as CSA+HCA are architecture-specific and currently represented here only by an undated survey.
 - Linear or recurrent attention variants replace growing per-token KV state with fixed-size state at those layers. Hybrid architectures interleave them with full-attention layers, retaining some sequence-length-dependent cache and model-specific quality trade-offs.
-- Cross-Layer Attention (CLA) reduces KVCache by having adjacent layers share K/V state instead of computing and storing them independently.
+- An undated survey describes Cross-Layer Attention (CLA) as sharing K/V state across adjacent layers to reduce KV-cache storage; its production maturity and compatibility with other attention variants still need primary-source validation. See [KV Cache in LLM Serving](../concepts/kv-cache-in-llm-serving.md) for the evidence boundary.
 - MoE changes the FFN path by routing each token to a small subset of experts, expanding total capacity while adding routing, load-balancing, and expert-parallel communication constraints.
 - Long-context extrapolation is a position-generalization problem as well as a memory problem: RoPE scaling can extend usable context only if quality survives the new position distribution.
 

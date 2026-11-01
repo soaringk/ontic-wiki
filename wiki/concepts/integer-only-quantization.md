@@ -6,7 +6,7 @@ Integer-only quantization represents weights and activations with low-bit intege
 
 - It can reduce model size, memory traffic, and latency on hardware with efficient integer units.
 - Exact zero representation matters for padding and fused operator correctness.
-- Some already-efficient models may require quantization-aware training when naive post-training conversion causes unacceptable accuracy loss.
+- In the cited mobile-CNN experiments, small models needed quantization-aware training when naive post-training conversion caused unacceptable accuracy loss; current LLMs require separate evidence and validation.
 - Higher-precision accumulators and biases are often still necessary.
 - Integer-only execution depends on affine scale/zero-point mappings, fixed-point multipliers, higher-precision accumulation, and kernels that preserve those arithmetic conventions.
 - LLM-specific outlier handling, GPTQ/AWQ/SmoothQuant, KV-cache formats, and serving validation are tracked on [LLM Quantization](llm-quantization.md).

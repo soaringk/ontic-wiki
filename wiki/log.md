@@ -1,5 +1,13 @@
 # Wiki Log
 
+## [2026-11-02] lint | tightened architecture and evidence boundaries
+
+- Audited 75 source, 10 topic, 38 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, repeated concepts, and obvious duplicates.
+- Found no broken internal links, non-index orphan content pages, inventory drift, missing raw targets, weakly connected source pages, duplicate identifiers or pages, repeated concepts requiring a new page, or debate/synthesis duplication; the debate remains `awaiting_user` and `undecided`.
+- Qualified survey-only CLA maturity, separated evaluated PagedAttention branch sharing from proposed cross-request prefix reuse, and clarified that position scaling affects KV-cache pressure through longer served contexts rather than changing ordinary KV tensor shape.
+- Scoped quantization-aware-training evidence to the tested mobile CNNs and made LoRA target-module selection configuration- and task-dependent.
+- Left `wiki/index.md` unchanged because page inventory and indexed summaries remain current.
+
 ## [2026-10-26] lint | repaired theorem consistency and benchmark scope
 
 - Audited 75 source, 10 topic, 38 concept, 1 debate, and 0 synthesis pages for orphans, broken links, stale or conflicting claims, weak source connections, debate/synthesis duplication, repeated concepts, and obvious duplicates.

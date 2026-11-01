@@ -6,7 +6,7 @@ PagedAttention is an attention implementation that stores a sequence's KV cache 
 
 - It removes most external fragmentation and sharply limits internal fragmentation.
 - It allows KV cache to grow on demand instead of reserving full maximum-length space up front.
-- It makes prompt sharing, branching, and copy-on-write updates much cheaper.
+- It makes evaluated sampling and beam-search branch sharing, including copy-on-write updates, much cheaper. The paper also proposes predefined shared-prefix reuse, but does not demonstrate cross-request reuse.
 - It raises the effective batch size ceiling by turning wasted memory into usable request capacity.
 - It is especially useful in autoregressive serving because request KV Cache grows dynamically and different requests finish at different sequence lengths.
 

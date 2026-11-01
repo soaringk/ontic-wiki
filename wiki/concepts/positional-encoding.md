@@ -9,7 +9,7 @@ Positional encoding injects order information into Transformer computation so at
 - RoPE rotates Q and K by position-dependent angles so their dot product depends on relative position; V is left unrotated because it carries content rather than matching position.
 - ALiBi adds a distance-dependent linear bias directly to attention scores; the cited tutorial characterizes this as simpler for extrapolation but less expressive than RoPE.
 - Long-context RoPE extensions such as position interpolation, NTK-aware scaling, YaRN, and dynamic NTK adjust how frequencies scale beyond the training window.
-- Position encoding choices affect kernel fusion, trigonometric cache layout, long-context quality, and KV Cache memory pressure.
+- Position encoding choices affect kernel fusion, trigonometric cache layout, and long-context quality. Scaling positions can enable longer served contexts, which indirectly increases KV-cache use; ordinary position encoding does not itself change the KV tensor size.
 - Long-context extrapolation must be evaluated separately from maximum configured context length because position scaling can preserve syntax while still losing retrieval or reasoning quality on long documents.
 
 ## Related Pages
